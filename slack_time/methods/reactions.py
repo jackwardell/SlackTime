@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Reactions(SlackAPI):
@@ -21,7 +21,6 @@ class Reactions(SlackAPI):
 
         :param timestamp: Timestamp of the message to add reaction to.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -75,7 +74,6 @@ class Reactions(SlackAPI):
 
         :param timestamp: Timestamp of the message to get reactions for.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -167,7 +165,6 @@ class Reactions(SlackAPI):
 
         :param user: Show reactions made by this user. Defaults to the authed user.
         :type str: e.g. W1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -322,7 +319,6 @@ class Reactions(SlackAPI):
 
         :param timestamp: Timestamp of the message to remove reaction from.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
