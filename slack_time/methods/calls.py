@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -19,7 +20,6 @@ class Participants(SlackAPI):
         :param users: The list of users to add as participants in the Call. Read more on how to specify users here.
         :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -29,9 +29,8 @@ class Participants(SlackAPI):
         <Response [200]>
         >>> response.json()
         {
-        	"ok": true
+            "ok": true
         }
-
         """
 
         payload = {"token": self.token, "id": id, "users": users}
@@ -52,7 +51,6 @@ class Participants(SlackAPI):
         :param users: The list of users to remove as participants in the Call. Read more on how to specify users here.
         :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -62,9 +60,8 @@ class Participants(SlackAPI):
         <Response [200]>
         >>> response.json()
         {
-        	"ok": true
+            "ok": true
         }
-
         """
 
         payload = {"token": self.token, "id": id, "users": users}
@@ -86,7 +83,7 @@ class Calls(SlackAPI):
         desktop_app_join_url: str = None,
         external_display_id: str = None,
         title: str = None,
-        users: str = None,
+        users: list = None,
         **kwargs
     ) -> Response:
         """
@@ -118,8 +115,7 @@ class Calls(SlackAPI):
         :type str: e.g. Kimpossible sync up
 
         :param users: The list of users to register as participants in the Call. Read more on how to specify users here.
-        :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
-
+        :type list: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -130,28 +126,27 @@ class Calls(SlackAPI):
         <Response [200]>
         >>> response.json()
         {
-        	"ok": true,
-        	"call": {
-        		"id": "R0E69JAIF",
-        		"date_start": 1562002086,
-        		"external_unique_id": "025169F6-E37A-4E62-BB54-7F93A0FC4C1F",
-        		"join_url": "https://example.com/calls/1234567890",
-        		"desktop_app_join_url": "callapp://join/1234567890",
-        		"external_display_id": "705-292-868",
-        		"title": "Kimpossible sync up",
-        		"users": [
-        			{
-        				"slack_id": "U0MQG83FD"
-        			},
-        			{
-        				"external_id": "54321678",
-        				"display_name": "Kim Possible",
-        				"avatar_url": "https://callmebeepme.com/users/avatar1234.jpg"
-        			}
-        		]
-        	}
+            "ok": true,
+            "call": {
+                "id": "R0E69JAIF",
+                "date_start": 1562002086,
+                "external_unique_id": "025169F6-E37A-4E62-BB54-7F93A0FC4C1F",
+                "join_url": "https://example.com/calls/1234567890",
+                "desktop_app_join_url": "callapp://join/1234567890",
+                "external_display_id": "705-292-868",
+                "title": "Kimpossible sync up",
+                "users": [
+                    {
+                        "slack_id": "U0MQG83FD"
+                    },
+                    {
+                        "external_id": "54321678",
+                        "display_name": "Kim Possible",
+                        "avatar_url": "https://callmebeepme.com/users/avatar1234.jpg"
+                    }
+                ]
+            }
         }
-
         """
 
         payload = {
@@ -194,7 +189,6 @@ class Calls(SlackAPI):
         :param duration: Call duration in seconds
         :type int: e.g. 1800
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -204,7 +198,7 @@ class Calls(SlackAPI):
         <Response [200]>
         >>> response.json()
         {
-        	"ok": true
+            "ok": true
         }
 
         """
@@ -227,7 +221,6 @@ class Calls(SlackAPI):
         :param id: id of the Call returned by the calls.add method.
         :type str: e.g. R0E69JAIF
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -237,28 +230,27 @@ class Calls(SlackAPI):
         <Response [200]>
         >>> response.json()
         {
-        	"ok": true,
-        	"call": {
-        		"id": "R0E69JAIF",
-        		"date_start": 1562002086,
-        		"external_unique_id": "025169F6-E37A-4E62-BB54-7F93A0FC4C1F",
-        		"join_url": "https://callmebeepme.com/calls/1234567890",
-        		"desktop_app_join_url": "callapp://join/1234567890",
-        		"external_display_id": "705-292-868",
-        		"title": "Kimpossible sync up",
-        		"users": [
-        			{
-        				"slack_id": "U0MQG83FD"
-        			},
-        			{
-        				"external_id": "54321678",
-        				"display_name": "Kim Possible",
-        				"avatar_url": "https://callmebeepme.com/users/avatar1234.jpg"
-        			}
-        		]
-        	}
+            "ok": true,
+            "call": {
+                "id": "R0E69JAIF",
+                "date_start": 1562002086,
+                "external_unique_id": "025169F6-E37A-4E62-BB54-7F93A0FC4C1F",
+                "join_url": "https://callmebeepme.com/calls/1234567890",
+                "desktop_app_join_url": "callapp://join/1234567890",
+                "external_display_id": "705-292-868",
+                "title": "Kimpossible sync up",
+                "users": [
+                    {
+                        "slack_id": "U0MQG83FD"
+                    },
+                    {
+                        "external_id": "54321678",
+                        "display_name": "Kim Possible",
+                        "avatar_url": "https://callmebeepme.com/users/avatar1234.jpg"
+                    }
+                ]
+            }
         }
-
         """
 
         payload = {"token": self.token, "id": id}
@@ -292,7 +284,6 @@ class Calls(SlackAPI):
         :param title: The name of the Call.
         :type str: e.g. Kimpossible sync up call
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -302,28 +293,27 @@ class Calls(SlackAPI):
         <Response [200]>
         >>> response.json()
         {
-        	"ok": true,
-        	"call": {
-        		"id": "R0E69JAIF",
-        		"date_start": 1562002086,
-        		"external_unique_id": "025169F6-E37A-4E62-BB54-7F93A0FC4C1F",
-        		"join_url": "https://callmebeepme.com/calls/0987654321",
-        		"desktop_app_join_url": "callapp://join/0987654321",
-        		"external_display_id": "705-292-868",
-        		"title": "Kimpossible sync up",
-        		"users": [
-        			{
-        				"slack_id": "U0MQG83FD"
-        			},
-        			{
-        				"external_id": "54321678",
-        				"display_name": "Kim Possible",
-        				"avatar_url": "https://callmebeepme.com/users/avatar1234.jpg"
-        			}
-        		]
-        	}
+            "ok": true,
+            "call": {
+                "id": "R0E69JAIF",
+                "date_start": 1562002086,
+                "external_unique_id": "025169F6-E37A-4E62-BB54-7F93A0FC4C1F",
+                "join_url": "https://callmebeepme.com/calls/0987654321",
+                "desktop_app_join_url": "callapp://join/0987654321",
+                "external_display_id": "705-292-868",
+                "title": "Kimpossible sync up",
+                "users": [
+                    {
+                        "slack_id": "U0MQG83FD"
+                    },
+                    {
+                        "external_id": "54321678",
+                        "display_name": "Kim Possible",
+                        "avatar_url": "https://callmebeepme.com/users/avatar1234.jpg"
+                    }
+                ]
+            }
         }
-
         """
 
         payload = {"token": self.token, "id": id}
@@ -338,13 +328,3 @@ class Calls(SlackAPI):
             payload["title"] = title
 
         return self._post("calls.update", payload=payload, **kwargs)
-
-
-class Calls(SlackAPI):
-    @cached_property
-    def calls(self) -> Calls:
-        return Calls(**self.params)
-
-    @cached_property
-    def participants(self) -> Participants:
-        return Participants(**self.params)
