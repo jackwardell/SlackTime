@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Stars(SlackAPI):
@@ -31,7 +31,6 @@ class Stars(SlackAPI):
 
         :param timestamp: Timestamp of the message to add star to.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -85,7 +84,6 @@ class Stars(SlackAPI):
         :param page: Page number of results to return.
         :type int: e.g. 2
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -137,7 +135,6 @@ class Stars(SlackAPI):
 
         :param timestamp: Timestamp of the message to remove star from.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
