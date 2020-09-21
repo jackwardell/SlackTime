@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -35,7 +36,6 @@ class ScheduledMessages(SlackAPI):
 
         :param oldest: A UNIX timestamp of the oldest value in the time range
         :type int: e.g. 1562137200
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -106,7 +106,6 @@ class Chat(SlackAPI):
         :param as_user: Pass true to delete the message as the authed user with chat:write:user scope. Bot users in this context are considered authed users. If unused or false, the message will be deleted with chat:write:bot scope.
         :type bool: e.g. true
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -148,7 +147,6 @@ class Chat(SlackAPI):
         :param as_user: Pass true to delete the message as the authed user with chat:write:user scope. Bot users in this context are considered authed users. If unused or false, the message will be deleted with chat:write:bot scope.
         :type bool: e.g. true
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -187,7 +185,6 @@ class Chat(SlackAPI):
         :param message_ts: A message's ts value, uniquely identifying it within a channel
         :type float: e.g. 1234567890.123456
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -221,7 +218,6 @@ class Chat(SlackAPI):
         :param text: Text of the message to send.
         :type str: e.g. Hello world
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -243,12 +239,12 @@ class Chat(SlackAPI):
 
     def post_ephemeral(
         self,
-        attachments: str,
+        attachments: list,
         channel: str,
         text: str,
         user: str,
         as_user: bool = None,
-        blocks: str = None,
+        blocks: list = None,
         icon_emoji: str = None,
         icon_url: str = None,
         link_names: bool = None,
@@ -265,7 +261,7 @@ class Chat(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param attachments: A JSON-based array of structured attachments, presented as a URL-encoded string.
-        :type str: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
+        :type list: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
 
         :param channel: Channel, private group, or IM channel to send message to. Can be an encoded ID, or a name.
         :type str: e.g. C1234567890
@@ -280,7 +276,7 @@ class Chat(SlackAPI):
         :type bool: e.g. true
 
         :param blocks: A JSON-based array of structured blocks, presented as a URL-encoded string.
-        :type str: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
+        :type list: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
 
         :param icon_emoji: Emoji to use as the icon for this message. Overrides icon_url. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.
         :type str: e.g. :chart_with_upwards_trend:
@@ -299,7 +295,6 @@ class Chat(SlackAPI):
 
         :param username: Set your bot's user name. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.
         :type str: e.g. My Bot
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -354,8 +349,8 @@ class Chat(SlackAPI):
         channel: str,
         text: str,
         as_user: bool = None,
-        attachments: str = None,
-        blocks: str = None,
+        attachments: list = None,
+        blocks: list = None,
         icon_emoji: str = None,
         icon_url: str = None,
         link_names: bool = None,
@@ -385,10 +380,10 @@ class Chat(SlackAPI):
         :type bool: e.g. true
 
         :param attachments: A JSON-based array of structured attachments, presented as a URL-encoded string.
-        :type str: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
+        :type list: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
 
         :param blocks: A JSON-based array of structured blocks, presented as a URL-encoded string.
-        :type str: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
+        :type list: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
 
         :param icon_emoji: Emoji to use as the icon for this message. Overrides icon_url. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below. This argument may not be used with newer bot tokens.
         :type str: e.g. :chart_with_upwards_trend:
@@ -419,7 +414,6 @@ class Chat(SlackAPI):
 
         :param username: Set your bot's user name. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.
         :type str: e.g. My Bot
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -500,8 +494,8 @@ class Chat(SlackAPI):
         post_at: int,
         text: str,
         as_user: bool = None,
-        attachments: str = None,
-        blocks: str = None,
+        attachments: list = None,
+        blocks: list = None,
         link_names: bool = None,
         parse: str = None,
         reply_broadcast: bool = None,
@@ -530,10 +524,10 @@ class Chat(SlackAPI):
         :type bool: e.g. true
 
         :param attachments: A JSON-based array of structured attachments, presented as a URL-encoded string.
-        :type str: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
+        :type list: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
 
         :param blocks: A JSON-based array of structured blocks, presented as a URL-encoded string.
-        :type str: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
+        :type list: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
 
         :param link_names: Find and link channel names and usernames.
         :type bool: e.g. true
@@ -552,7 +546,6 @@ class Chat(SlackAPI):
 
         :param unfurl_media: Pass false to disable unfurling of media content.
         :type bool: e.g. false
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -623,8 +616,8 @@ class Chat(SlackAPI):
     def unfurl(
         self,
         channel: str,
-        ts: str,
-        unfurls: str,
+        ts: float,
+        unfurls: dict,
         user_auth_message: str = None,
         user_auth_required: bool = None,
         user_auth_url: str = None,
@@ -641,17 +634,19 @@ class Chat(SlackAPI):
         :type str: e.g. C1234567890
 
         :param ts: Timestamp of the message to add unfurl behavior to.
-        :type str:
+        :type float: e.g. 1405894322.002768
+
         :param unfurls: URL-encoded JSON map with keys set to URLs featured in the the message, pointing to their unfurl blocks or message attachments.
-        :type str:
+        :type dict:
+
         :param user_auth_message: Provide a simply-formatted string to send as an ephemeral message to the user as invitation to authenticate further and enable full unfurling behavior
         :type str:
+
         :param user_auth_required: Set to true or 1 to indicate the user must install your Slack app to trigger unfurls for this domain
         :type bool: e.g. true
 
         :param user_auth_url: Send users to this custom URL where they will complete authentication in your app to fully trigger unfurling. Value should be properly URL-encoded.
         :type str: e.g. https://example.com/onboarding?user_id=xxx
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -689,8 +684,8 @@ class Chat(SlackAPI):
         channel: str,
         ts: float,
         as_user: bool = None,
-        attachments: str = None,
-        blocks: str = None,
+        attachments: list = None,
+        blocks: list = None,
         link_names: bool = None,
         parse: str = None,
         text: str = None,
@@ -713,10 +708,10 @@ class Chat(SlackAPI):
         :type bool: e.g. true
 
         :param attachments: A JSON-based array of structured attachments, presented as a URL-encoded string. This field is required when not presenting text. If you don't include this field, the message's previous attachments will be retained. To remove previous attachments, include an empty array for this field.
-        :type str: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
+        :type list: e.g. [{"pretext": "pre-hello", "text": "text-world"}]
 
         :param blocks: A JSON-based array of structured blocks, presented as a URL-encoded string. If you don't include this field, the message's previous blocks will be retained. To remove previous blocks, include an empty array for this field.
-        :type str: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
+        :type list: e.g. [{"type": "section", "text": {"type": "plain_text", "text": "Hello world"}}]
 
         :param link_names: Find and link channel names and usernames. Defaults to none. If you do not specify a value for this field, the original value set for the message will be overwritten with the default, none.
         :type bool: e.g. true
@@ -726,7 +721,6 @@ class Chat(SlackAPI):
 
         :param text: New text for the message, using the default formatting rules. It's not required when presenting blocks or attachments.
         :type str: e.g. Hello world
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -769,13 +763,3 @@ class Chat(SlackAPI):
             payload["text"] = text
 
         return self._post("chat.update", payload=payload, **kwargs)
-
-
-class Chat(SlackAPI):
-    @cached_property
-    def chat(self) -> Chat:
-        return Chat(**self.params)
-
-    @cached_property
-    def scheduled_messages(self) -> ScheduledMessages:
-        return ScheduledMessages(**self.params)
