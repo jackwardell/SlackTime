@@ -92,9 +92,9 @@ class Views(SlackAPI):
 
         :param view: A view payload. This must be a JSON-encoded string.
         :type str:
+
         :param hash: A string that represents view state to protect against possible race conditions.
         :type float: e.g. 156772938.1827394
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -242,6 +242,7 @@ class Views(SlackAPI):
 
         :param view: A view object. This must be a JSON-encoded string.
         :type str:
+
         :param external_id: A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either view_id or external_id is required.
         :type str: e.g. bmarley_view2
 
@@ -250,7 +251,6 @@ class Views(SlackAPI):
 
         :param view_id: A unique identifier of the view to be updated. Either view_id or external_id is required.
         :type str: e.g. VMM512F2U
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
