@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from functools import update_wrapper, wraps
+from typing import IO
+from typing import Union
 
 
 class CachedProperty:
@@ -26,3 +27,23 @@ class CachedProperty:
 
 
 cached_property = CachedProperty
+
+
+def make_file(file: Union[str, IO]):
+    """
+    for multipart/form-data
+
+    for docstrings: e.g. '/absolute/path/to/file' or actual IO file"
+
+    snippet:
+    file_to_upload = make_file(file)
+    payload["xxx"] = file_to_upload
+    or
+    kwargs["files"] = {"file": file_to_upload}
+    """
+    if isinstance(file, str):
+        with open(file, "rb") as f:
+            file_to_upload = f
+    else:
+        file_to_upload = file
+    return file_to_upload

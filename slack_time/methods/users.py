@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+from typing import IO
+from typing import Union
+
 from requests import Response
 
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import make_file
 
 
 class Profile(SlackAPI):
@@ -656,7 +660,7 @@ class Users(SlackAPI):
         crop_w: int = None,
         crop_x: int = None,
         crop_y: int = None,
-        image: str = None,
+        image: Union[str, IO] = None,
         **kwargs
     ) -> Response:
         """
@@ -676,7 +680,7 @@ class Users(SlackAPI):
         :type int: e.g. 15
 
         :param image: File contents via multipart/form-data.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -699,7 +703,8 @@ class Users(SlackAPI):
             payload["crop_y"] = crop_y
 
         if image is not None:
-            payload["image"] = image
+            file_to_upload = make_file(image)
+            kwargs["files"] = {"file": file_to_upload}
 
         return self._post("users.setPhoto", payload=payload, **kwargs)
 

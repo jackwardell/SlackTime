@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+from typing import IO
+from typing import Union
+
 from requests import Response
 
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import make_file
 
 
 class Comments(SlackAPI):
@@ -45,8 +49,8 @@ class Remote(SlackAPI):
         external_url: str,
         title: str,
         filetype: str = None,
-        indexable_file_contents: str = None,
-        preview_image: str = None,
+        indexable_file_contents: Union[str, IO] = None,
+        preview_image: Union[str, IO] = None,
         **kwargs
     ) -> Response:
         """
@@ -69,10 +73,10 @@ class Remote(SlackAPI):
         :type str: e.g. doc
 
         :param indexable_file_contents: A text file (txt, pdf, doc, etc.) containing textual search terms that are used to improve discovery of the remote file.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :param preview_image: Preview of the document via multipart/form-data.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -130,10 +134,12 @@ class Remote(SlackAPI):
             payload["filetype"] = filetype
 
         if indexable_file_contents is not None:
-            payload["indexable_file_contents"] = indexable_file_contents
+            file_to_upload = make_file(indexable_file_contents)
+            payload["indexable_file_contents"] = file_to_upload
 
         if preview_image is not None:
-            payload["preview_image"] = preview_image
+            file_to_upload = make_file(indexable_file_contents)
+            kwargs["files"] = {"file": file_to_upload}
 
         return self._get("files.remote.add", payload=payload, **kwargs)
 
@@ -306,8 +312,8 @@ class Remote(SlackAPI):
         external_url: str = None,
         file: str = None,
         filetype: str = None,
-        indexable_file_contents: str = None,
-        preview_image: str = None,
+        indexable_file_contents: Union[str, IO] = None,
+        preview_image: Union[str, IO] = None,
         title: str = None,
         **kwargs
     ) -> Response:
@@ -331,10 +337,10 @@ class Remote(SlackAPI):
         :type str: e.g. doc
 
         :param indexable_file_contents: File containing contents that can be used to improve searchability for the remote file.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :param preview_image: Preview of the document via multipart/form-data.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :param title: Title of the file being shared.
         :type str: e.g. Danger, High Voltage!
@@ -363,10 +369,12 @@ class Remote(SlackAPI):
             payload["filetype"] = filetype
 
         if indexable_file_contents is not None:
-            payload["indexable_file_contents"] = indexable_file_contents
+            file_to_upload = make_file(file)
+            payload["indexable_file_contents"] = file_to_upload
 
         if preview_image is not None:
-            payload["preview_image"] = preview_image
+            file_to_upload = make_file(file)
+            kwargs["files"] = {"file": file_to_upload}
 
         if title is not None:
             payload["title"] = title
@@ -760,8 +768,8 @@ class Files(SlackAPI):
     def upload(
         self,
         channels: str = None,
-        content: str = None,
-        file: str = None,
+        content: Union[str, IO] = None,
+        file: Union[str, IO] = None,
         filename: str = None,
         filetype: str = None,
         initial_comment: str = None,
@@ -780,10 +788,10 @@ class Files(SlackAPI):
         :type str: e.g. C1234567890,C2345678901,C3456789012
 
         :param content: File contents via a POST variable. If omitting this parameter, you must provide a file.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file
 
         :param file: File contents via multipart/form-data. If omitting this parameter, you must submit content.
-        :type str: e.g. ...
+        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file
 
         :param filename: Filename of file.
         :type str: e.g. foo.txt
@@ -875,16 +883,12 @@ class Files(SlackAPI):
             payload["channels"] = channels
 
         if content is not None:
-            payload["content"] = content
+            file_to_upload = make_file(content)
+            payload["content"] = file_to_upload
 
         if file is not None:
-            if isinstance(file, str):
-                with open(file, "rb") as f:
-                    file_to_upload = f
-            else:
-                file_to_upload = file
-
-            kwargs.setdefault("files", {"file": file_to_upload})
+            file_to_upload = make_file(file)
+            kwargs["files"] = {"file": file_to_upload}
 
         if filename is not None:
             payload["filename"] = filename
