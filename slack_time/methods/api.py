@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Api(SlackAPI):
@@ -15,7 +15,6 @@ class Api(SlackAPI):
 
         :param foo: example property to return
         :type str: e.g. bar
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
