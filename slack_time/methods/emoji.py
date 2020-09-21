@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Emoji(SlackAPI):
@@ -12,7 +12,6 @@ class Emoji(SlackAPI):
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
