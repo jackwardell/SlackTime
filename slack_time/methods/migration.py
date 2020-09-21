@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Migration(SlackAPI):
@@ -15,9 +15,9 @@ class Migration(SlackAPI):
 
         :param users: A comma-separated list of user ids, up to 400 per request
         :type str:
+
         :param to_old: Specify true to convert W global user IDs to workspace-specific U IDs. Defaults to false.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
