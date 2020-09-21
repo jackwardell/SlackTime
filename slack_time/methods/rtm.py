@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Rtm(SlackAPI):
@@ -20,7 +20,6 @@ class Rtm(SlackAPI):
 
         :param presence_sub: Only deliver presence events when requested by subscription. See presence subscriptions.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -93,7 +92,6 @@ class Rtm(SlackAPI):
 
         :param simple_latest: Return timestamp only for latest message object of each channel (improves performance).
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
