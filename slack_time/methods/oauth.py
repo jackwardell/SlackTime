@@ -221,13 +221,3 @@ class OAuth(SlackAPI):
             payload["single_channel"] = single_channel
 
         return self._post("oauth.token", payload=payload, **kwargs)
-
-
-class Oauth(SlackAPI):
-    @cached_property
-    def oauth(self) -> OAuth:
-        return OAuth(**self.params)
-
-    @cached_property
-    def v2(self) -> V2:
-        return V2(**self.params)
