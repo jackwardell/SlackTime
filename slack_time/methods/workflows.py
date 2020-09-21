@@ -6,7 +6,7 @@ from slack_time.utils import cached_property
 
 class Workflows(SlackAPI):
     def step_completed(
-        self, workflow_step_execute_id: str, outputs: str = None, **kwargs
+        self, workflow_step_execute_id: dict, outputs: dict = None, **kwargs
     ) -> Response:
         """
         Indicate that an app's step in a workflow completed execution.
@@ -16,9 +16,10 @@ class Workflows(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param workflow_step_execute_id: Context identifier that maps to the correct workflow step execution.
-        :type str:
+        :type dict:
+
         :param outputs: Key-value object of outputs from your step. Keys of this object reflect the configured key properties of your outputs array from your workflow_step object.
-        :type str:
+        :type dict:
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -50,9 +51,10 @@ class Workflows(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param error: A JSON-based object with a message property that should contain a human readable error message.
-        :type str:
+        :type dict:
+
         :param workflow_step_execute_id: Context identifier that maps to the correct workflow step execution.
-        :type str:
+        :type dict:
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -74,8 +76,8 @@ class Workflows(SlackAPI):
     def update_step(
         self,
         workflow_step_edit_id: str,
-        inputs: str = None,
-        outputs: str = None,
+        inputs: dict = None,
+        outputs: list = None,
         **kwargs
     ) -> Response:
         """
@@ -87,12 +89,12 @@ class Workflows(SlackAPI):
 
         :param workflow_step_edit_id: A context identifier provided with view_submission payloads used to call back to workflows.updateStep.
         :type str:
+
         :param inputs: A JSON key-value map of inputs required from a user during configuration. This is the data your app expects to receive when the workflow step starts.
-        :type str: e.g. {"title":{"value":"The Title"},"submitter":{"value":"{{user}}"}}
+        :type dict: e.g. {"title":{"value":"The Title"},"submitter":{"value":"{{user}}"}}
 
         :param outputs: An JSON array of output objects used during step execution. This is the data your app agrees to provide when your workflow step was executed.
-        :type str: e.g. [{"name":"ticket_id","type":"text","label":"Ticket ID"},{"name":"title","type":"text","label":"Title"}]
-
+        :type list: e.g. [{"name":"ticket_id","type":"text","label":"Ticket ID"},{"name":"title","type":"text","label":"Title"}]
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
