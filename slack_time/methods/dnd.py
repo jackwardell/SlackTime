@@ -13,7 +13,6 @@ class Dnd(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -34,7 +33,6 @@ class Dnd(SlackAPI):
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -59,7 +57,6 @@ class Dnd(SlackAPI):
 
         :param user: User to fetch status for (defaults to current user)
         :type str: e.g. U1234
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -88,7 +85,6 @@ class Dnd(SlackAPI):
         :param num_minutes: Number of minutes, from now, to snooze until.
         :type int: e.g. 60
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -112,7 +108,6 @@ class Dnd(SlackAPI):
 
         :param users: Comma-separated list of users to fetch Do Not Disturb status for
         :type str: e.g. U1234,W4567
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
