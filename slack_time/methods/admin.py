@@ -610,6 +610,14 @@ class RestrictAccess(SlackAPI):
 
 
 class Conversations(SlackAPI):
+    @cached_property
+    def ekm(self) -> Ekm:
+        return Ekm(**self.params)
+
+    @cached_property
+    def restrict_access(self) -> RestrictAccess:
+        return RestrictAccess(**self.params)
+
     def archive(self, channel_id: str, **kwargs) -> Response:
         """
         Archive a public or private channel.
@@ -1110,14 +1118,6 @@ class Conversations(SlackAPI):
 
         return self._post("admin.conversations.unarchive", payload=payload, **kwargs)
 
-    @cached_property
-    def ekm(self) -> Ekm:
-        return Ekm(**self.params)
-
-    @cached_property
-    def restrict_access(self) -> RestrictAccess:
-        return RestrictAccess(**self.params)
-
 
 class Emoji(SlackAPI):
     def add(self, name: str, url: str, **kwargs) -> Response:
@@ -1405,6 +1405,14 @@ class Denied(SlackAPI):
 
 
 class InviteRequests(SlackAPI):
+    @cached_property
+    def approved(self) -> Approved_:
+        return Approved_(**self.params)
+
+    @cached_property
+    def denied(self) -> Denied:
+        return Denied(**self.params)
+
     def approve(
         self, invite_request_id: str, team_id: str = None, **kwargs
     ) -> Response:
@@ -1520,14 +1528,6 @@ class InviteRequests(SlackAPI):
             payload["team_id"] = team_id
 
         return self._post("admin.inviteRequests.list", payload=payload, **kwargs)
-
-    @cached_property
-    def approved(self) -> Approved_:
-        return Approved_(**self.params)
-
-    @cached_property
-    def denied(self) -> Denied:
-        return Denied(**self.params)
 
 
 class Admins(SlackAPI):
@@ -1834,6 +1834,18 @@ class Settings(SlackAPI):
 
 
 class Teams(SlackAPI):
+    @cached_property
+    def admins(self) -> Admins:
+        return Admins(**self.params)
+
+    @cached_property
+    def owners(self) -> Owners:
+        return Owners(**self.params)
+
+    @cached_property
+    def settings(self) -> Settings:
+        return Settings(**self.params)
+
     def create(
         self,
         team_domain: str,
@@ -1937,18 +1949,6 @@ class Teams(SlackAPI):
             payload["limit"] = limit
 
         return self._post("admin.teams.list", payload=payload, **kwargs)
-
-    @cached_property
-    def admins(self) -> Admins:
-        return Admins(**self.params)
-
-    @cached_property
-    def owners(self) -> Owners:
-        return Owners(**self.params)
-
-    @cached_property
-    def settings(self) -> Settings:
-        return Settings(**self.params)
 
 
 class Usergroups(SlackAPI):
@@ -2195,6 +2195,10 @@ class Session(SlackAPI):
 
 
 class Users(SlackAPI):
+    @cached_property
+    def session(self) -> Session:
+        return Session(**self.params)
+
     def assign(
         self,
         team_id: str,
@@ -2557,10 +2561,6 @@ class Users(SlackAPI):
         payload = {"token": self.token, "team_id": team_id, "user_id": user_id}
 
         return self._post("admin.users.setRegular", payload=payload, **kwargs)
-
-    @cached_property
-    def session(self) -> Session:
-        return Session(**self.params)
 
 
 class Admin(SlackAPI):
