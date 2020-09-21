@@ -1,101 +1,8 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
-
-
-class Apps(SlackAPI):
-    def approve(
-        self, app_id: str = None, request_id: str = None, team_id: str = None, **kwargs
-    ) -> Response:
-        """
-        Approve an app for installation on a workspace.
-        https://api.slack.com/methods/admin.apps.approve
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param app_id: The id of the app to approve.
-        :type str: e.g. A12345
-
-        :param request_id: The id of the request to approve.
-        :type str: e.g. Ar12345
-
-        :param team_id:
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.apps.approve(**your_params)
-        <Response [200]>
-        >>> response.json()
-        	{
-        		"ok": true
-        	}
-
-        """
-
-        payload = {"token": self.token}
-
-        if app_id is not None:
-            payload["app_id"] = app_id
-
-        if request_id is not None:
-            payload["request_id"] = request_id
-
-        if team_id is not None:
-            payload["team_id"] = team_id
-
-        return self._post("admin.apps.approve", payload=payload, **kwargs)
-
-    def restrict(
-        self, app_id: str = None, request_id: str = None, team_id: str = None, **kwargs
-    ) -> Response:
-        """
-        Restrict an app for installation on a workspace.
-        https://api.slack.com/methods/admin.apps.restrict
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param app_id: The id of the app to restrict.
-        :type str: e.g. A12345
-
-        :param request_id: The id of the request to restrict.
-        :type str: e.g. Ar12345
-
-        :param team_id:
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.apps.restrict(**your_params)
-        <Response [200]>
-        >>> response.json()
-        	{
-        		"ok": true
-        	}
-
-        """
-
-        payload = {"token": self.token}
-
-        if app_id is not None:
-            payload["app_id"] = app_id
-
-        if request_id is not None:
-            payload["request_id"] = request_id
-
-        if team_id is not None:
-            payload["team_id"] = team_id
-
-        return self._post("admin.apps.restrict", payload=payload, **kwargs)
 
 
 class Approved(SlackAPI):
@@ -123,9 +30,8 @@ class Approved(SlackAPI):
         :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
         :type int: e.g. 100
 
-        :param team_id:
+        :param team_id: The id of the team
         :type str: e.g. T0HFE6EBT
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -219,8 +125,8 @@ class Requests(SlackAPI):
         :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
         :type int: e.g. 100
 
-        :param team_id:
-        :type str:
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -327,9 +233,8 @@ class Restricted(SlackAPI):
         :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
         :type int: e.g. 100
 
-        :param team_id:
+        :param team_id: The id of the team
         :type str: e.g. T0HFE6EBT
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -406,505 +311,77 @@ class Restricted(SlackAPI):
         return self._get("admin.apps.restricted.list", payload=payload, **kwargs)
 
 
-class Conversations(SlackAPI):
-    def archive(self, channel_id: str, **kwargs) -> Response:
-        """
-        Archive a public or private channel.
-        https://api.slack.com/methods/admin.conversations.archive
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to archive.
-        :type str: e.g. C12345
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.archive(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        return self._post("admin.conversations.archive", payload=payload, **kwargs)
-
-    def convert_to_private(self, channel_id: str, **kwargs) -> Response:
-        """
-        Convert a public channel to a private channel.
-        https://api.slack.com/methods/admin.conversations.convertToPrivate
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to convert to private.
-        :type str: e.g. C12345
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.convert_to_private(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        return self._post(
-            "admin.conversations.convertToPrivate", payload=payload, **kwargs
-        )
-
-    def create(
-        self,
-        is_private: bool,
-        name: str,
-        description: str = None,
-        org_wide: bool = None,
-        team_id: str = None,
-        **kwargs
+class Apps(SlackAPI):
+    def approve(
+        self, app_id: str = None, request_id: str = None, team_id: str = None, **kwargs
     ) -> Response:
         """
-        Create a public or private channel-based conversation.
-        https://api.slack.com/methods/admin.conversations.create
+        Approve an app for installation on a workspace.
+        https://api.slack.com/methods/admin.apps.approve
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-        :param is_private: When true, creates a private channel instead of a public channel
-        :type bool: e.g. true
+        :param app_id: The id of the app to approve.
+        :type str: e.g. A12345
 
-        :param name: Name of the public or private channel to create.
-        :type str: e.g. mychannel
+        :param request_id: The id of the request to approve.
+        :type str: e.g. Ar12345
 
-        :param description: Description of the public or private channel to create.
-        :type str: e.g. It's a good channel, Bront.
-
-        :param org_wide: When true, the channel will be available org-wide. Note: if the channel is not org_wide=true, you must specify a team_id for this channel
-        :type bool: e.g. true
-
-        :param team_id: The workspace to create the channel in. Note: this argument is required unless you set org_wide=true.
-        :type str:
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
         example:
         >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.create(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true,
-            "channel_id": "C12345"
-        }
-        """
-
-        payload = {"token": self.token, "is_private": is_private, "name": name}
-
-        if description is not None:
-            payload["description"] = description
-
-        if org_wide is not None:
-            payload["org_wide"] = org_wide
-
-        if team_id is not None:
-            payload["team_id"] = team_id
-
-        return self._post("admin.conversations.create", payload=payload, **kwargs)
-
-    def delete(self, channel_id: str, **kwargs) -> Response:
-        """
-        Delete a public or private channel.
-        https://api.slack.com/methods/admin.conversations.delete
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to delete.
-        :type str: e.g. C12345
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.delete(**your_params)
+        >>> response = client.admin.apps.approve(**your_params)
         <Response [200]>
         >>> response.json()
         {
             "ok": true
         }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        return self._post("admin.conversations.delete", payload=payload, **kwargs)
-
-    def disconnect_shared(
-        self, channel_id: str, leaving_team_ids: str = None, **kwargs
-    ) -> Response:
-        """
-        Disconnect a connected channel from one or more workspaces.
-        https://api.slack.com/methods/admin.conversations.disconnectShared
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to be disconnected from some workspaces.
-        :type str: e.g. C12345
-
-        :param leaving_team_ids: The team to be removed from the channel. Currently only a single team id can be specified.
-        :type str: e.g. T123, T4567
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.disconnect_shared(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        if leaving_team_ids is not None:
-            payload["leaving_team_ids"] = leaving_team_ids
-
-        return self._post(
-            "admin.conversations.disconnectShared", payload=payload, **kwargs
-        )
-
-    def get_conversation_prefs(self, channel_id: str, **kwargs) -> Response:
-        """
-        Get conversation preferences for a public or private channel.
-        https://api.slack.com/methods/admin.conversations.getConversationPrefs
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to get preferences for.
-        :type str: e.g. C12345
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.get_conversation_prefs(**your_params)
-        <Response [200]>
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        return self._post(
-            "admin.conversations.getConversationPrefs", payload=payload, **kwargs
-        )
-
-    def get_teams(
-        self, channel_id: str, cursor: str = None, limit: int = None, **kwargs
-    ) -> Response:
-        """
-        Get all the workspaces a given public or private channel is connected to within this Enterprise org.
-        https://api.slack.com/methods/admin.conversations.getTeams
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to determine connected workspaces within the organization for.
-        :type str: e.g. C12345
-
-        :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page
-        :type str: e.g. 5c3e53d5
-
-        :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
-        :type int: e.g. 100
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.get_teams(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true,
-            "teams": "T1234,T5678"
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        if cursor is not None:
-            payload["cursor"] = cursor
-
-        if limit is not None:
-            payload["limit"] = limit
-
-        return self._post("admin.conversations.getTeams", payload=payload, **kwargs)
-
-    def invite(self, channel_id: str, user_ids: str, **kwargs) -> Response:
-        """
-        Invite a user to a public or private channel.
-        https://api.slack.com/methods/admin.conversations.invite
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel that the users will be invited to.
-        :type str: e.g. C12345
-
-        :param user_ids: The users to invite.
-        :type str: e.g. U1234,U2345,U3456
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.invite(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id, "user_ids": user_ids}
-
-        return self._post("admin.conversations.invite", payload=payload, **kwargs)
-
-    def rename(self, channel_id: str, name: str, **kwargs) -> Response:
-        """
-        Rename a public or private channel.
-        https://api.slack.com/methods/admin.conversations.rename
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to rename.
-        :type str: e.g. C12345
-
-        :param name:
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.rename(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id, "name": name}
-
-        return self._post("admin.conversations.rename", payload=payload, **kwargs)
-
-    def search(
-        self,
-        cursor: str = None,
-        limit: int = None,
-        query: str = None,
-        search_channel_types: str = None,
-        sort: str = None,
-        sort_dir: str = None,
-        team_ids: str = None,
-        **kwargs
-    ) -> Response:
-        """
-        Search for public or private channels in an Enterprise organization.
-        https://api.slack.com/methods/admin.conversations.search
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
-        :type str: e.g. dXNlcjpVMEc5V0ZYTlo=
-
-        :param limit: Maximum number of items to be returned. Must be between 1 - 20 both inclusive. Default is 10.
-        :type int: e.g. 20
-
-        :param query: Name of the the channel to query by.
-        :type str: e.g. announcement
-
-        :param search_channel_types: The type of channel to include or exclude in the search. For example private will search private channels, while private_exclude will exclude them. For a full list of types, check the Types section.
-        :type str: e.g. private,archived
-
-        :param sort: Possible values are relevant (search ranking based on what we think is closest), name (alphabetical), member_count (number of users in the channel), and created (date channel was created). You can optionally pair this with the sort_dir arg to change how it is sorted
-        :type str: e.g. name
-
-        :param sort_dir: Sort direction. Possible values are asc for ascending order like (1, 2, 3) or (a, b, c), and desc for descending order like (3, 2, 1) or (c, b, a)
-        :type str: e.g. asc
-
-        :param team_ids: Comma separated string of team IDs, signifying the workspaces to search through.
-        :type str: e.g. T00000000,T00000001
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.search(**your_params)
-        <Response [200]>
         """
 
         payload = {"token": self.token}
 
-        if cursor is not None:
-            payload["cursor"] = cursor
+        if app_id is not None:
+            payload["app_id"] = app_id
 
-        if limit is not None:
-            payload["limit"] = limit
-
-        if query is not None:
-            payload["query"] = query
-
-        if search_channel_types is not None:
-            payload["search_channel_types"] = search_channel_types
-
-        if sort is not None:
-            payload["sort"] = sort
-
-        if sort_dir is not None:
-            payload["sort_dir"] = sort_dir
-
-        if team_ids is not None:
-            payload["team_ids"] = team_ids
-
-        return self._post("admin.conversations.search", payload=payload, **kwargs)
-
-    def set_conversation_prefs(self, channel_id: str, prefs: str, **kwargs) -> Response:
-        """
-        Set the posting permissions for a public or private channel.
-        https://api.slack.com/methods/admin.conversations.setConversationPrefs
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The channel to set the prefs for
-        :type str: e.g. C1234
-
-        :param prefs: The prefs for this channel in a stringified JSON format.
-        :type str: e.g. {'who_can_post':'type:admin,user:U1234,subteam:S1234'}
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.set_conversation_prefs(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id, "prefs": prefs}
-
-        return self._post(
-            "admin.conversations.setConversationPrefs", payload=payload, **kwargs
-        )
-
-    def set_teams(
-        self,
-        channel_id: str,
-        org_channel: bool = None,
-        target_team_ids: str = None,
-        team_id: str = None,
-        **kwargs
-    ) -> Response:
-        """
-        Set the workspaces in an Enterprise grid org that connect to a public or private channel.
-        https://api.slack.com/methods/admin.conversations.setTeams
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_id: The encoded channel_id to add or remove to workspaces.
-        :type str:
-        :param org_channel: True if channel has to be converted to an org channel
-        :type bool: e.g. true
-
-        :param target_team_ids: A comma-separated list of workspaces to which the channel should be shared. Not required if the channel is being shared org-wide.
-        :type str: e.g. T1234,T5678,T9012,T3456
-
-        :param team_id: The workspace to which the channel belongs. Omit this argument if the channel is a cross-workspace shared channel.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.set_teams(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_id": channel_id}
-
-        if org_channel is not None:
-            payload["org_channel"] = org_channel
-
-        if target_team_ids is not None:
-            payload["target_team_ids"] = target_team_ids
+        if request_id is not None:
+            payload["request_id"] = request_id
 
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.conversations.setTeams", payload=payload, **kwargs)
+        return self._post("admin.apps.approve", payload=payload, **kwargs)
 
-    def unarchive(self, channel_id: str, **kwargs) -> Response:
+    def restrict(
+        self, app_id: str = None, request_id: str = None, team_id: str = None, **kwargs
+    ) -> Response:
         """
-        Unarchive a public or private channel.
-        https://api.slack.com/methods/admin.conversations.unarchive
+        Restrict an app for installation on a workspace.
+        https://api.slack.com/methods/admin.apps.restrict
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-        :param channel_id: The channel to unarchive.
-        :type str: e.g. C12345
+        :param app_id: The id of the app to restrict.
+        :type str: e.g. A12345
 
+        :param request_id: The id of the request to restrict.
+        :type str: e.g. Ar12345
+
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
         example:
         >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.conversations.unarchive(**your_params)
+        >>> response = client.admin.apps.restrict(**your_params)
         <Response [200]>
         >>> response.json()
         {
@@ -912,9 +389,30 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self.token}
 
-        return self._post("admin.conversations.unarchive", payload=payload, **kwargs)
+        if app_id is not None:
+            payload["app_id"] = app_id
+
+        if request_id is not None:
+            payload["request_id"] = request_id
+
+        if team_id is not None:
+            payload["team_id"] = team_id
+
+        return self._post("admin.apps.restrict", payload=payload, **kwargs)
+
+    @cached_property
+    def approved(self) -> Approved:
+        return Approved(**self.params)
+
+    @cached_property
+    def requests(self) -> Requests:
+        return Requests(**self.params)
+
+    @cached_property
+    def restricted(self) -> Restricted:
+        return Restricted(**self.params)
 
 
 class Ekm(SlackAPI):
@@ -999,8 +497,10 @@ class RestrictAccess(SlackAPI):
 
         :param channel_id: The channel to link this group to.
         :type str:
+
         :param group_id: The IDP Group ID to be an allowlist for the private channel.
         :type str:
+
         :param team_id: The workspace where the channel exists. This argument is required for channels only tied to one workspace, and optional for channels that are shared across an organization.
         :type str:
 
@@ -1036,6 +536,7 @@ class RestrictAccess(SlackAPI):
 
         :param channel_id:
         :type str:
+
         :param team_id: The workspace where the channel exists. This argument is required for channels only tied to one workspace, and optional for channels that are shared across an organization.
         :type str:
 
@@ -1076,8 +577,10 @@ class RestrictAccess(SlackAPI):
 
         :param channel_id: The channel to remove the linked group from.
         :type str:
+
         :param group_id: The IDP Group ID to remove from the private channel.
         :type str:
+
         :param team_id: The workspace where the channel exists. This argument is required for channels only tied to one workspace, and optional for channels that are shared across an organization.
         :type str:
 
@@ -1106,6 +609,516 @@ class RestrictAccess(SlackAPI):
         )
 
 
+class Conversations(SlackAPI):
+    def archive(self, channel_id: str, **kwargs) -> Response:
+        """
+        Archive a public or private channel.
+        https://api.slack.com/methods/admin.conversations.archive
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to archive.
+        :type str: e.g. C12345
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.archive(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        return self._post("admin.conversations.archive", payload=payload, **kwargs)
+
+    def convert_to_private(self, channel_id: str, **kwargs) -> Response:
+        """
+        Convert a public channel to a private channel.
+        https://api.slack.com/methods/admin.conversations.convertToPrivate
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to convert to private.
+        :type str: e.g. C12345
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.convert_to_private(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        return self._post(
+            "admin.conversations.convertToPrivate", payload=payload, **kwargs
+        )
+
+    def create(
+        self,
+        is_private: bool,
+        name: str,
+        description: str = None,
+        org_wide: bool = None,
+        team_id: str = None,
+        **kwargs
+    ) -> Response:
+        """
+        Create a public or private channel-based conversation.
+        https://api.slack.com/methods/admin.conversations.create
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param is_private: When true, creates a private channel instead of a public channel
+        :type bool: e.g. true
+
+        :param name: Name of the public or private channel to create.
+        :type str: e.g. mychannel
+
+        :param description: Description of the public or private channel to create.
+        :type str: e.g. It's a good channel, Bront.
+
+        :param org_wide: When true, the channel will be available org-wide. Note: if the channel is not org_wide=true, you must specify a team_id for this channel
+        :type bool: e.g. true
+
+        :param team_id: The workspace to create the channel in. Note: this argument is required unless you set org_wide=true.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.create(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true,
+            "channel_id": "C12345"
+        }
+        """
+
+        payload = {"token": self.token, "is_private": is_private, "name": name}
+
+        if description is not None:
+            payload["description"] = description
+
+        if org_wide is not None:
+            payload["org_wide"] = org_wide
+
+        if team_id is not None:
+            payload["team_id"] = team_id
+
+        return self._post("admin.conversations.create", payload=payload, **kwargs)
+
+    def delete(self, channel_id: str, **kwargs) -> Response:
+        """
+        Delete a public or private channel.
+        https://api.slack.com/methods/admin.conversations.delete
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to delete.
+        :type str: e.g. C12345
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.delete(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        return self._post("admin.conversations.delete", payload=payload, **kwargs)
+
+    def disconnect_shared(
+        self, channel_id: str, leaving_team_ids: str = None, **kwargs
+    ) -> Response:
+        """
+        Disconnect a connected channel from one or more workspaces.
+        https://api.slack.com/methods/admin.conversations.disconnectShared
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to be disconnected from some workspaces.
+        :type str: e.g. C12345
+
+        :param leaving_team_ids: The team to be removed from the channel. Currently only a single team id can be specified.
+        :type str: e.g. T123, T4567
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.disconnect_shared(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        if leaving_team_ids is not None:
+            payload["leaving_team_ids"] = leaving_team_ids
+
+        return self._post(
+            "admin.conversations.disconnectShared", payload=payload, **kwargs
+        )
+
+    def get_conversation_prefs(self, channel_id: str, **kwargs) -> Response:
+        """
+        Get conversation preferences for a public or private channel.
+        https://api.slack.com/methods/admin.conversations.getConversationPrefs
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to get preferences for.
+        :type str: e.g. C12345
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.get_conversation_prefs(**your_params)
+        <Response [200]>
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        return self._post(
+            "admin.conversations.getConversationPrefs", payload=payload, **kwargs
+        )
+
+    def get_teams(
+        self, channel_id: str, cursor: str = None, limit: int = None, **kwargs
+    ) -> Response:
+        """
+        Get all the workspaces a given public or private channel is connected to within this Enterprise org.
+        https://api.slack.com/methods/admin.conversations.getTeams
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to determine connected workspaces within the organization for.
+        :type str: e.g. C12345
+
+        :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page
+        :type str: e.g. 5c3e53d5
+
+        :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
+        :type int: e.g. 100
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.get_teams(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true,
+            "teams": "T1234,T5678"
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        if cursor is not None:
+            payload["cursor"] = cursor
+
+        if limit is not None:
+            payload["limit"] = limit
+
+        return self._post("admin.conversations.getTeams", payload=payload, **kwargs)
+
+    def invite(self, channel_id: str, user_ids: str, **kwargs) -> Response:
+        """
+        Invite a user to a public or private channel.
+        https://api.slack.com/methods/admin.conversations.invite
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel that the users will be invited to.
+        :type str: e.g. C12345
+
+        :param user_ids: The users to invite.
+        :type str: e.g. U1234,U2345,U3456
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.invite(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id, "user_ids": user_ids}
+
+        return self._post("admin.conversations.invite", payload=payload, **kwargs)
+
+    def rename(self, channel_id: str, name: str, **kwargs) -> Response:
+        """
+        Rename a public or private channel.
+        https://api.slack.com/methods/admin.conversations.rename
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to rename.
+        :type str: e.g. C12345
+
+        :param name: name to rename
+        :type str: e.g. my-renamed-channel
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.rename(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id, "name": name}
+
+        return self._post("admin.conversations.rename", payload=payload, **kwargs)
+
+    def search(
+        self,
+        cursor: str = None,
+        limit: int = None,
+        query: str = None,
+        search_channel_types: str = None,
+        sort: str = None,
+        sort_dir: str = None,
+        team_ids: str = None,
+        **kwargs
+    ) -> Response:
+        """
+        Search for public or private channels in an Enterprise organization.
+        https://api.slack.com/methods/admin.conversations.search
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
+        :type str: e.g. dXNlcjpVMEc5V0ZYTlo=
+
+        :param limit: Maximum number of items to be returned. Must be between 1 - 20 both inclusive. Default is 10.
+        :type int: e.g. 20
+
+        :param query: Name of the the channel to query by.
+        :type str: e.g. announcement
+
+        :param search_channel_types: The type of channel to include or exclude in the search. For example private will search private channels, while private_exclude will exclude them. For a full list of types, check the Types section.
+        :type str: e.g. private,archived
+
+        :param sort: Possible values are relevant (search ranking based on what we think is closest), name (alphabetical), member_count (number of users in the channel), and created (date channel was created). You can optionally pair this with the sort_dir arg to change how it is sorted
+        :type str: e.g. name
+
+        :param sort_dir: Sort direction. Possible values are asc for ascending order like (1, 2, 3) or (a, b, c), and desc for descending order like (3, 2, 1) or (c, b, a)
+        :type str: e.g. asc
+
+        :param team_ids: Comma separated string of team IDs, signifying the workspaces to search through.
+        :type str: e.g. T00000000,T00000001
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.search(**your_params)
+        <Response [200]>
+        """
+
+        payload = {"token": self.token}
+
+        if cursor is not None:
+            payload["cursor"] = cursor
+
+        if limit is not None:
+            payload["limit"] = limit
+
+        if query is not None:
+            payload["query"] = query
+
+        if search_channel_types is not None:
+            payload["search_channel_types"] = search_channel_types
+
+        if sort is not None:
+            payload["sort"] = sort
+
+        if sort_dir is not None:
+            payload["sort_dir"] = sort_dir
+
+        if team_ids is not None:
+            payload["team_ids"] = team_ids
+
+        return self._post("admin.conversations.search", payload=payload, **kwargs)
+
+    def set_conversation_prefs(self, channel_id: str, prefs: str, **kwargs) -> Response:
+        """
+        Set the posting permissions for a public or private channel.
+        https://api.slack.com/methods/admin.conversations.setConversationPrefs
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to set the prefs for
+        :type str: e.g. C1234
+
+        :param prefs: The prefs for this channel in a stringified JSON format.
+        :type str: e.g. {'who_can_post':'type:admin,user:U1234,subteam:S1234'}
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.set_conversation_prefs(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id, "prefs": prefs}
+
+        return self._post(
+            "admin.conversations.setConversationPrefs", payload=payload, **kwargs
+        )
+
+    def set_teams(
+        self,
+        channel_id: str,
+        org_channel: bool = None,
+        target_team_ids: str = None,
+        team_id: str = None,
+        **kwargs
+    ) -> Response:
+        """
+        Set the workspaces in an Enterprise grid org that connect to a public or private channel.
+        https://api.slack.com/methods/admin.conversations.setTeams
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The encoded channel_id to add or remove to workspaces.
+        :type str: e.g. C1234
+
+        :param org_channel: True if channel has to be converted to an org channel
+        :type bool: e.g. true
+
+        :param target_team_ids: A comma-separated list of workspaces to which the channel should be shared. Not required if the channel is being shared org-wide.
+        :type str: e.g. T1234,T5678,T9012,T3456
+
+        :param team_id: The workspace to which the channel belongs. Omit this argument if the channel is a cross-workspace shared channel.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.set_teams(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        if org_channel is not None:
+            payload["org_channel"] = org_channel
+
+        if target_team_ids is not None:
+            payload["target_team_ids"] = target_team_ids
+
+        if team_id is not None:
+            payload["team_id"] = team_id
+
+        return self._post("admin.conversations.setTeams", payload=payload, **kwargs)
+
+    def unarchive(self, channel_id: str, **kwargs) -> Response:
+        """
+        Unarchive a public or private channel.
+        https://api.slack.com/methods/admin.conversations.unarchive
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_id: The channel to unarchive.
+        :type str: e.g. C12345
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.conversations.unarchive(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_id": channel_id}
+
+        return self._post("admin.conversations.unarchive", payload=payload, **kwargs)
+
+    @cached_property
+    def ekm(self) -> Ekm:
+        return Ekm(**self.params)
+
+    @cached_property
+    def restrict_access(self) -> RestrictAccess:
+        return RestrictAccess(**self.params)
+
+
 class Emoji(SlackAPI):
     def add(self, name: str, url: str, **kwargs) -> Response:
         """
@@ -1115,10 +1128,11 @@ class Emoji(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-        :param name: The name of the emoji to be removed. Colons (:myemoji:) around the value are not required, although they may be included.
-        :type str:
+        :param name: The name of the emoji to be added. Colons (:myemoji:) around the value are not required, although they may be included.
+        :type str: e.g. :helloworld:
+
         :param url: The URL of a file to use as an image for the emoji. Square images under 128KB and with transparent backgrounds work best.
-        :type str:
+        :type str: https://www.someimage.com/image-here.png
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1147,8 +1161,9 @@ class Emoji(SlackAPI):
 
         :param alias_for: The alias of the emoji.
         :type str:
+
         :param name: The name of the emoji to be aliased. Colons (:myemoji:) around the value are not required, although they may be included.
-        :type str:
+        :type str: e.g. :helloworld:
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1180,7 +1195,6 @@ class Emoji(SlackAPI):
 
         :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
         :type int: e.g. 100
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1246,7 +1260,7 @@ class Emoji(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param name: The name of the emoji to be removed. Colons (:myemoji:) around the value are not required, although they may be included.
-        :type str:
+        :type str: :helloworld:
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1274,9 +1288,10 @@ class Emoji(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param name: The name of the emoji to be renamed. Colons (:myemoji:) around the value are not required, although they may be included.
-        :type str:
+        :type str: e.g. :helloworld:
+
         :param new_name: The new name of the emoji.
-        :type str:
+        :type str: e.g. :goodbyeworld:
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1296,127 +1311,12 @@ class Emoji(SlackAPI):
         return self._get("admin.emoji.rename", payload=payload, **kwargs)
 
 
-class InviteRequests(SlackAPI):
-    def approve(
-        self, invite_request_id: str, team_id: str = None, **kwargs
-    ) -> Response:
-        """
-        Approve a workspace invite request.
-        https://api.slack.com/methods/admin.inviteRequests.approve
+class Approved_(SlackAPI):
+    """
+    Renamed to conflict
+    TODO: think of more elegant solution
+    """
 
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param invite_request_id: ID of the request to invite.
-        :type str: e.g. Ir1234
-
-        :param team_id: ID for the workspace where the invite request was made.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.invite_requests.approve(**your_params)
-        <Response [200]>
-        >>> response.json()
-            {
-                "ok": true
-            }
-
-        """
-
-        payload = {"token": self.token, "invite_request_id": invite_request_id}
-
-        if team_id is not None:
-            payload["team_id"] = team_id
-
-        return self._post("admin.inviteRequests.approve", payload=payload, **kwargs)
-
-    def deny(self, invite_request_id: str, team_id: str = None, **kwargs) -> Response:
-        """
-        Deny a workspace invite request.
-        https://api.slack.com/methods/admin.inviteRequests.deny
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param invite_request_id: ID of the request to invite.
-        :type str: e.g. Ir1234
-
-        :param team_id: ID for the workspace where the invite request was made.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.invite_requests.deny(**your_params)
-        <Response [200]>
-        >>> response.json()
-            {
-                "ok": true
-            }
-
-        """
-
-        payload = {"token": self.token, "invite_request_id": invite_request_id}
-
-        if team_id is not None:
-            payload["team_id"] = team_id
-
-        return self._post("admin.inviteRequests.deny", payload=payload, **kwargs)
-
-    def list(
-        self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
-    ) -> Response:
-        """
-        List all pending workspace invite requests.
-        https://api.slack.com/methods/admin.inviteRequests.list
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param cursor: Value of the next_cursor field sent as part of the previous API response
-        :type str: e.g. 5cweb43
-
-        :param limit: The number of results that will be returned by the API on each invocation. Must be between 1 - 1000, both inclusive
-        :type int: e.g. 100
-
-        :param team_id: ID for the workspace where the invite requests were made.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.invite_requests.list(**your_params)
-        <Response [200]>
-        >>> response.json()
-            {
-                "ok": true
-            }
-
-        """
-
-        payload = {"token": self.token}
-
-        if cursor is not None:
-            payload["cursor"] = cursor
-
-        if limit is not None:
-            payload["limit"] = limit
-
-        if team_id is not None:
-            payload["team_id"] = team_id
-
-        return self._post("admin.inviteRequests.list", payload=payload, **kwargs)
-
-
-class Approved(SlackAPI):
     def list(
         self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
     ) -> Response:
@@ -1504,6 +1404,132 @@ class Denied(SlackAPI):
         return self._post("admin.inviteRequests.denied.list", payload=payload, **kwargs)
 
 
+class InviteRequests(SlackAPI):
+    def approve(
+        self, invite_request_id: str, team_id: str = None, **kwargs
+    ) -> Response:
+        """
+        Approve a workspace invite request.
+        https://api.slack.com/methods/admin.inviteRequests.approve
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param invite_request_id: ID of the request to invite.
+        :type str: e.g. Ir1234
+
+        :param team_id: ID for the workspace where the invite request was made.
+        :type str: e.g. H34344
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.invite_requests.approve(**your_params)
+        <Response [200]>
+        >>> response.json()
+            {
+                "ok": true
+            }
+
+        """
+
+        payload = {"token": self.token, "invite_request_id": invite_request_id}
+
+        if team_id is not None:
+            payload["team_id"] = team_id
+
+        return self._post("admin.inviteRequests.approve", payload=payload, **kwargs)
+
+    def deny(self, invite_request_id: str, team_id: str = None, **kwargs) -> Response:
+        """
+        Deny a workspace invite request.
+        https://api.slack.com/methods/admin.inviteRequests.deny
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param invite_request_id: ID of the request to invite.
+        :type str: e.g. Ir1234
+
+        :param team_id: ID for the workspace where the invite request was made.
+        :type str:
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.invite_requests.deny(**your_params)
+        <Response [200]>
+        >>> response.json()
+            {
+                "ok": true
+            }
+        """
+
+        payload = {"token": self.token, "invite_request_id": invite_request_id}
+
+        if team_id is not None:
+            payload["team_id"] = team_id
+
+        return self._post("admin.inviteRequests.deny", payload=payload, **kwargs)
+
+    def list(
+        self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
+    ) -> Response:
+        """
+        List all pending workspace invite requests.
+        https://api.slack.com/methods/admin.inviteRequests.list
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param cursor: Value of the next_cursor field sent as part of the previous API response
+        :type str: e.g. 5cweb43
+
+        :param limit: The number of results that will be returned by the API on each invocation. Must be between 1 - 1000, both inclusive
+        :type int: e.g. 100
+
+        :param team_id: ID for the workspace where the invite requests were made.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.invite_requests.list(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token}
+
+        if cursor is not None:
+            payload["cursor"] = cursor
+
+        if limit is not None:
+            payload["limit"] = limit
+
+        if team_id is not None:
+            payload["team_id"] = team_id
+
+        return self._post("admin.inviteRequests.list", payload=payload, **kwargs)
+
+    @cached_property
+    def approved(self) -> Approved_:
+        return Approved_(**self.params)
+
+    @cached_property
+    def denied(self) -> Denied:
+        return Denied(**self.params)
+
+
 class Admins(SlackAPI):
     def list(
         self, team_id: str, cursor: str = None, limit: int = None, **kwargs
@@ -1515,14 +1541,14 @@ class Admins(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-        :param team_id:
-        :type str:
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
+
         :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
         :type str: e.g. dXNlcjpVMEc5V0ZYTlo=
 
         :param limit: The maximum number of items to return.
         :type int: e.g. 200
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1551,6 +1577,262 @@ class Admins(SlackAPI):
         return self._get("admin.teams.admins.list", payload=payload, **kwargs)
 
 
+class Owners(SlackAPI):
+    def list(
+        self, team_id: str, cursor: str = None, limit: int = None, **kwargs
+    ) -> Response:
+        """
+        List all of the owners on a given workspace.
+        https://api.slack.com/methods/admin.teams.owners.list
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
+
+        :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
+        :type str: e.g. 5c3e53d5
+
+        :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
+        :type int: e.g. 100
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.owners.list(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true,
+            "owner_ids": [
+                "U1234"
+            ]
+        }
+        """
+
+        payload = {"token": self.token, "team_id": team_id}
+
+        if cursor is not None:
+            payload["cursor"] = cursor
+
+        if limit is not None:
+            payload["limit"] = limit
+
+        return self._get("admin.teams.owners.list", payload=payload, **kwargs)
+
+
+class Settings(SlackAPI):
+    def info(self, team_id: str, **kwargs) -> Response:
+        """
+        Fetch information about settings in a workspace
+        https://api.slack.com/methods/admin.teams.settings.info
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.settings.info(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true,
+            "team": {
+                "id": "string",
+                "name": "string",
+                "domain": "string",
+                "email_domain": "string",
+                "icon": "array",
+                "enterprise_id": "string",
+                "enterprise_name": "string",
+                "default_channels": "array"
+            }
+        }
+        """
+
+        payload = {"token": self.token, "team_id": team_id}
+
+        return self._post("admin.teams.settings.info", payload=payload, **kwargs)
+
+    def set_default_channels(
+        self, channel_ids: str, team_id: str, **kwargs
+    ) -> Response:
+        """
+        Set the default channels of a workspace.
+        https://api.slack.com/methods/admin.teams.settings.setDefaultChannels
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param channel_ids: An array of channel IDs.
+        :type str:
+
+        :param team_id: The id of the team
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.settings.set_default_channels(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "channel_ids": channel_ids, "team_id": team_id}
+
+        return self._get(
+            "admin.teams.settings.setDefaultChannels", payload=payload, **kwargs
+        )
+
+    def set_description(self, description: str, team_id: str, **kwargs) -> Response:
+        """
+        Set the description of a given workspace.
+        https://api.slack.com/methods/admin.teams.settings.setDescription
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param description: The new description for the workspace.
+        :type str:
+
+        :param team_id: ID for the workspace to set the description for.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.settings.set_description(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "description": description, "team_id": team_id}
+
+        return self._post(
+            "admin.teams.settings.setDescription", payload=payload, **kwargs
+        )
+
+    def set_discoverability(
+        self, discoverability: str, team_id: str, **kwargs
+    ) -> Response:
+        """
+        An API method that allows admins to set the discoverability of a given workspace
+        https://api.slack.com/methods/admin.teams.settings.setDiscoverability
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param discoverability: This workspace's discovery setting. It must be set to one of open, invite_only, closed, or unlisted.
+        :type str:
+
+        :param team_id: The ID of the workspace to set discoverability on.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.settings.set_discoverability(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {
+            "token": self.token,
+            "discoverability": discoverability,
+            "team_id": team_id,
+        }
+
+        return self._post(
+            "admin.teams.settings.setDiscoverability", payload=payload, **kwargs
+        )
+
+    def set_icon(self, image_url: str, team_id: str, **kwargs) -> Response:
+        """
+        Sets the icon of a workspace.
+        https://api.slack.com/methods/admin.teams.settings.setIcon
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param image_url: Image URL for the icon
+        :type str: e.g. http://mysite.com/icon.jpeg
+
+        :param team_id: ID for the workspace to set the icon for.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.settings.set_icon(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "image_url": image_url, "team_id": team_id}
+
+        return self._get("admin.teams.settings.setIcon", payload=payload, **kwargs)
+
+    def set_name(self, name: str, team_id: str, **kwargs) -> Response:
+        """
+        Set the name of a given workspace.
+        https://api.slack.com/methods/admin.teams.settings.setName
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param name: The new name of the workspace.
+        :type str:
+
+        :param team_id: ID for the workspace to set the name for.
+        :type str: e.g. T0HFE6EBT
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.teams.settings.set_name(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+            "ok": true
+        }
+        """
+
+        payload = {"token": self.token, "name": name, "team_id": team_id}
+
+        return self._post("admin.teams.settings.setName", payload=payload, **kwargs)
+
+
 class Teams(SlackAPI):
     def create(
         self,
@@ -1569,10 +1851,13 @@ class Teams(SlackAPI):
 
         :param team_domain: Team domain (for example, slacksoftballteam).
         :type str:
+
         :param team_name: Team name (for example, Slack Softball Team).
         :type str:
+
         :param team_description: Description for the team.
         :type str:
+
         :param team_discoverability: Who can join the team. A team's discoverability can be open, closed, invite_only, or unlisted.
         :type str:
 
@@ -1618,7 +1903,6 @@ class Teams(SlackAPI):
         :param limit: The maximum number of items to return. Must be between 1 - 100 both inclusive.
         :type int: e.g. 50
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -1654,260 +1938,17 @@ class Teams(SlackAPI):
 
         return self._post("admin.teams.list", payload=payload, **kwargs)
 
+    @cached_property
+    def admins(self) -> Admins:
+        return Admins(**self.params)
 
-class Owners(SlackAPI):
-    def list(
-        self, team_id: str, cursor: str = None, limit: int = None, **kwargs
-    ) -> Response:
-        """
-        List all of the owners on a given workspace.
-        https://api.slack.com/methods/admin.teams.owners.list
+    @cached_property
+    def owners(self) -> Owners:
+        return Owners(**self.params)
 
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param team_id:
-        :type str:
-        :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
-        :type str: e.g. 5c3e53d5
-
-        :param limit: The maximum number of items to return. Must be between 1 - 1000 both inclusive.
-        :type int: e.g. 100
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.owners.list(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true,
-            "owner_ids": [
-                "U1234"
-            ]
-        }
-        """
-
-        payload = {"token": self.token, "team_id": team_id}
-
-        if cursor is not None:
-            payload["cursor"] = cursor
-
-        if limit is not None:
-            payload["limit"] = limit
-
-        return self._get("admin.teams.owners.list", payload=payload, **kwargs)
-
-
-class Settings(SlackAPI):
-    def info(self, team_id: str, **kwargs) -> Response:
-        """
-        Fetch information about settings in a workspace
-        https://api.slack.com/methods/admin.teams.settings.info
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param team_id:
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.settings.info(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true,
-            "team": {
-                "id": "string",
-                "name": "string",
-                "domain": "string",
-                "email_domain": "string",
-                "icon": "array",
-                "enterprise_id": "string",
-                "enterprise_name": "string",
-                "default_channels": "array"
-            }
-        }
-        """
-
-        payload = {"token": self.token, "team_id": team_id}
-
-        return self._post("admin.teams.settings.info", payload=payload, **kwargs)
-
-    def set_default_channels(
-        self, channel_ids: str, team_id: str, **kwargs
-    ) -> Response:
-        """
-        Set the default channels of a workspace.
-        https://api.slack.com/methods/admin.teams.settings.setDefaultChannels
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param channel_ids: An array of channel IDs.
-        :type str:
-        :param team_id: ID for the workspace to set the default channel for.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.settings.set_default_channels(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {"token": self.token, "channel_ids": channel_ids, "team_id": team_id}
-
-        return self._get(
-            "admin.teams.settings.setDefaultChannels", payload=payload, **kwargs
-        )
-
-    def set_description(self, description: str, team_id: str, **kwargs) -> Response:
-        """
-        Set the description of a given workspace.
-        https://api.slack.com/methods/admin.teams.settings.setDescription
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param description: The new description for the workspace.
-        :type str:
-        :param team_id: ID for the workspace to set the description for.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.settings.set_description(**your_params)
-        <Response [200]>
-        >>> response.json()
-            {
-                "ok": true
-            }
-
-        """
-
-        payload = {"token": self.token, "description": description, "team_id": team_id}
-
-        return self._post(
-            "admin.teams.settings.setDescription", payload=payload, **kwargs
-        )
-
-    def set_discoverability(
-        self, discoverability: str, team_id: str, **kwargs
-    ) -> Response:
-        """
-        An API method that allows admins to set the discoverability of a given workspace
-        https://api.slack.com/methods/admin.teams.settings.setDiscoverability
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param discoverability: This workspace's discovery setting. It must be set to one of open, invite_only, closed, or unlisted.
-        :type str:
-        :param team_id: The ID of the workspace to set discoverability on.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.settings.set_discoverability(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-            "ok": true
-        }
-        """
-
-        payload = {
-            "token": self.token,
-            "discoverability": discoverability,
-            "team_id": team_id,
-        }
-
-        return self._post(
-            "admin.teams.settings.setDiscoverability", payload=payload, **kwargs
-        )
-
-    def set_icon(self, image_url: str, team_id: str, **kwargs) -> Response:
-        """
-        Sets the icon of a workspace.
-        https://api.slack.com/methods/admin.teams.settings.setIcon
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param image_url: Image URL for the icon
-        :type str: e.g. http://mysite.com/icon.jpeg
-
-        :param team_id: ID for the workspace to set the icon for.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.settings.set_icon(**your_params)
-        <Response [200]>
-        >>> response.json()
-            {
-                "ok": true
-            }
-
-        """
-
-        payload = {"token": self.token, "image_url": image_url, "team_id": team_id}
-
-        return self._get("admin.teams.settings.setIcon", payload=payload, **kwargs)
-
-    def set_name(self, name: str, team_id: str, **kwargs) -> Response:
-        """
-        Set the name of a given workspace.
-        https://api.slack.com/methods/admin.teams.settings.setName
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param name: The new name of the workspace.
-        :type str:
-        :param team_id: ID for the workspace to set the name for.
-        :type str:
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.teams.settings.set_name(**your_params)
-        <Response [200]>
-        >>> response.json()
-            {
-                "ok": true
-            }
-
-        """
-
-        payload = {"token": self.token, "name": name, "team_id": team_id}
-
-        return self._post("admin.teams.settings.setName", payload=payload, **kwargs)
+    @cached_property
+    def settings(self) -> Settings:
+        return Settings(**self.params)
 
 
 class Usergroups(SlackAPI):
@@ -1929,7 +1970,6 @@ class Usergroups(SlackAPI):
 
         :param team_id: The workspace to add default channels in.
         :type str: e.g. T00000000
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1973,7 +2013,6 @@ class Usergroups(SlackAPI):
 
         :param auto_provision: When true, this method automatically creates new workspace accounts for the IDP group members.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2021,7 +2060,6 @@ class Usergroups(SlackAPI):
 
         :param team_id: ID of the the workspace.
         :type str: e.g. T00000000
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2087,7 +2125,6 @@ class Usergroups(SlackAPI):
         :param usergroup_id: ID of the IDP Group
         :type str: e.g. S00000000
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -2110,6 +2147,53 @@ class Usergroups(SlackAPI):
         return self._post("admin.usergroups.removeChannels", payload=payload, **kwargs)
 
 
+class Session(SlackAPI):
+    def reset(
+        self, user_id: str, mobile_only: bool = None, web_only: bool = None, **kwargs
+    ) -> Response:
+        """
+        Wipes all valid sessions on all devices for a given user
+        https://api.slack.com/methods/admin.users.session.reset
+
+        :param token: Authentication token bearing required scopes.
+        :type str: e.g. xxxx-xxxxxxxxx-xxxx
+
+        :param user_id: The ID of the user to wipe sessions for
+        :type str: e.g. W12345678
+
+        :param mobile_only: Only expire mobile sessions (default: false)
+        :type bool: e.g. true
+
+        :param web_only: Only expire web sessions (default: false)
+        :type bool: e.g. true
+
+        :returns response:
+        :type requests.Response: e.g. <Response [200]>
+
+        example:
+        >>> client = SlackTime(token='insert-your-token-here')
+        >>> response = client.admin.users.session.reset(**your_params)
+        <Response [200]>
+        >>> response.json()
+        {
+          "token": "xoxp-xxxxxxxx-xxxxxxxx",
+          "user_id": "U1234",
+          "mobile_only": true
+        }
+
+        """
+
+        payload = {"token": self.token, "user_id": user_id}
+
+        if mobile_only is not None:
+            payload["mobile_only"] = mobile_only
+
+        if web_only is not None:
+            payload["web_only"] = web_only
+
+        return self._post("admin.users.session.reset", payload=payload, **kwargs)
+
+
 class Users(SlackAPI):
     def assign(
         self,
@@ -2128,9 +2212,11 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param user_id: The ID of the user to add to the workspace.
         :type str:
+
         :param channel_ids: Comma separated values of channel IDs to add user in the new workspace.
         :type str: e.g. C123,C3456
 
@@ -2139,7 +2225,6 @@ class Users(SlackAPI):
 
         :param is_ultra_restricted: True if user should be added to the workspace as a single-channel guest.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2194,7 +2279,8 @@ class Users(SlackAPI):
         :type str: e.g. joe@email.com
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param custom_message: An optional message to send to the user in the invite email.
         :type str: e.g. Come and join our team!
 
@@ -2212,7 +2298,6 @@ class Users(SlackAPI):
 
         :param resend: Allow this invite to be resent in the future if a user has not signed up yet. (default: false)
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2265,13 +2350,13 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
         :type str: e.g. 5c3e53d5
 
         :param limit: Limit for how many users to be retrieved per page
         :type int: e.g. 50
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2317,10 +2402,10 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param user_id: The ID of the user to remove.
         :type str: e.g. W12345678
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2348,10 +2433,10 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param user_id: The ID of the user to designate as an admin.
         :type str: e.g. W12345678
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2384,10 +2469,10 @@ class Users(SlackAPI):
         :type int: e.g. 1234567890
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param user_id: The ID of the user to set an expiration for.
         :type str: e.g. W12345678
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2420,7 +2505,8 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param user_id: Id of the user to promote to owner.
         :type str:
 
@@ -2450,10 +2536,10 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_id: The ID (T1234) of the workspace.
-        :type str:
+        :type str: e.g. T1234
+
         :param user_id: The ID of the user to designate as a regular user.
         :type str: e.g. W12345678
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -2472,53 +2558,9 @@ class Users(SlackAPI):
 
         return self._post("admin.users.setRegular", payload=payload, **kwargs)
 
-
-class Session(SlackAPI):
-    def reset(
-        self, user_id: str, mobile_only: bool = None, web_only: bool = None, **kwargs
-    ) -> Response:
-        """
-        Wipes all valid sessions on all devices for a given user
-        https://api.slack.com/methods/admin.users.session.reset
-
-        :param token: Authentication token bearing required scopes.
-        :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
-        :param user_id: The ID of the user to wipe sessions for
-        :type str: e.g. W12345678
-
-        :param mobile_only: Only expire mobile sessions (default: false)
-        :type bool: e.g. true
-
-        :param web_only: Only expire web sessions (default: false)
-        :type bool: e.g. true
-
-
-        :returns response:
-        :type requests.Response: e.g. <Response [200]>
-
-        example:
-        >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.admin.users.session.reset(**your_params)
-        <Response [200]>
-        >>> response.json()
-        {
-          "token": "xoxp-xxxxxxxx-xxxxxxxx",
-          "user_id": "U1234",
-          "mobile_only": true
-        }
-
-        """
-
-        payload = {"token": self.token, "user_id": user_id}
-
-        if mobile_only is not None:
-            payload["mobile_only"] = mobile_only
-
-        if web_only is not None:
-            payload["web_only"] = web_only
-
-        return self._post("admin.users.session.reset", payload=payload, **kwargs)
+    @cached_property
+    def session(self) -> Session:
+        return Session(**self.params)
 
 
 class Admin(SlackAPI):
