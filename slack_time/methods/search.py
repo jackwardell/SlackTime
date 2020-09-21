@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Search(SlackAPI):
@@ -39,7 +39,6 @@ class Search(SlackAPI):
 
         :param sort_dir: Change sort direction to ascending (asc) or descending (desc).
         :type str: e.g. asc
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -236,7 +235,6 @@ class Search(SlackAPI):
         :param sort_dir: Change sort direction to ascending (asc) or descending (desc).
         :type str: e.g. asc
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -378,7 +376,6 @@ class Search(SlackAPI):
 
         :param sort_dir: Change sort direction to ascending (asc) or descending (desc).
         :type str: e.g. asc
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
