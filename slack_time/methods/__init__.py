@@ -54,6 +54,7 @@ __all__ = [
     "Users",
     "Views",
     "Workflows",
+    "SlackTime",
 ]
 
 

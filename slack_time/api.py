@@ -11,21 +11,7 @@ class SlackError(Exception):
     pass
 
 
-def enhance_response(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        resp = func(*args, **kwargs)
-        # got these features from:
-        # https://github.com/os/slacker/blob/master/slacker/__init__.py
-        resp.body = resp.json()
-        resp.successful = resp.body["ok"]
-        resp.error = resp.body.get("error")
-        return resp
-
-    return wrapper
-
-
-def raise_exception_on_failure(func):
+def raise_exception_on_error_from_server(func):
     @wraps(func)
     def wrapper(instance, path, **kwargs):
         resp = func(instance, path, **kwargs)
@@ -45,6 +31,22 @@ def raise_exception_on_failure(func):
 
 
 class SlackAPI:
+    """
+    Base API for all Slack endpoints.
+
+    :param token: slack api token
+    :type str: e.g. xoxo-3243434543w5-XXXXXXX
+
+    :param session: requests session object
+    :type request.Session:
+
+    :param proxies: http and https proxies
+    :type dict: {"http": 10.10.10.10, "https": 10.11.12.13}
+
+    :param timeout: number of seconds for timeout
+    :type int: e.g. 60 (for 60s)
+    """
+
     url = SLACK_API_BASE_URL
 
     def __init__(
@@ -54,46 +56,48 @@ class SlackAPI:
         proxies: dict = None,
         timeout: int = 10,
     ):
-        self.token = token
-        self.session = session
-        self.proxies = proxies
-        self.timeout = timeout
+        self._token = token
+        self._session = session
+        self._proxies = proxies
+        self._timeout = timeout
 
     @property
-    def params(self):
+    def params(self) -> dict:
         rv = {
-            "token": self.token,
-            "session": self.session,
-            "proxies": self.proxies,
-            "timeout": self.timeout,
+            "token": self._token,
+            "session": self._session,
+            "proxies": self._proxies,
+            "timeout": self._timeout,
         }
         return rv
 
     def make_url(self, path: str) -> str:
         return self.url + "/" + path
 
-    @enhance_response
     def _request(self, method: str, url: str, **kwargs) -> requests.Response:
-        kwargs.setdefault("timeout", self.timeout)
-        kwargs.setdefault("proxies", self.proxies)
-        client = self.session if self.session else requests
-        return client.request(method, url, **kwargs)
+        kwargs.setdefault("timeout", self._timeout)
+        kwargs.setdefault("proxies", self._proxies)
+        client = self._session if self._session else requests
 
-    @raise_exception_on_failure
+        resp = client.request(method, url, **kwargs)
+        # got these features from:
+        # https://github.com/os/slacker/blob/master/slacker/__init__.py
+        resp.body = resp.json()
+        resp.successful = resp.body["ok"]
+        resp.error = resp.body.get("error")
+        return resp
+
+    @raise_exception_on_error_from_server
     def _post(self, path: str, payload: dict = None, **kwargs) -> requests.Response:
         url = self.make_url(path)
         kwargs.setdefault("data", payload)
         return self._request("post", url, **kwargs)
 
-    @raise_exception_on_failure
+    @raise_exception_on_error_from_server
     def _get(self, path: str, payload: dict = None, **kwargs) -> requests.Response:
         url = self.make_url(path)
         kwargs.setdefault("params", payload)
         return self._request("get", url, **kwargs)
-
-    def __repr__(self):
-        name = self.__class__.__name__
-        return f"<{name}(url={self.url + '/' + name.lower()})>"
 
 
 # class Endpoint:

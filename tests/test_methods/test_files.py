@@ -17,12 +17,12 @@ def test_files_list(slack_time):
     assert slack_time.files.list
 
 
-def test_files_revoke_public_u_r_l(slack_time):
-    assert slack_time.files.revoke_public_u_r_l
+def test_files_revoke_public_url(slack_time):
+    assert slack_time.files.revoke_public_url
 
 
-def test_files_shared_public_u_r_l(slack_time):
-    assert slack_time.files.shared_public_u_r_l
+def test_files_shared_public_url(slack_time):
+    assert slack_time.files.shared_public_url
 
 
 def test_files_upload(slack_time):
