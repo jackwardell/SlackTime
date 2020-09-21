@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Bots(SlackAPI):
@@ -15,7 +15,6 @@ class Bots(SlackAPI):
 
         :param bot: Bot user to get info on
         :type str: e.g. B12345678
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
