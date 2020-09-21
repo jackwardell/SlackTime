@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -18,7 +19,6 @@ class Profile(SlackAPI):
 
         :param user: User to retrieve profile info for
         :type str: e.g. W1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -65,7 +65,7 @@ class Profile(SlackAPI):
     def set(
         self,
         name: str = None,
-        profile: str = None,
+        profile: dict = None,
         user: str = None,
         value: str = None,
         **kwargs
@@ -81,14 +81,13 @@ class Profile(SlackAPI):
         :type str: e.g. first_name
 
         :param profile: Collection of key:value pairs presented as a URL-encoded JSON hash. At most 50 fields may be set. Each field name is limited to 255 characters.
-        :type str: e.g. { first_name: "John", ... }
+        :type dict: e.g. { first_name: "John", ... }
 
         :param user: ID of user to change. This argument may only be specified by team admins on paid teams.
         :type str: e.g. W1234567890
 
         :param value: Value to set a single key to. Usable only if profile is not passed.
         :type str: e.g. John
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -173,7 +172,6 @@ class Users(SlackAPI):
 
         :param user: Browse conversations by a specific user ID's membership. Non-public channels are restricted to those where the calling user shares membership.
         :type str: e.g. W0B2345D
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -282,7 +280,6 @@ class Users(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -310,7 +307,6 @@ class Users(SlackAPI):
 
         :param user: User to get presence info on. Defaults to the authed user.
         :type str: e.g. W1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -340,7 +336,6 @@ class Users(SlackAPI):
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -379,7 +374,6 @@ class Users(SlackAPI):
 
         :param include_locale: Set this to true to receive the locale for this user. Defaults to false
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -461,7 +455,6 @@ class Users(SlackAPI):
 
         :param limit: The maximum number of items to return. Fewer than the requested number of items may be returned, even if the end of the users list hasn't been reached. Providing no limit value will result in Slack attempting to deliver you the entire result set. If the collection is too large you may experience limit_required or HTTP 500 errors.
         :type int: e.g. 20
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -583,7 +576,6 @@ class Users(SlackAPI):
         :param email: An email address belonging to a user in the workspace
         :type str: e.g. spengler@ghostbusters.example.com
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -646,7 +638,6 @@ class Users(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -687,7 +678,6 @@ class Users(SlackAPI):
         :param image: File contents via multipart/form-data.
         :type str: e.g. ...
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -724,7 +714,6 @@ class Users(SlackAPI):
         :param presence: Either auto or away
         :type str: e.g. away
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -737,13 +726,3 @@ class Users(SlackAPI):
         payload = {"token": self.token, "presence": presence}
 
         return self._post("users.setPresence", payload=payload, **kwargs)
-
-
-class Users(SlackAPI):
-    @cached_property
-    def users(self) -> Users:
-        return Users(**self.params)
-
-    @cached_property
-    def profile(self) -> Profile:
-        return Profile(**self.params)
