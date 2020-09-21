@@ -19,7 +19,6 @@ class Comments(SlackAPI):
         :param id: The comment to delete.
         :type str: e.g. Fc1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -73,7 +72,6 @@ class Remote(SlackAPI):
 
         :param preview_image: Preview of the document via multipart/form-data.
         :type str: e.g. ...
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -152,7 +150,6 @@ class Remote(SlackAPI):
         :param file: Specify a file by providing its ID.
         :type str: e.g. F2147483862
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -203,7 +200,6 @@ class Remote(SlackAPI):
         :param ts_to: Filter files created before this timestamp (inclusive).
         :type int: e.g. 123456789
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -246,7 +242,6 @@ class Remote(SlackAPI):
         :param file: Specify a file by providing its ID.
         :type str: e.g. F2147483862
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -284,7 +279,6 @@ class Remote(SlackAPI):
 
         :param file: Specify a file registered with Slack by providing its ID. Either this field or external_id or both are required.
         :type str: e.g. F2147483862
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -344,7 +338,6 @@ class Remote(SlackAPI):
         :param title: Title of the file being shared.
         :type str: e.g. Danger, High Voltage!
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -400,7 +393,6 @@ class Files(SlackAPI):
         :param file: ID of file to delete.
         :type str: e.g. F1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -444,7 +436,6 @@ class Files(SlackAPI):
 
         :param page: Page number of results to return.
         :type int: e.g. 2
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -584,7 +575,6 @@ class Files(SlackAPI):
         :param user: Filter files created by a single user.
         :type str: e.g. W1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -718,7 +708,7 @@ class Files(SlackAPI):
 
         return self._get("files.list", payload=payload, **kwargs)
 
-    def revoke_public_u_r_l(self, file: str, **kwargs) -> Response:
+    def revoke_public_url(self, file: str, **kwargs) -> Response:
         """
         Revokes public/external sharing access for a file
         https://api.slack.com/methods/files.revokePublicURL
@@ -729,13 +719,12 @@ class Files(SlackAPI):
         :param file: File to revoke
         :type str: e.g. F1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
         example:
         >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.files.revoke_public_u_r_l(**your_params)
+        >>> response = client.files.revoke_public_url(**your_params)
         <Response [200]>
         """
 
@@ -743,7 +732,7 @@ class Files(SlackAPI):
 
         return self._post("files.revokePublicURL", payload=payload, **kwargs)
 
-    def shared_public_u_r_l(self, file: str, **kwargs) -> Response:
+    def shared_public_url(self, file: str, **kwargs) -> Response:
         """
         Enables a file for public/external sharing.
         https://api.slack.com/methods/files.sharedPublicURL
@@ -754,13 +743,12 @@ class Files(SlackAPI):
         :param file: File to share
         :type str: e.g. F1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
         example:
         >>> client = SlackTime(token='insert-your-token-here')
-        >>> response = client.files.shared_public_u_r_l(**your_params)
+        >>> response = client.files.shared_public_url(**your_params)
         <Response [200]>
         """
 
@@ -810,7 +798,6 @@ class Files(SlackAPI):
 
         :param title: Title of file.
         :type str: e.g. My File
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -890,7 +877,13 @@ class Files(SlackAPI):
             payload["content"] = content
 
         if file is not None:
-            payload["file"] = file
+            if isinstance(file, str):
+                with open(file, "rb") as f:
+                    file_to_upload = f
+            else:
+                file_to_upload = file
+
+            kwargs.setdefault("files", {"file": file_to_upload})
 
         if filename is not None:
             payload["filename"] = filename
@@ -908,17 +901,3 @@ class Files(SlackAPI):
             payload["title"] = title
 
         return self._post("files.upload", payload=payload, **kwargs)
-
-
-class Files(SlackAPI):
-    @cached_property
-    def comments(self) -> Comments:
-        return Comments(**self.params)
-
-    @cached_property
-    def files(self) -> Files:
-        return Files(**self.params)
-
-    @cached_property
-    def remote(self) -> Remote:
-        return Remote(**self.params)
