@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Reminders(SlackAPI):
@@ -21,7 +21,6 @@ class Reminders(SlackAPI):
 
         :param user: The user who will receive the reminder. If no user is specified, the reminder will go to user who created it.
         :type str: e.g. U18888888
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -50,7 +49,6 @@ class Reminders(SlackAPI):
         :param reminder: The ID of the reminder to be marked as complete
         :type str: e.g. Rm12345678
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -74,7 +72,6 @@ class Reminders(SlackAPI):
 
         :param reminder: The ID of the reminder
         :type str: e.g. Rm12345678
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -100,7 +97,6 @@ class Reminders(SlackAPI):
         :param reminder: The ID of the reminder
         :type str: e.g. Rm23456789
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -121,7 +117,6 @@ class Reminders(SlackAPI):
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
