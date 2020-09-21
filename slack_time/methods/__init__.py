@@ -12,7 +12,7 @@ from .dnd import Dnd
 from .emoji import Emoji
 from .files import Files
 from .migration import Migration
-from .oauth import Oauth
+from .oauth import OAuth
 from .pins import Pins
 from .reactions import Reactions
 from .reminders import Reminders
@@ -42,7 +42,7 @@ __all__ = [
     "Emoji",
     "Files",
     "Migration",
-    "Oauth",
+    "OAuth",
     "Pins",
     "Reactions",
     "Reminders",
@@ -111,8 +111,8 @@ class SlackTime(SlackAPI):
         return Migration(**self.params)
 
     @cached_property
-    def oauth(self) -> Oauth:
-        return Oauth(**self.params)
+    def oauth(self) -> OAuth:
+        return OAuth(**self.params)
 
     @cached_property
     def pins(self) -> Pins:

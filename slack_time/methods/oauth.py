@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -28,7 +29,6 @@ class V2(SlackAPI):
 
         :param redirect_uri: This must match the originally submitted URI (if one was sent).
         :type str: e.g. http://example.com
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -76,7 +76,7 @@ class V2(SlackAPI):
         return self._post("oauth.v2.access", payload=payload, **kwargs)
 
 
-class Oauth(SlackAPI):
+class OAuth(SlackAPI):
     @cached_property
     def v2(self) -> V2:
         return V2(**self.params)
@@ -94,6 +94,8 @@ class Oauth(SlackAPI):
         Exchanges a temporary OAuth verifier code for an access token.
         https://api.slack.com/methods/oauth.access
 
+        A potential gotcha: while redirect_uri is optional, it is required if your app passed it as a parameter to oauth/authorization in the first step of the OAuth flow.
+
         :param client_id: Issued when you created your application.
         :type str: e.g. 4b39e9-752c4
 
@@ -108,7 +110,6 @@ class Oauth(SlackAPI):
 
         :param single_channel: Request the user to add your app only to a single channel. Only valid with a legacy workspace app.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -174,7 +175,6 @@ class Oauth(SlackAPI):
         :param single_channel: Request the user to add your app only to a single channel.
         :type bool: e.g. true
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -225,8 +225,8 @@ class Oauth(SlackAPI):
 
 class Oauth(SlackAPI):
     @cached_property
-    def oauth(self) -> Oauth:
-        return Oauth(**self.params)
+    def oauth(self) -> OAuth:
+        return OAuth(**self.params)
 
     @cached_property
     def v2(self) -> V2:
