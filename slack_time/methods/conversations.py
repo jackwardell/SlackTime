@@ -16,7 +16,6 @@ class Conversations(SlackAPI):
         :param channel: ID of conversation to archive
         :type str: e.g. C1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -44,7 +43,6 @@ class Conversations(SlackAPI):
 
         :param channel: Conversation to close.
         :type str: e.g. G1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -76,7 +74,6 @@ class Conversations(SlackAPI):
 
         :param is_private: Create a private channel instead of a public one
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -169,7 +166,6 @@ class Conversations(SlackAPI):
 
         :param oldest: Start of time range of messages to include in results.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -323,7 +319,6 @@ class Conversations(SlackAPI):
         :param users: A comma separated list of user IDs. Up to 1000 users may be listed.
         :type str: e.g. W1234567890,U2345678901,U3456789012
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -391,7 +386,6 @@ class Conversations(SlackAPI):
 
         :param channel: ID of conversation to join
         :type str: e.g. C1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -462,7 +456,6 @@ class Conversations(SlackAPI):
         :param user: User ID to be removed.
         :type str: e.g. W1234567890
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -490,7 +483,6 @@ class Conversations(SlackAPI):
 
         :param channel: Conversation to leave
         :type str: e.g. C1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -535,7 +527,6 @@ class Conversations(SlackAPI):
 
         :param types: Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im
         :type str: e.g. public_channel,private_channel
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -651,7 +642,6 @@ class Conversations(SlackAPI):
         :param ts: Unique identifier of message you want marked as most recently seen in this conversation.
         :type float: e.g. 1593473566.000200
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -687,7 +677,6 @@ class Conversations(SlackAPI):
 
         :param limit: The maximum number of items to return. Fewer than the requested number of items may be returned, even if the end of the users list hasn't been reached.
         :type int: e.g. 20
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -739,7 +728,6 @@ class Conversations(SlackAPI):
         :param users: Comma separated lists of users. If only one user is included, this creates a 1:1 DM.  The ordering of the users is preserved whenever a multi-person direct message is returned. Supply a channel when not supplying users.
         :type str: e.g. W1234567890,U2345678901,U3456789012
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -781,7 +769,7 @@ class Conversations(SlackAPI):
         :type str: e.g. C1234567890
 
         :param name: New name for conversation.
-        :type str:
+        :type str: new-convo
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -879,7 +867,6 @@ class Conversations(SlackAPI):
         :param oldest: Start of time range of messages to include in results.
         :type float: e.g. 1234567890.123456
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -967,7 +954,6 @@ class Conversations(SlackAPI):
         :param purpose: A new, specialer purpose
         :type str: e.g. My More Special Purpose
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -1001,7 +987,6 @@ class Conversations(SlackAPI):
         :param topic: The new topic string. Does not support formatting or linkification.
         :type str: e.g. Apply topically for best effects
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -1031,7 +1016,6 @@ class Conversations(SlackAPI):
 
         :param channel: ID of conversation to unarchive
         :type str: e.g. C1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
