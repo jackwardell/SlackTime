@@ -15,9 +15,9 @@ class Dialog(SlackAPI):
 
         :param dialog: The dialog definition. This must be a JSON-encoded string.
         :type str:
+
         :param trigger_id: Exchange a trigger to post to the user.
         :type str: e.g. 12345.98765.abcd2358fdea
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
