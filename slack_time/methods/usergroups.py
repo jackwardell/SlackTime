@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -18,7 +19,6 @@ class Users(SlackAPI):
 
         :param include_disabled: Allow results that involve disabled User Groups.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -62,7 +62,6 @@ class Users(SlackAPI):
 
         :param include_count: Include the number of users in the User Group.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -139,12 +138,12 @@ class Usergroups(SlackAPI):
 
         :param description: A short description of the User Group.
         :type str:
+
         :param handle: A mention handle. Must be unique among channels, users and User Groups.
         :type str: e.g. marketing
 
         :param include_count: Include the number of users in each User Group.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -185,7 +184,6 @@ class Usergroups(SlackAPI):
         :param include_count: Include the number of users in the User Group.
         :type bool: e.g. true
 
-
         :returns response:
         :type requests.Response: e.g. <Response [200]>
 
@@ -215,7 +213,6 @@ class Usergroups(SlackAPI):
 
         :param include_count: Include the number of users in the User Group.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -255,7 +252,6 @@ class Usergroups(SlackAPI):
 
         :param include_users: Include the list of users for each User Group.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -373,6 +369,7 @@ class Usergroups(SlackAPI):
 
         :param description: A short description of the User Group.
         :type str:
+
         :param handle: A mention handle. Must be unique among channels, users and User Groups.
         :type str: e.g. marketing
 
@@ -381,7 +378,6 @@ class Usergroups(SlackAPI):
 
         :param name: A name for the User Group. Must be unique among User Groups.
         :type str: e.g. My Test Team
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -439,13 +435,3 @@ class Usergroups(SlackAPI):
             payload["name"] = name
 
         return self._post("usergroups.update", payload=payload, **kwargs)
-
-
-class Usergroups(SlackAPI):
-    @cached_property
-    def usergroups(self) -> Usergroups:
-        return Usergroups(**self.params)
-
-    @cached_property
-    def users(self) -> Users:
-        return Users(**self.params)
