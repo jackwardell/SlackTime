@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Pins(SlackAPI):
@@ -18,7 +18,6 @@ class Pins(SlackAPI):
 
         :param timestamp: Timestamp of the message to pin.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -47,7 +46,6 @@ class Pins(SlackAPI):
 
         :param channel: Channel to get pinned items for.
         :type str: e.g. C1234567890
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -126,7 +124,6 @@ class Pins(SlackAPI):
 
         :param timestamp: Timestamp of the message to un-pin.
         :type float: e.g. 1234567890.123456
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
