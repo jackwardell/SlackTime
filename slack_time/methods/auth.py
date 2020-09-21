@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests import Response
+
 from slack_time.api import SlackAPI
-from slack_time.utils import cached_property
 
 
 class Auth(SlackAPI):
@@ -15,7 +15,6 @@ class Auth(SlackAPI):
 
         :param test: Setting this parameter to 1 triggers a testing mode where the specified token will not actually be revoked.
         :type bool: e.g. true
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -45,7 +44,6 @@ class Auth(SlackAPI):
 
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
-
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
