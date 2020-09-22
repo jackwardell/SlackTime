@@ -59,7 +59,7 @@ from slack_time import get_slack_time
 
 slack_time = get_slack_time()
 
-slack.chat.post_message("general", "Hey team, I love this knock off Slacker library!"
+slack.chat.post_message("general", "Hey team, I love this knock off Slacker library!")
 ```
 
 
