@@ -14,6 +14,12 @@ This library aims to be:
 * Intuitive
 * Fast
 
+## Install
+* This library uses type hints so is Python 3.5+
+* Simply install using pip
+```
+pip install slack_time
+```
 
 ## Learn by example
 #### Getting a client:
@@ -28,7 +34,7 @@ slack_time = get_slack_time()
 slack_time = get_slack_time('SLACK_TOKEN')
 ```
 
-#### Making a client
+#### Making a client:
 ```
 from slack_time import SlackTime
 
@@ -41,13 +47,13 @@ import requests
 
 token = "xoxo-gossip-girl"
 session = requests.Session()
-proxies = {"http": "10.10.10.10", "https": "10.11.12.13"}
+proxies = {"http": "10.10.10.10:80", "https": "10.11.12.13:8080"}
 timeout = 60
 
 slack_time = SlackTime(token, session=session, proxies=proxies, timeout=timeout)
 ```
 
-#### Using the client
+#### Using the client:
 ```
 from slack_time import get_slack_time
 
@@ -60,7 +66,7 @@ slack.chat.post_message("general", "Hey team, I love this knock off Slacker libr
 #### How it works
 * In the web API docs (https://api.slack.com/methods) the methods are listed as endpoints e.g. admin.apps.requests.list
 * The url for admin.apps.requests.list would be https://slack.com/api/admin.apps.requests.list
-* The client method would be `slack_time.apps.requests.list(*args, **kwargs)`
+* The client method would be `slack_time.admin.apps.requests.list(*args, **kwargs)`
 * The method translation would be from camelCase to snake_case
 
 Some examples:
