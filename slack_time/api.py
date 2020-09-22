@@ -5,6 +5,7 @@ from functools import wraps
 import requests
 
 SLACK_API_BASE_URL = "https://slack.com/api"
+SLACK_DOC_BASE_URL = "https://api.slack.com/methods/"
 
 
 class SlackError(Exception):
@@ -17,7 +18,7 @@ def raise_exception_on_error_from_server(func):
         resp = func(instance, path, **kwargs)
         if not resp.successful:
             url = SLACK_API_BASE_URL + "/" + path
-            doc = "https://api.slack.com/methods/" + url.rsplit("/", maxsplit=1).pop()
+            doc = SLACK_DOC_BASE_URL + url.rsplit("/", maxsplit=1).pop()
             exception = type(resp.error, (SlackError,), {})
             raise exception(
                 f"You tried to perform a request to {url}. \n"
@@ -41,7 +42,7 @@ class SlackAPI:
     :type request.Session:
 
     :param proxies: http and https proxies
-    :type dict: {"http": 10.10.10.10, "https": 10.11.12.13}
+    :type dict: e.g. {"http": 10.10.10.10, "https": 10.11.12.13}
 
     :param timeout: number of seconds for timeout
     :type int: e.g. 60 (for 60s)

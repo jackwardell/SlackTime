@@ -29,7 +29,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         return self._post("conversations.archive", payload=payload, **kwargs)
 
@@ -57,7 +57,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         return self._post("conversations.close", payload=payload, **kwargs)
 
@@ -125,7 +125,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "name": name}
+        payload = {"token": self._token, "name": name}
 
         if is_private is not None:
             payload["is_private"] = is_private
@@ -199,7 +199,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -295,7 +295,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         if include_locale is not None:
             payload["include_locale"] = include_locale
@@ -372,7 +372,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "users": users}
+        payload = {"token": self._token, "channel": channel, "users": users}
 
         return self._post("conversations.invite", payload=payload, **kwargs)
 
@@ -438,7 +438,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         return self._post("conversations.join", payload=payload, **kwargs)
 
@@ -469,7 +469,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "user": user}
+        payload = {"token": self._token, "channel": channel, "user": user}
 
         return self._post("conversations.kick", payload=payload, **kwargs)
 
@@ -497,7 +497,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         return self._post("conversations.leave", payload=payload, **kwargs)
 
@@ -612,7 +612,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -655,7 +655,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "ts": ts}
+        payload = {"token": self._token, "channel": channel, "ts": ts}
 
         return self._post("conversations.mark", payload=payload, **kwargs)
 
@@ -699,7 +699,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -744,7 +744,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel
@@ -824,7 +824,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "name": name}
+        payload = {"token": self._token, "channel": channel, "name": name}
 
         return self._post("conversations.rename", payload=payload, **kwargs)
 
@@ -921,7 +921,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "ts": ts}
+        payload = {"token": self._token, "channel": channel, "ts": ts}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -969,7 +969,7 @@ class Conversations(SlackAPI):
 
         """
 
-        payload = {"token": self.token, "channel": channel, "purpose": purpose}
+        payload = {"token": self._token, "channel": channel, "purpose": purpose}
 
         return self._post("conversations.setPurpose", payload=payload, **kwargs)
 
@@ -1002,7 +1002,7 @@ class Conversations(SlackAPI):
 
         """
 
-        payload = {"token": self.token, "channel": channel, "topic": topic}
+        payload = {"token": self._token, "channel": channel, "topic": topic}
 
         return self._post("conversations.setTopic", payload=payload, **kwargs)
 
@@ -1030,6 +1030,6 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         return self._post("conversations.unarchive", payload=payload, **kwargs)

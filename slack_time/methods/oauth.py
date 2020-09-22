@@ -62,7 +62,7 @@ class V2(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "code": code}
+        payload = {"token": self._token, "code": code}
 
         if client_id is not None:
             payload["client_id"] = client_id
@@ -128,7 +128,7 @@ class OAuth(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if client_id is not None:
             payload["client_id"] = client_id
@@ -208,7 +208,7 @@ class OAuth(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "client_id": client_id,
             "client_secret": client_secret,
             "code": code,

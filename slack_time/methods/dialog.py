@@ -32,6 +32,6 @@ class Dialog(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "dialog": dialog, "trigger_id": trigger_id}
+        payload = {"token": self._token, "dialog": dialog, "trigger_id": trigger_id}
 
         return self._post("dialog.open", payload=payload, **kwargs)

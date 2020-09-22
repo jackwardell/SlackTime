@@ -44,7 +44,7 @@ class Rtm(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if batch_presence_aware is not None:
             payload["batch_presence_aware"] = batch_presence_aware
@@ -102,7 +102,7 @@ class Rtm(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if batch_presence_aware is not None:
             payload["batch_presence_aware"] = batch_presence_aware

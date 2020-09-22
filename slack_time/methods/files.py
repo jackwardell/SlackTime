@@ -37,7 +37,7 @@ class Comments(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "file": file, "id": id}
+        payload = {"token": self._token, "file": file, "id": id}
 
         return self._post("files.comments.delete", payload=payload, **kwargs)
 
@@ -124,7 +124,7 @@ class Remote(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "external_id": external_id,
             "external_url": external_url,
             "title": title,
@@ -166,7 +166,7 @@ class Remote(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if external_id is not None:
             payload["external_id"] = external_id
@@ -216,7 +216,7 @@ class Remote(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel
@@ -258,7 +258,7 @@ class Remote(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if external_id is not None:
             payload["external_id"] = external_id
@@ -296,7 +296,7 @@ class Remote(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "channels": channels}
+        payload = {"token": self._token, "channels": channels}
 
         if external_id is not None:
             payload["external_id"] = external_id
@@ -354,7 +354,7 @@ class Remote(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if external_id is not None:
             payload["external_id"] = external_id
@@ -411,7 +411,7 @@ class Files(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "file": file}
+        payload = {"token": self._token, "file": file}
 
         return self._post("files.delete", payload=payload, **kwargs)
 
@@ -525,7 +525,7 @@ class Files(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "file": file}
+        payload = {"token": self._token, "file": file}
 
         if count is not None:
             payload["count"] = count
@@ -689,7 +689,7 @@ class Files(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel
@@ -737,7 +737,7 @@ class Files(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "file": file}
+        payload = {"token": self._token, "file": file}
 
         return self._post("files.revokePublicURL", payload=payload, **kwargs)
 
@@ -761,7 +761,7 @@ class Files(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "file": file}
+        payload = {"token": self._token, "file": file}
 
         return self._post("files.sharedPublicURL", payload=payload, **kwargs)
 
@@ -877,7 +877,7 @@ class Files(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channels is not None:
             payload["channels"] = channels

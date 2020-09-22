@@ -22,6 +22,6 @@ class Emoji(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._get("emoji.list", payload=payload, **kwargs)

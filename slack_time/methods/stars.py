@@ -41,7 +41,7 @@ class Stars(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel
@@ -93,7 +93,7 @@ class Stars(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if count is not None:
             payload["count"] = count
@@ -145,7 +145,7 @@ class Stars(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel

@@ -62,7 +62,7 @@ class ScheduledMessages(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel
@@ -121,7 +121,7 @@ class Chat(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "ts": ts}
+        payload = {"token": self._token, "channel": channel, "ts": ts}
 
         if as_user is not None:
             payload["as_user"] = as_user
@@ -161,7 +161,7 @@ class Chat(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel": channel,
             "scheduled_message_id": scheduled_message_id,
         }
@@ -200,7 +200,7 @@ class Chat(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "message_ts": message_ts}
+        payload = {"token": self._token, "channel": channel, "message_ts": message_ts}
 
         return self._get("chat.getPermalink", payload=payload, **kwargs)
 
@@ -233,7 +233,7 @@ class Chat(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "text": text}
+        payload = {"token": self._token, "channel": channel, "text": text}
 
         return self._post("chat.meMessage", payload=payload, **kwargs)
 
@@ -311,7 +311,7 @@ class Chat(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "attachments": attachments,
             "channel": channel,
             "text": text,
@@ -445,7 +445,7 @@ class Chat(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "text": text}
+        payload = {"token": self._token, "channel": channel, "text": text}
 
         if as_user is not None:
             payload["as_user"] = as_user
@@ -578,7 +578,7 @@ class Chat(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel": channel,
             "post_at": post_at,
             "text": text,
@@ -662,7 +662,7 @@ class Chat(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel": channel,
             "ts": ts,
             "unfurls": unfurls,
@@ -742,7 +742,7 @@ class Chat(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "ts": ts}
+        payload = {"token": self._token, "channel": channel, "ts": ts}
 
         if as_user is not None:
             payload["as_user"] = as_user

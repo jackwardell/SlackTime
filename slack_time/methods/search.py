@@ -181,7 +181,7 @@ class Search(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "query": query}
+        payload = {"token": self._token, "query": query}
 
         if count is not None:
             payload["count"] = count
@@ -323,7 +323,7 @@ class Search(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "query": query}
+        payload = {"token": self._token, "query": query}
 
         if count is not None:
             payload["count"] = count
@@ -452,7 +452,7 @@ class Search(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "query": query}
+        payload = {"token": self._token, "query": query}
 
         if count is not None:
             payload["count"] = count

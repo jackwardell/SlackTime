@@ -30,7 +30,7 @@ class Auth(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if test is not None:
             payload["test"] = test
@@ -63,6 +63,6 @@ class Auth(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._post("auth.test", payload=payload, **kwargs)

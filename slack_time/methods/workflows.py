@@ -31,7 +31,7 @@ class Workflows(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "workflow_step_execute_id": workflow_step_execute_id,
         }
 
@@ -66,7 +66,7 @@ class Workflows(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "error": error,
             "workflow_step_execute_id": workflow_step_execute_id,
         }
@@ -105,7 +105,7 @@ class Workflows(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "workflow_step_edit_id": workflow_step_edit_id}
+        payload = {"token": self._token, "workflow_step_edit_id": workflow_step_edit_id}
 
         if inputs is not None:
             payload["inputs"] = inputs

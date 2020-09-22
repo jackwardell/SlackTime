@@ -37,7 +37,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "usergroup": usergroup}
+        payload = {"token": self._token, "usergroup": usergroup}
 
         if include_disabled is not None:
             payload["include_disabled"] = include_disabled
@@ -101,7 +101,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "usergroup": usergroup, "users": users}
+        payload = {"token": self._token, "usergroup": usergroup, "users": users}
 
         if include_count is not None:
             payload["include_count"] = include_count
@@ -154,7 +154,7 @@ class Usergroups(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "name": name}
+        payload = {"token": self._token, "name": name}
 
         if channels is not None:
             payload["channels"] = channels
@@ -193,7 +193,7 @@ class Usergroups(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "usergroup": usergroup}
+        payload = {"token": self._token, "usergroup": usergroup}
 
         if include_count is not None:
             payload["include_count"] = include_count
@@ -223,7 +223,7 @@ class Usergroups(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "usergroup": usergroup}
+        payload = {"token": self._token, "usergroup": usergroup}
 
         if include_count is not None:
             payload["include_count"] = include_count
@@ -331,7 +331,7 @@ class Usergroups(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if include_count is not None:
             payload["include_count"] = include_count
@@ -417,7 +417,7 @@ class Usergroups(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "usergroup": usergroup}
+        payload = {"token": self._token, "usergroup": usergroup}
 
         if channels is not None:
             payload["channels"] = channels

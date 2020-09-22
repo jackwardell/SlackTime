@@ -22,7 +22,7 @@ class Dnd(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._post("dnd.endDnd", payload=payload, **kwargs)
 
@@ -43,7 +43,7 @@ class Dnd(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._post("dnd.endSnooze", payload=payload, **kwargs)
 
@@ -67,7 +67,7 @@ class Dnd(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if user is not None:
             payload["user"] = user
@@ -94,7 +94,7 @@ class Dnd(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "num_minutes": num_minutes}
+        payload = {"token": self._token, "num_minutes": num_minutes}
 
         return self._get("dnd.setSnooze", payload=payload, **kwargs)
 
@@ -134,6 +134,6 @@ class Dnd(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "users": users}
+        payload = {"token": self._token, "users": users}
 
         return self._get("dnd.teamInfo", payload=payload, **kwargs)

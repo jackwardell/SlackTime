@@ -42,7 +42,7 @@ class Bots(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if bot is not None:
             payload["bot"] = bot

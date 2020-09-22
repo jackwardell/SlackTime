@@ -29,7 +29,7 @@ class Api(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if error is not None:
             payload["error"] = error

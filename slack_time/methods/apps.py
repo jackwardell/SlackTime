@@ -50,7 +50,7 @@ class Resources(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -107,7 +107,7 @@ class Scopes(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._get("apps.permissions.scopes.list", payload=payload, **kwargs)
 
@@ -158,7 +158,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -199,7 +199,7 @@ class Users(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "scopes": scopes,
             "trigger_id": trigger_id,
             "user": user,
@@ -281,7 +281,7 @@ class Permissions(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._get("apps.permissions.info", payload=payload, **kwargs)
 
@@ -312,7 +312,7 @@ class Permissions(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "scopes": scopes, "trigger_id": trigger_id}
+        payload = {"token": self._token, "scopes": scopes, "trigger_id": trigger_id}
 
         return self._get("apps.permissions.request", payload=payload, **kwargs)
 
@@ -358,7 +358,7 @@ class Apps(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "client_id": client_id,
             "client_secret": client_secret,
         }

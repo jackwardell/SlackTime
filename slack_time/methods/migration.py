@@ -44,7 +44,7 @@ class Migration(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "users": users}
+        payload = {"token": self._token, "users": users}
 
         if to_old is not None:
             payload["to_old"] = to_old

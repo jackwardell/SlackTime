@@ -73,7 +73,7 @@ class Views(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "trigger_id": trigger_id, "view": view}
+        payload = {"token": self._token, "trigger_id": trigger_id, "view": view}
 
         return self._post("views.open", payload=payload, **kwargs)
 
@@ -140,7 +140,7 @@ class Views(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "user_id": user_id, "view": view}
+        payload = {"token": self._token, "user_id": user_id, "view": view}
 
         if hash is not None:
             payload["hash"] = hash
@@ -221,7 +221,7 @@ class Views(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "trigger_id": trigger_id, "view": view}
+        payload = {"token": self._token, "trigger_id": trigger_id, "view": view}
 
         return self._post("views.push", payload=payload, **kwargs)
 
@@ -313,7 +313,7 @@ class Views(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "view": view}
+        payload = {"token": self._token, "view": view}
 
         if external_id is not None:
             payload["external_id"] = external_id

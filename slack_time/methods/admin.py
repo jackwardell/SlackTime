@@ -91,7 +91,7 @@ class Approved(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -194,7 +194,7 @@ class Requests(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -294,7 +294,7 @@ class Restricted(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -344,7 +344,7 @@ class Apps(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if app_id is not None:
             payload["app_id"] = app_id
@@ -389,7 +389,7 @@ class Apps(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if app_id is not None:
             payload["app_id"] = app_id
@@ -463,7 +463,7 @@ class Ekm(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel_ids is not None:
             payload["channel_ids"] = channel_ids
@@ -517,7 +517,7 @@ class RestrictAccess(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id, "group_id": group_id}
+        payload = {"token": self._token, "channel_id": channel_id, "group_id": group_id}
 
         if team_id is not None:
             payload["team_id"] = team_id
@@ -556,7 +556,7 @@ class RestrictAccess(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         if team_id is not None:
             payload["team_id"] = team_id
@@ -598,7 +598,7 @@ class RestrictAccess(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel_id": channel_id,
             "group_id": group_id,
             "team_id": team_id,
@@ -642,7 +642,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         return self._post("admin.conversations.archive", payload=payload, **kwargs)
 
@@ -670,7 +670,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         return self._post(
             "admin.conversations.convertToPrivate", payload=payload, **kwargs
@@ -721,7 +721,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "is_private": is_private, "name": name}
+        payload = {"token": self._token, "is_private": is_private, "name": name}
 
         if description is not None:
             payload["description"] = description
@@ -758,7 +758,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         return self._post("admin.conversations.delete", payload=payload, **kwargs)
 
@@ -791,7 +791,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         if leaving_team_ids is not None:
             payload["leaving_team_ids"] = leaving_team_ids
@@ -820,7 +820,7 @@ class Conversations(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         return self._post(
             "admin.conversations.getConversationPrefs", payload=payload, **kwargs
@@ -859,7 +859,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -896,7 +896,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id, "user_ids": user_ids}
+        payload = {"token": self._token, "channel_id": channel_id, "user_ids": user_ids}
 
         return self._post("admin.conversations.invite", payload=payload, **kwargs)
 
@@ -927,7 +927,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id, "name": name}
+        payload = {"token": self._token, "channel_id": channel_id, "name": name}
 
         return self._post("admin.conversations.rename", payload=payload, **kwargs)
 
@@ -979,7 +979,7 @@ class Conversations(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1031,7 +1031,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id, "prefs": prefs}
+        payload = {"token": self._token, "channel_id": channel_id, "prefs": prefs}
 
         return self._post(
             "admin.conversations.setConversationPrefs", payload=payload, **kwargs
@@ -1077,7 +1077,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         if org_channel is not None:
             payload["org_channel"] = org_channel
@@ -1114,7 +1114,7 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_id": channel_id}
+        payload = {"token": self._token, "channel_id": channel_id}
 
         return self._post("admin.conversations.unarchive", payload=payload, **kwargs)
 
@@ -1147,7 +1147,7 @@ class Emoji(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "name": name, "url": url}
+        payload = {"token": self._token, "name": name, "url": url}
 
         return self._get("admin.emoji.add", payload=payload, **kwargs)
 
@@ -1178,7 +1178,7 @@ class Emoji(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "alias_for": alias_for, "name": name}
+        payload = {"token": self._token, "alias_for": alias_for, "name": name}
 
         return self._get("admin.emoji.addAlias", payload=payload, **kwargs)
 
@@ -1241,7 +1241,7 @@ class Emoji(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1275,7 +1275,7 @@ class Emoji(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "name": name}
+        payload = {"token": self._token, "name": name}
 
         return self._get("admin.emoji.remove", payload=payload, **kwargs)
 
@@ -1306,7 +1306,7 @@ class Emoji(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "name": name, "new_name": new_name}
+        payload = {"token": self._token, "name": name, "new_name": new_name}
 
         return self._get("admin.emoji.rename", payload=payload, **kwargs)
 
@@ -1345,7 +1345,7 @@ class Approved_(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1390,7 +1390,7 @@ class Denied(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1443,7 +1443,7 @@ class InviteRequests(SlackAPI):
 
         """
 
-        payload = {"token": self.token, "invite_request_id": invite_request_id}
+        payload = {"token": self._token, "invite_request_id": invite_request_id}
 
         if team_id is not None:
             payload["team_id"] = team_id
@@ -1477,7 +1477,7 @@ class InviteRequests(SlackAPI):
             }
         """
 
-        payload = {"token": self.token, "invite_request_id": invite_request_id}
+        payload = {"token": self._token, "invite_request_id": invite_request_id}
 
         if team_id is not None:
             payload["team_id"] = team_id
@@ -1516,7 +1516,7 @@ class InviteRequests(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1566,7 +1566,7 @@ class Admins(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id}
+        payload = {"token": self._token, "team_id": team_id}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1613,7 +1613,7 @@ class Owners(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id}
+        payload = {"token": self._token, "team_id": team_id}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1659,7 +1659,7 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id}
+        payload = {"token": self._token, "team_id": team_id}
 
         return self._post("admin.teams.settings.info", payload=payload, **kwargs)
 
@@ -1692,7 +1692,7 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel_ids": channel_ids, "team_id": team_id}
+        payload = {"token": self._token, "channel_ids": channel_ids, "team_id": team_id}
 
         return self._get(
             "admin.teams.settings.setDefaultChannels", payload=payload, **kwargs
@@ -1725,7 +1725,7 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "description": description, "team_id": team_id}
+        payload = {"token": self._token, "description": description, "team_id": team_id}
 
         return self._post(
             "admin.teams.settings.setDescription", payload=payload, **kwargs
@@ -1761,7 +1761,7 @@ class Settings(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "discoverability": discoverability,
             "team_id": team_id,
         }
@@ -1797,7 +1797,7 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "image_url": image_url, "team_id": team_id}
+        payload = {"token": self._token, "image_url": image_url, "team_id": team_id}
 
         return self._get("admin.teams.settings.setIcon", payload=payload, **kwargs)
 
@@ -1828,7 +1828,7 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "name": name, "team_id": team_id}
+        payload = {"token": self._token, "name": name, "team_id": team_id}
 
         return self._post("admin.teams.settings.setName", payload=payload, **kwargs)
 
@@ -1888,7 +1888,7 @@ class Teams(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "team_domain": team_domain,
             "team_name": team_name,
         }
@@ -1940,7 +1940,7 @@ class Teams(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -1985,7 +1985,7 @@ class Usergroups(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel_ids": channel_ids,
             "usergroup_id": usergroup_id,
         }
@@ -2028,7 +2028,7 @@ class Usergroups(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "team_ids": team_ids,
             "usergroup_id": usergroup_id,
         }
@@ -2099,7 +2099,7 @@ class Usergroups(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "usergroup_id": usergroup_id}
+        payload = {"token": self._token, "usergroup_id": usergroup_id}
 
         if include_num_members is not None:
             payload["include_num_members"] = include_num_members
@@ -2139,7 +2139,7 @@ class Usergroups(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel_ids": channel_ids,
             "usergroup_id": usergroup_id,
         }
@@ -2183,7 +2183,7 @@ class Session(SlackAPI):
 
         """
 
-        payload = {"token": self.token, "user_id": user_id}
+        payload = {"token": self._token, "user_id": user_id}
 
         if mobile_only is not None:
             payload["mobile_only"] = mobile_only
@@ -2243,7 +2243,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id, "user_id": user_id}
+        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
 
         if channel_ids is not None:
             payload["channel_ids"] = channel_ids
@@ -2317,7 +2317,7 @@ class Users(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel_ids": channel_ids,
             "email": email,
             "team_id": team_id,
@@ -2387,7 +2387,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id}
+        payload = {"token": self._token, "team_id": team_id}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -2424,7 +2424,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id, "user_id": user_id}
+        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
 
         return self._post("admin.users.remove", payload=payload, **kwargs)
 
@@ -2455,7 +2455,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id, "user_id": user_id}
+        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
 
         return self._post("admin.users.setAdmin", payload=payload, **kwargs)
 
@@ -2492,7 +2492,7 @@ class Users(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "expiration_ts": expiration_ts,
             "team_id": team_id,
             "user_id": user_id,
@@ -2527,7 +2527,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id, "user_id": user_id}
+        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
 
         return self._post("admin.users.setOwner", payload=payload, **kwargs)
 
@@ -2558,7 +2558,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "team_id": team_id, "user_id": user_id}
+        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
 
         return self._post("admin.users.setRegular", payload=payload, **kwargs)
 

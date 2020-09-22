@@ -56,7 +56,7 @@ class Profile(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if include_labels is not None:
             payload["include_labels"] = include_labels
@@ -124,7 +124,7 @@ class Profile(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if name is not None:
             payload["name"] = name
@@ -257,7 +257,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -297,7 +297,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._get("users.deletePhoto", payload=payload, **kwargs)
 
@@ -326,7 +326,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if user is not None:
             payload["user"] = user
@@ -361,7 +361,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._get("users.identity", payload=payload, **kwargs)
 
@@ -430,7 +430,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "user": user}
+        payload = {"token": self._token, "user": user}
 
         if include_locale is not None:
             payload["include_locale"] = include_locale
@@ -556,7 +556,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -630,7 +630,7 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "email": email}
+        payload = {"token": self._token, "email": email}
 
         return self._get("users.lookupByEmail", payload=payload, **kwargs)
 
@@ -651,7 +651,7 @@ class Users(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._post("users.setActive", payload=payload, **kwargs)
 
@@ -691,7 +691,7 @@ class Users(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if crop_w is not None:
             payload["crop_w"] = crop_w
@@ -728,6 +728,6 @@ class Users(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "presence": presence}
+        payload = {"token": self._token, "presence": presence}
 
         return self._post("users.setPresence", payload=payload, **kwargs)

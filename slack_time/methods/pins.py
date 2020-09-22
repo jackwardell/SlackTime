@@ -32,7 +32,7 @@ class Pins(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel, "timestamp": timestamp}
+        payload = {"token": self._token, "channel": channel, "timestamp": timestamp}
 
         return self._post("pins.add", payload=payload, **kwargs)
 
@@ -94,7 +94,7 @@ class Pins(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         return self._get("pins.list", payload=payload, **kwargs)
 
@@ -138,7 +138,7 @@ class Pins(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "channel": channel}
+        payload = {"token": self._token, "channel": channel}
 
         if file is not None:
             payload["file"] = file

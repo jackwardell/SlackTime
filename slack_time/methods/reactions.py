@@ -36,7 +36,7 @@ class Reactions(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "channel": channel,
             "name": name,
             "timestamp": timestamp,
@@ -112,7 +112,7 @@ class Reactions(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if channel is not None:
             payload["channel"] = channel
@@ -267,7 +267,7 @@ class Reactions(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if count is not None:
             payload["count"] = count
@@ -333,7 +333,7 @@ class Reactions(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "name": name}
+        payload = {"token": self._token, "name": name}
 
         if channel is not None:
             payload["channel"] = channel

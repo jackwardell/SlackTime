@@ -33,7 +33,7 @@ class Participants(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "id": id, "users": users}
+        payload = {"token": self._token, "id": id, "users": users}
 
         return self._post("calls.participants.add", payload=payload, **kwargs)
 
@@ -64,7 +64,7 @@ class Participants(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "id": id, "users": users}
+        payload = {"token": self._token, "id": id, "users": users}
 
         return self._post("calls.participants.remove", payload=payload, **kwargs)
 
@@ -150,7 +150,7 @@ class Calls(SlackAPI):
         """
 
         payload = {
-            "token": self.token,
+            "token": self._token,
             "external_unique_id": external_unique_id,
             "join_url": join_url,
         }
@@ -203,7 +203,7 @@ class Calls(SlackAPI):
 
         """
 
-        payload = {"token": self.token, "id": id}
+        payload = {"token": self._token, "id": id}
 
         if duration is not None:
             payload["duration"] = duration
@@ -253,7 +253,7 @@ class Calls(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "id": id}
+        payload = {"token": self._token, "id": id}
 
         return self._post("calls.info", payload=payload, **kwargs)
 
@@ -316,7 +316,7 @@ class Calls(SlackAPI):
         }
         """
 
-        payload = {"token": self.token, "id": id}
+        payload = {"token": self._token, "id": id}
 
         if desktop_app_join_url is not None:
             payload["desktop_app_join_url"] = desktop_app_join_url

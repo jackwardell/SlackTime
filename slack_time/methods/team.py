@@ -95,7 +95,7 @@ class Profile(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if visibility is not None:
             payload["visibility"] = visibility
@@ -172,7 +172,7 @@ class Team(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if before is not None:
             payload["before"] = before
@@ -220,7 +220,7 @@ class Team(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if user is not None:
             payload["user"] = user
@@ -268,7 +268,7 @@ class Team(SlackAPI):
         }
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if team is not None:
             payload["team"] = team
@@ -319,7 +319,7 @@ class Team(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         if app_id is not None:
             payload["app_id"] = app_id

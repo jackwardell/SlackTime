@@ -31,7 +31,7 @@ class Reminders(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "text": text, "time": time}
+        payload = {"token": self._token, "text": text, "time": time}
 
         if user is not None:
             payload["user"] = user
@@ -58,7 +58,7 @@ class Reminders(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "reminder": reminder}
+        payload = {"token": self._token, "reminder": reminder}
 
         return self._post("reminders.complete", payload=payload, **kwargs)
 
@@ -82,7 +82,7 @@ class Reminders(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "reminder": reminder}
+        payload = {"token": self._token, "reminder": reminder}
 
         return self._post("reminders.delete", payload=payload, **kwargs)
 
@@ -106,7 +106,7 @@ class Reminders(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token, "reminder": reminder}
+        payload = {"token": self._token, "reminder": reminder}
 
         return self._get("reminders.info", payload=payload, **kwargs)
 
@@ -127,6 +127,6 @@ class Reminders(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self.token}
+        payload = {"token": self._token}
 
         return self._get("reminders.list", payload=payload, **kwargs)
