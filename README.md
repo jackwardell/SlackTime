@@ -2,6 +2,7 @@
 
 ## Background
 * This library is a wrapper around the Slack WebAPI (https://api.slack.com/methods)
+* This library uses the beautiful requests library (https://github.com/psf/requests) and the methods return `requests.Response` objects
 * This library is a homage to the great (and now archived) Slacker (https://github.com/os/slacker)
 * This library is a response to the official Slack client (https://github.com/slackapi/python-slackclient). I'm so petty I couldn't stand the the camel/snake-case hybrid: `client.chat_postMessage`
 * This library was made mostly by a script that scraped the Slack API method page and automagically generated the code
