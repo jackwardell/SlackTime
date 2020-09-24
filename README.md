@@ -63,6 +63,37 @@ slack_time = get_slack_time()
 slack.chat.post_message("general", "Hey team, I love this knock off Slacker library!")
 ```
 
+#### Inspecting a response:
+```
+>>> resp = slack_time.api.test(foo='bar')
+>>> resp
+<Response [200]>
+>>> resp.json()
+{
+    'ok': True,
+    'args': {
+        'token': 'xoxp-your-token',
+        'foo': 'bar'
+    }
+}
+```
+
+#### Errors:
+* When an 'error' is returned in the response it will be raised as an exception
+* The exception will subclassed from `SlackError`
+```
+>>> slack_time.api.test(error='hello')
+Traceback (most recent call last):
+  ...
+slack_time.api.hello: You tried to perform a request to https://slack.com/api/api.test. 
+The server returned a 'hello' response. Find out more at: https://api.slack.com/methods/api.test#errors
+
+>>> from slack_time import SlackError
+>>> try:
+...     slack_time.api.test(error='hello')
+... except SlackError:
+...     pass
+```
 
 #### How it works
 * In the web API docs (https://api.slack.com/methods) the methods are listed as endpoints e.g. admin.apps.requests.list
