@@ -2,6 +2,7 @@
 import os
 
 from slack_time.methods import SlackTime
+from slack_time.api import SlackError
 
 
 def get_slack_time(env_var: str = "SLACK_API_TOKEN", **kwargs) -> SlackTime:
