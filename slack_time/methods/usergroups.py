@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
+from typing import Union
+
 from requests import Response
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import comma_separated_string
 
 
 class Users(SlackAPI):
@@ -46,7 +50,11 @@ class Users(SlackAPI):
         return self._get("usergroups.users.list", payload=payload, **kwargs)
 
     def update(
-        self, usergroup: str, users: str, include_count: bool = None, **kwargs
+        self,
+        usergroup: str,
+        users: Union[str, Iterable],
+        include_count: bool = None,
+        **kwargs
     ) -> Response:
         """
         Update the list of users for a User Group
@@ -59,7 +67,7 @@ class Users(SlackAPI):
         :type str: e.g. S0604QSJC
 
         :param users: A comma separated string of encoded user IDs that represent the entire list of users for the User Group.
-        :type str: e.g. U060R4BJ4,U060RNRCZ
+        :type Union[str, Iterable]: e.g. U060R4BJ4,U060RNRCZ
 
         :param include_count: Include the number of users in the User Group.
         :type bool: e.g. true
@@ -101,6 +109,8 @@ class Users(SlackAPI):
             }
         }
         """
+        if users is not None:
+            users = comma_separated_string(users)
 
         payload = {
             "token": self._token,
@@ -122,7 +132,7 @@ class Usergroups(SlackAPI):
     def create(
         self,
         name: str,
-        channels: str = None,
+        channels: Union[str, Iterable] = None,
         description: str = None,
         handle: str = None,
         include_count: bool = None,
@@ -139,7 +149,7 @@ class Usergroups(SlackAPI):
         :type str: e.g. My Test Team
 
         :param channels: A comma separated string of encoded channel IDs for which the User Group uses as a default.
-        :type str: e.g. C1234567890,C2345678901,C3456789012
+        :type Union[str, Iterable]: e.g. C1234567890,C2345678901,C3456789012
 
         :param description: A short description of the User Group.
         :type str:
@@ -162,7 +172,7 @@ class Usergroups(SlackAPI):
         payload = {"token": self._token, "name": name}
 
         if channels is not None:
-            payload["channels"] = channels
+            payload["channels"] = comma_separated_string(channels)
 
         if description is not None:
             payload["description"] = description
@@ -356,7 +366,7 @@ class Usergroups(SlackAPI):
     def update(
         self,
         usergroup: str,
-        channels: str = None,
+        channels: Union[str, Iterable] = None,
         description: str = None,
         handle: str = None,
         include_count: bool = None,
@@ -374,7 +384,7 @@ class Usergroups(SlackAPI):
         :type str: e.g. S0604QSJC
 
         :param channels: A comma separated string of encoded channel IDs for which the User Group uses as a default.
-        :type str: e.g. C1234567890,C2345678901,C3456789012
+        :type Union[str, Iterable]: e.g. C1234567890,C2345678901,C3456789012
 
         :param description: A short description of the User Group.
         :type str:
@@ -429,7 +439,7 @@ class Usergroups(SlackAPI):
         payload = {"token": self._token, "usergroup": usergroup}
 
         if channels is not None:
-            payload["channels"] = channels
+            payload["channels"] = comma_separated_string(channels)
 
         if description is not None:
             payload["description"] = description

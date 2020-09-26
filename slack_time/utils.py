@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+from collections.abc import Iterable
 from typing import IO
 from typing import Union
 
@@ -46,3 +48,28 @@ def make_file(file: Union[str, IO]):
             return f
     else:
         return file
+
+
+def make_json_encoded(param: Union[str, list, dict]):
+    if isinstance(param, str):
+        return param
+    elif isinstance(param, (list, dict)):
+        return json.dumps(param)
+    else:
+        raise ValueError(
+            "A JSON-encoded object must be passed to the function as either a "
+            "string (JSON encoded) or a list or dict, which will be be "
+            "converted by json.dumps to a JSON encoded string"
+        )
+
+
+def comma_separated_string(param: Union[str, Iterable]):
+    if isinstance(param, str):
+        return param
+    elif isinstance(param, Iterable):
+        return ",".join(param)
+    else:
+        raise ValueError(
+            "A comma separated string must be passed as the comma separated "
+            "string itself or as an iterable which will be joined with a comma"
+        )

@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+from typing import Union
+
 from requests import Response
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import make_json_encoded
 
 
 class ScheduledMessages(SlackAPI):
@@ -252,12 +255,12 @@ class Chat(SlackAPI):
 
     def post_ephemeral(
         self,
-        attachments: list,
+        attachments: Union[list, str],
         channel: str,
         text: str,
         user: str,
         as_user: bool = None,
-        blocks: list = None,
+        blocks: Union[list, str] = None,
         icon_emoji: str = None,
         icon_url: str = None,
         link_names: bool = None,
@@ -322,6 +325,8 @@ class Chat(SlackAPI):
             "message_ts": "1502210682.580145"
         }
         """
+        if attachments is not None:
+            attachments = make_json_encoded(attachments)
 
         payload = {
             "token": self._token,
@@ -335,7 +340,7 @@ class Chat(SlackAPI):
             payload["as_user"] = as_user
 
         if blocks is not None:
-            payload["blocks"] = blocks
+            payload["blocks"] = make_json_encoded(blocks)
 
         if icon_emoji is not None:
             payload["icon_emoji"] = icon_emoji
@@ -362,8 +367,8 @@ class Chat(SlackAPI):
         channel: str,
         text: str,
         as_user: bool = None,
-        attachments: list = None,
-        blocks: list = None,
+        attachments: Union[list, str] = None,
+        blocks: Union[list, str] = None,
         icon_emoji: str = None,
         icon_url: str = None,
         link_names: bool = None,
@@ -464,10 +469,10 @@ class Chat(SlackAPI):
             payload["as_user"] = as_user
 
         if attachments is not None:
-            payload["attachments"] = attachments
+            payload["attachments"] = make_json_encoded(attachments)
 
         if blocks is not None:
-            payload["blocks"] = blocks
+            payload["blocks"] = make_json_encoded(blocks)
 
         if icon_emoji is not None:
             payload["icon_emoji"] = icon_emoji
@@ -507,8 +512,8 @@ class Chat(SlackAPI):
         post_at: int,
         text: str,
         as_user: bool = None,
-        attachments: list = None,
-        blocks: list = None,
+        attachments: Union[list, str] = None,
+        blocks: Union[list, str] = None,
         link_names: bool = None,
         parse: str = None,
         reply_broadcast: bool = None,
@@ -601,10 +606,10 @@ class Chat(SlackAPI):
             payload["as_user"] = as_user
 
         if attachments is not None:
-            payload["attachments"] = attachments
+            payload["attachments"] = make_json_encoded(attachments)
 
         if blocks is not None:
-            payload["blocks"] = blocks
+            payload["blocks"] = make_json_encoded(blocks)
 
         if link_names is not None:
             payload["link_names"] = link_names
@@ -630,7 +635,7 @@ class Chat(SlackAPI):
         self,
         channel: str,
         ts: float,
-        unfurls: dict,
+        unfurls: Union[dict, str],
         user_auth_message: str = None,
         user_auth_required: bool = None,
         user_auth_url: str = None,
@@ -673,6 +678,8 @@ class Chat(SlackAPI):
             "ok": true
         }
         """
+        if unfurls is not None:
+            unfurls = make_json_encoded(unfurls)
 
         payload = {
             "token": self._token,
@@ -697,8 +704,8 @@ class Chat(SlackAPI):
         channel: str,
         ts: float,
         as_user: bool = None,
-        attachments: list = None,
-        blocks: list = None,
+        attachments: Union[list, str] = None,
+        blocks: Union[list, str] = None,
         link_names: bool = None,
         parse: str = None,
         text: str = None,
@@ -761,10 +768,10 @@ class Chat(SlackAPI):
             payload["as_user"] = as_user
 
         if attachments is not None:
-            payload["attachments"] = attachments
+            payload["attachments"] = make_json_encoded(attachments)
 
         if blocks is not None:
-            payload["blocks"] = blocks
+            payload["blocks"] = make_json_encoded(blocks)
 
         if link_names is not None:
             payload["link_names"] = link_names

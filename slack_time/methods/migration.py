@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
+from typing import Union
+
 from requests import Response
 from slack_time.api import SlackAPI
+from slack_time.utils import comma_separated_string
 
 
 class Migration(SlackAPI):
-    def exchange(self, users: str, to_old: bool = None, **kwargs) -> Response:
+    def exchange(
+        self, users: Union[str, Iterable], to_old: bool = None, **kwargs
+    ) -> Response:
         """
         For Enterprise Grid workspaces, map local user IDs to global user IDs
         https://api.slack.com/methods/migration.exchange
@@ -13,7 +19,7 @@ class Migration(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param users: A comma-separated list of user ids, up to 400 per request
-        :type str:
+        :type Union[str, Iterable]:
 
         :param to_old: Specify true to convert W global user IDs to workspace-specific U IDs. Defaults to false.
         :type bool: e.g. true
@@ -42,6 +48,8 @@ class Migration(SlackAPI):
             ]
         }
         """
+        if users is not None:
+            users = comma_separated_string(users)
 
         payload = {"token": self._token, "users": users}
 

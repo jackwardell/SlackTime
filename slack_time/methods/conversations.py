@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
+from typing import Union
+
 from requests import Response
 from slack_time.api import SlackAPI
+from slack_time.utils import comma_separated_string
 
 
 class Conversations(SlackAPI):
@@ -304,7 +308,9 @@ class Conversations(SlackAPI):
 
         return self._get("conversations.info", payload=payload, **kwargs)
 
-    def invite(self, channel: str, users: str, **kwargs) -> Response:
+    def invite(
+        self, channel: str, users: Union[str, Iterable], **kwargs
+    ) -> Response:
         """
         Invites users to a channel.
         https://api.slack.com/methods/conversations.invite
@@ -316,7 +322,7 @@ class Conversations(SlackAPI):
         :type str: e.g. C1234567890
 
         :param users: A comma separated list of user IDs. Up to 1000 users may be listed.
-        :type str: e.g. W1234567890,U2345678901,U3456789012
+        :type Union[str, Iterable]: e.g. W1234567890,U2345678901,U3456789012
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -370,6 +376,8 @@ class Conversations(SlackAPI):
             }
         }
         """
+        if users is not None:
+            users = comma_separated_string(users)
 
         payload = {"token": self._token, "channel": channel, "users": users}
 
@@ -505,7 +513,7 @@ class Conversations(SlackAPI):
         cursor: str = None,
         exclude_archived: bool = None,
         limit: int = None,
-        types: str = None,
+        types: Union[str, Iterable] = None,
         **kwargs
     ) -> Response:
         """
@@ -525,7 +533,7 @@ class Conversations(SlackAPI):
         :type int: e.g. 20
 
         :param types: Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im
-        :type str: e.g. public_channel,private_channel
+        :type Union[str, Iterable]: e.g. public_channel,private_channel
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -623,7 +631,7 @@ class Conversations(SlackAPI):
             payload["limit"] = limit
 
         if types is not None:
-            payload["types"] = types
+            payload["types"] = comma_separated_string(types)
 
         return self._get("conversations.list", payload=payload, **kwargs)
 
