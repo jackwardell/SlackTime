@@ -85,7 +85,7 @@ slack.chat.post_message("general", "Hey team, I love this knock off Slacker libr
 >>> slack_time.api.test(error='hello')
 Traceback (most recent call last):
   ...
-slack_time.api.hello: You tried to perform a request to https://slack.com/api/api.test. 
+slack_time.api.hello: You tried to perform a request to https://slack.com/api/api.test.
 The server returned a 'hello' response. Find out more at: https://api.slack.com/methods/api.test#errors
 
 >>> from slack_time import SlackError

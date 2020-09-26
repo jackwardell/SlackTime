@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
 class Rtm(SlackAPI):
     def connect(
-        self, batch_presence_aware: int = None, presence_sub: bool = None, **kwargs
+        self,
+        batch_presence_aware: int = None,
+        presence_sub: bool = None,
+        **kwargs
     ) -> Response:
         """
         Starts a Real Time Messaging session.

@@ -3,14 +3,15 @@ from typing import IO
 from typing import Union
 
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 from slack_time.utils import make_file
 
 
 class Profile(SlackAPI):
-    def get(self, include_labels: bool = None, user: str = None, **kwargs) -> Response:
+    def get(
+        self, include_labels: bool = None, user: str = None, **kwargs
+    ) -> Response:
         """
         Retrieves a user's profile information.
         https://api.slack.com/methods/users.profile.get
@@ -365,7 +366,9 @@ class Users(SlackAPI):
 
         return self._get("users.identity", payload=payload, **kwargs)
 
-    def info(self, user: str, include_locale: bool = None, **kwargs) -> Response:
+    def info(
+        self, user: str, include_locale: bool = None, **kwargs
+    ) -> Response:
         """
         Gets information about a user.
         https://api.slack.com/methods/users.info

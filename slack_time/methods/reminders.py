@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
 class Reminders(SlackAPI):
-    def add(self, text: str, time: int, user: str = None, **kwargs) -> Response:
+    def add(
+        self, text: str, time: int, user: str = None, **kwargs
+    ) -> Response:
         """
         Creates a reminder.
         https://api.slack.com/methods/reminders.add

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -17,8 +16,11 @@ class Participants(SlackAPI):
         :param id: id returned by the calls.add method.
         :type str: e.g. R0E69JAIF
 
-        :param users: The list of users to add as participants in the Call. Read more on how to specify users here.
-        :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
+        :param users: The list of users to add as participants in the Call.
+                      Read more on how to specify users here.
+        :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678",
+                        "display_name": "External User", "avatar_url":
+                        "https://example.com/users/avatar1234.jpg"}]
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -48,8 +50,11 @@ class Participants(SlackAPI):
         :param id: id returned by the calls.add method.
         :type str: e.g. R0E69JAIF
 
-        :param users: The list of users to remove as participants in the Call. Read more on how to specify users here.
-        :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
+        :param users: The list of users to remove as participants in the Call.
+                      Read more on how to specify users here.
+        :type str: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678",
+                        "display_name": "External User", "avatar_url":
+                        "https://example.com/users/avatar1234.jpg"}]
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -66,7 +71,9 @@ class Participants(SlackAPI):
 
         payload = {"token": self._token, "id": id, "users": users}
 
-        return self._post("calls.participants.remove", payload=payload, **kwargs)
+        return self._post(
+            "calls.participants.remove", payload=payload, **kwargs
+        )
 
 
 class Calls(SlackAPI):
@@ -93,29 +100,42 @@ class Calls(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-        :param external_unique_id: An ID supplied by the 3rd-party Call provider. It must be unique across all Calls from that service.
+        :param external_unique_id: An ID supplied by the 3rd-party Call
+                                   provider. It must be unique across all Calls
+                                   from that service.
         :type str: e.g. 025169F6-E37A-4E62-BB54-7F93A0FC4C1F
 
         :param join_url: The URL required for a client to join the Call.
         :type str: e.g. https://example.com/calls/1234567890
 
-        :param created_by: The valid Slack user ID of the user who created this Call. When this method is called with a user token, the created_by field is optional and defaults to the authed user of the token. Otherwise, the field is required.
+        :param created_by: The valid Slack user ID of the user who created this
+                           Call. When this method is called with a user token,
+                           the created_by field is optional and defaults to the
+                           authed user of the token. Otherwise, the field is
+                           required.
         :type str: e.g. U1H77
 
         :param date_start: Call start time in UTC UNIX timestamp format
         :type int: e.g. 1562002086
 
-        :param desktop_app_join_url: When supplied, available Slack clients will attempt to directly launch the 3rd-party Call with this URL.
+        :param desktop_app_join_url: When supplied, available Slack clients will
+                                     attempt to directly launch the 3rd-party
+                                     Call with this URL.
         :type str: e.g. callapp://join/1234567890
 
-        :param external_display_id: An optional, human-readable ID supplied by the 3rd-party Call provider. If supplied, this ID will be displayed in the Call object.
+        :param external_display_id: An optional, human-readable ID supplied by
+        the 3rd-party Call provider. If supplied, this ID will be displayed in
+                                     the Call object.
         :type str: e.g. 705-292-868
 
         :param title: The name of the Call.
         :type str: e.g. Kimpossible sync up
 
-        :param users: The list of users to register as participants in the Call. Read more on how to specify users here.
-        :type list: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678", "display_name": "External User", "avatar_url": "https://example.com/users/avatar1234.jpg"}]
+        :param users: The list of users to register as participants in the Call.
+                      Read more on how to specify users here.
+        :type list: e.g. [{"slack_id": "U1H77"}, {"external_id": "54321678",
+                         "display_name": "External User", "avatar_url":
+                         "https://example.com/users/avatar1234.jpg"}]
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -183,7 +203,8 @@ class Calls(SlackAPI):
         :param token: Authentication token bearing required scopes.
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
-        :param id: id returned when registering the call using the calls.add method.
+        :param id: id returned when registering the call using the calls.add
+                   method.
         :type str: e.g. R0E69JAIF
 
         :param duration: Call duration in seconds
@@ -275,7 +296,9 @@ class Calls(SlackAPI):
         :param id: id returned by the calls.add method.
         :type str: e.g. R0E69JAIF
 
-        :param desktop_app_join_url: When supplied, available Slack clients will attempt to directly launch the 3rd-party Call with this URL.
+        :param desktop_app_join_url: When supplied, available Slack clients will
+                                     attempt to directly launch the 3rd-party
+                                     Call with this URL.
         :type str: e.g. callapp://join/0987654321
 
         :param join_url: The URL required for a client to join the Call.

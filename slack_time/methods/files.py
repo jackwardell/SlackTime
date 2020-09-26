@@ -3,7 +3,6 @@ from typing import IO
 from typing import Union
 
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 from slack_time.utils import make_file
@@ -143,7 +142,9 @@ class Remote(SlackAPI):
 
         return self._get("files.remote.add", payload=payload, **kwargs)
 
-    def info(self, external_id: int = None, file: str = None, **kwargs) -> Response:
+    def info(
+        self, external_id: int = None, file: str = None, **kwargs
+    ) -> Response:
         """
         Retrieve information about a remote file added to Slack
         https://api.slack.com/methods/files.remote.info
@@ -235,7 +236,9 @@ class Remote(SlackAPI):
 
         return self._get("files.remote.list", payload=payload, **kwargs)
 
-    def remove(self, external_id: int = None, file: str = None, **kwargs) -> Response:
+    def remove(
+        self, external_id: int = None, file: str = None, **kwargs
+    ) -> Response:
         """
         Remove a remote file.
         https://api.slack.com/methods/files.remote.remove
@@ -269,7 +272,11 @@ class Remote(SlackAPI):
         return self._get("files.remote.remove", payload=payload, **kwargs)
 
     def share(
-        self, channels: str, external_id: int = None, file: str = None, **kwargs
+        self,
+        channels: str,
+        external_id: int = None,
+        file: str = None,
+        **kwargs
     ) -> Response:
         """
         Share a remote file into a channel.

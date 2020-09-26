@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
@@ -32,6 +31,10 @@ class Dialog(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "dialog": dialog, "trigger_id": trigger_id}
+        payload = {
+            "token": self._token,
+            "dialog": dialog,
+            "trigger_id": trigger_id,
+        }
 
         return self._post("dialog.open", payload=payload, **kwargs)

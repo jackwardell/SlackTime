@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -110,7 +109,11 @@ class Approved(SlackAPI):
 
 class Requests(SlackAPI):
     def list(
-        self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
+        self,
+        cursor: str = None,
+        limit: int = None,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         List app requests for a team/workspace.
@@ -308,12 +311,18 @@ class Restricted(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._get("admin.apps.restricted.list", payload=payload, **kwargs)
+        return self._get(
+            "admin.apps.restricted.list", payload=payload, **kwargs
+        )
 
 
 class Apps(SlackAPI):
     def approve(
-        self, app_id: str = None, request_id: str = None, team_id: str = None, **kwargs
+        self,
+        app_id: str = None,
+        request_id: str = None,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         Approve an app for installation on a workspace.
@@ -358,7 +367,11 @@ class Apps(SlackAPI):
         return self._post("admin.apps.approve", payload=payload, **kwargs)
 
     def restrict(
-        self, app_id: str = None, request_id: str = None, team_id: str = None, **kwargs
+        self,
+        app_id: str = None,
+        request_id: str = None,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         Restrict an app for installation on a workspace.
@@ -517,16 +530,24 @@ class RestrictAccess(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel_id": channel_id, "group_id": group_id}
+        payload = {
+            "token": self._token,
+            "channel_id": channel_id,
+            "group_id": group_id,
+        }
 
         if team_id is not None:
             payload["team_id"] = team_id
 
         return self._get(
-            "admin.conversations.restrictAccess.addGroup", payload=payload, **kwargs
+            "admin.conversations.restrictAccess.addGroup",
+            payload=payload,
+            **kwargs
         )
 
-    def list_groups(self, channel_id: str, team_id: str = None, **kwargs) -> Response:
+    def list_groups(
+        self, channel_id: str, team_id: str = None, **kwargs
+    ) -> Response:
         """
         List all IDP Groups linked to a channel
         https://api.slack.com/methods/admin.conversations.restrictAccess.listGroups
@@ -562,7 +583,9 @@ class RestrictAccess(SlackAPI):
             payload["team_id"] = team_id
 
         return self._get(
-            "admin.conversations.restrictAccess.listGroups", payload=payload, **kwargs
+            "admin.conversations.restrictAccess.listGroups",
+            payload=payload,
+            **kwargs
         )
 
     def remove_group(
@@ -605,7 +628,9 @@ class RestrictAccess(SlackAPI):
         }
 
         return self._get(
-            "admin.conversations.restrictAccess.removeGroup", payload=payload, **kwargs
+            "admin.conversations.restrictAccess.removeGroup",
+            payload=payload,
+            **kwargs
         )
 
 
@@ -644,7 +669,9 @@ class Conversations(SlackAPI):
 
         payload = {"token": self._token, "channel_id": channel_id}
 
-        return self._post("admin.conversations.archive", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.archive", payload=payload, **kwargs
+        )
 
     def convert_to_private(self, channel_id: str, **kwargs) -> Response:
         """
@@ -721,7 +748,11 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "is_private": is_private, "name": name}
+        payload = {
+            "token": self._token,
+            "is_private": is_private,
+            "name": name,
+        }
 
         if description is not None:
             payload["description"] = description
@@ -732,7 +763,9 @@ class Conversations(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.conversations.create", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.create", payload=payload, **kwargs
+        )
 
     def delete(self, channel_id: str, **kwargs) -> Response:
         """
@@ -760,7 +793,9 @@ class Conversations(SlackAPI):
 
         payload = {"token": self._token, "channel_id": channel_id}
 
-        return self._post("admin.conversations.delete", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.delete", payload=payload, **kwargs
+        )
 
     def disconnect_shared(
         self, channel_id: str, leaving_team_ids: str = None, **kwargs
@@ -823,7 +858,9 @@ class Conversations(SlackAPI):
         payload = {"token": self._token, "channel_id": channel_id}
 
         return self._post(
-            "admin.conversations.getConversationPrefs", payload=payload, **kwargs
+            "admin.conversations.getConversationPrefs",
+            payload=payload,
+            **kwargs
         )
 
     def get_teams(
@@ -867,7 +904,9 @@ class Conversations(SlackAPI):
         if limit is not None:
             payload["limit"] = limit
 
-        return self._post("admin.conversations.getTeams", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.getTeams", payload=payload, **kwargs
+        )
 
     def invite(self, channel_id: str, user_ids: str, **kwargs) -> Response:
         """
@@ -896,9 +935,15 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel_id": channel_id, "user_ids": user_ids}
+        payload = {
+            "token": self._token,
+            "channel_id": channel_id,
+            "user_ids": user_ids,
+        }
 
-        return self._post("admin.conversations.invite", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.invite", payload=payload, **kwargs
+        )
 
     def rename(self, channel_id: str, name: str, **kwargs) -> Response:
         """
@@ -927,9 +972,15 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel_id": channel_id, "name": name}
+        payload = {
+            "token": self._token,
+            "channel_id": channel_id,
+            "name": name,
+        }
 
-        return self._post("admin.conversations.rename", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.rename", payload=payload, **kwargs
+        )
 
     def search(
         self,
@@ -1002,9 +1053,13 @@ class Conversations(SlackAPI):
         if team_ids is not None:
             payload["team_ids"] = team_ids
 
-        return self._post("admin.conversations.search", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.search", payload=payload, **kwargs
+        )
 
-    def set_conversation_prefs(self, channel_id: str, prefs: str, **kwargs) -> Response:
+    def set_conversation_prefs(
+        self, channel_id: str, prefs: str, **kwargs
+    ) -> Response:
         """
         Set the posting permissions for a public or private channel.
         https://api.slack.com/methods/admin.conversations.setConversationPrefs
@@ -1031,10 +1086,16 @@ class Conversations(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel_id": channel_id, "prefs": prefs}
+        payload = {
+            "token": self._token,
+            "channel_id": channel_id,
+            "prefs": prefs,
+        }
 
         return self._post(
-            "admin.conversations.setConversationPrefs", payload=payload, **kwargs
+            "admin.conversations.setConversationPrefs",
+            payload=payload,
+            **kwargs
         )
 
     def set_teams(
@@ -1088,7 +1149,9 @@ class Conversations(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.conversations.setTeams", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.setTeams", payload=payload, **kwargs
+        )
 
     def unarchive(self, channel_id: str, **kwargs) -> Response:
         """
@@ -1116,7 +1179,9 @@ class Conversations(SlackAPI):
 
         payload = {"token": self._token, "channel_id": channel_id}
 
-        return self._post("admin.conversations.unarchive", payload=payload, **kwargs)
+        return self._post(
+            "admin.conversations.unarchive", payload=payload, **kwargs
+        )
 
 
 class Emoji(SlackAPI):
@@ -1182,7 +1247,9 @@ class Emoji(SlackAPI):
 
         return self._get("admin.emoji.addAlias", payload=payload, **kwargs)
 
-    def list(self, cursor: str = None, limit: int = None, **kwargs) -> Response:
+    def list(
+        self, cursor: str = None, limit: int = None, **kwargs
+    ) -> Response:
         """
         List emoji for an Enterprise Grid organization.
         https://api.slack.com/methods/admin.emoji.list
@@ -1318,7 +1385,11 @@ class Approved_(SlackAPI):
     """
 
     def list(
-        self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
+        self,
+        cursor: str = None,
+        limit: int = None,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         List all approved workspace invite requests.
@@ -1363,7 +1434,11 @@ class Approved_(SlackAPI):
 
 class Denied(SlackAPI):
     def list(
-        self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
+        self,
+        cursor: str = None,
+        limit: int = None,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         List all denied workspace invite requests.
@@ -1401,7 +1476,9 @@ class Denied(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.inviteRequests.denied.list", payload=payload, **kwargs)
+        return self._post(
+            "admin.inviteRequests.denied.list", payload=payload, **kwargs
+        )
 
 
 class InviteRequests(SlackAPI):
@@ -1443,14 +1520,21 @@ class InviteRequests(SlackAPI):
 
         """
 
-        payload = {"token": self._token, "invite_request_id": invite_request_id}
+        payload = {
+            "token": self._token,
+            "invite_request_id": invite_request_id,
+        }
 
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.inviteRequests.approve", payload=payload, **kwargs)
+        return self._post(
+            "admin.inviteRequests.approve", payload=payload, **kwargs
+        )
 
-    def deny(self, invite_request_id: str, team_id: str = None, **kwargs) -> Response:
+    def deny(
+        self, invite_request_id: str, team_id: str = None, **kwargs
+    ) -> Response:
         """
         Deny a workspace invite request.
         https://api.slack.com/methods/admin.inviteRequests.deny
@@ -1477,15 +1561,24 @@ class InviteRequests(SlackAPI):
             }
         """
 
-        payload = {"token": self._token, "invite_request_id": invite_request_id}
+        payload = {
+            "token": self._token,
+            "invite_request_id": invite_request_id,
+        }
 
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.inviteRequests.deny", payload=payload, **kwargs)
+        return self._post(
+            "admin.inviteRequests.deny", payload=payload, **kwargs
+        )
 
     def list(
-        self, cursor: str = None, limit: int = None, team_id: str = None, **kwargs
+        self,
+        cursor: str = None,
+        limit: int = None,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         List all pending workspace invite requests.
@@ -1527,7 +1620,9 @@ class InviteRequests(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.inviteRequests.list", payload=payload, **kwargs)
+        return self._post(
+            "admin.inviteRequests.list", payload=payload, **kwargs
+        )
 
 
 class Admins(SlackAPI):
@@ -1661,7 +1756,9 @@ class Settings(SlackAPI):
 
         payload = {"token": self._token, "team_id": team_id}
 
-        return self._post("admin.teams.settings.info", payload=payload, **kwargs)
+        return self._post(
+            "admin.teams.settings.info", payload=payload, **kwargs
+        )
 
     def set_default_channels(
         self, channel_ids: str, team_id: str, **kwargs
@@ -1692,13 +1789,21 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel_ids": channel_ids, "team_id": team_id}
+        payload = {
+            "token": self._token,
+            "channel_ids": channel_ids,
+            "team_id": team_id,
+        }
 
         return self._get(
-            "admin.teams.settings.setDefaultChannels", payload=payload, **kwargs
+            "admin.teams.settings.setDefaultChannels",
+            payload=payload,
+            **kwargs
         )
 
-    def set_description(self, description: str, team_id: str, **kwargs) -> Response:
+    def set_description(
+        self, description: str, team_id: str, **kwargs
+    ) -> Response:
         """
         Set the description of a given workspace.
         https://api.slack.com/methods/admin.teams.settings.setDescription
@@ -1725,7 +1830,11 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "description": description, "team_id": team_id}
+        payload = {
+            "token": self._token,
+            "description": description,
+            "team_id": team_id,
+        }
 
         return self._post(
             "admin.teams.settings.setDescription", payload=payload, **kwargs
@@ -1767,7 +1876,9 @@ class Settings(SlackAPI):
         }
 
         return self._post(
-            "admin.teams.settings.setDiscoverability", payload=payload, **kwargs
+            "admin.teams.settings.setDiscoverability",
+            payload=payload,
+            **kwargs
         )
 
     def set_icon(self, image_url: str, team_id: str, **kwargs) -> Response:
@@ -1797,9 +1908,15 @@ class Settings(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "image_url": image_url, "team_id": team_id}
+        payload = {
+            "token": self._token,
+            "image_url": image_url,
+            "team_id": team_id,
+        }
 
-        return self._get("admin.teams.settings.setIcon", payload=payload, **kwargs)
+        return self._get(
+            "admin.teams.settings.setIcon", payload=payload, **kwargs
+        )
 
     def set_name(self, name: str, team_id: str, **kwargs) -> Response:
         """
@@ -1830,7 +1947,9 @@ class Settings(SlackAPI):
 
         payload = {"token": self._token, "name": name, "team_id": team_id}
 
-        return self._post("admin.teams.settings.setName", payload=payload, **kwargs)
+        return self._post(
+            "admin.teams.settings.setName", payload=payload, **kwargs
+        )
 
 
 class Teams(SlackAPI):
@@ -1901,7 +2020,9 @@ class Teams(SlackAPI):
 
         return self._post("admin.teams.create", payload=payload, **kwargs)
 
-    def list(self, cursor: str = None, limit: int = None, **kwargs) -> Response:
+    def list(
+        self, cursor: str = None, limit: int = None, **kwargs
+    ) -> Response:
         """
         List all teams on an Enterprise organization
         https://api.slack.com/methods/admin.teams.list
@@ -1953,7 +2074,11 @@ class Teams(SlackAPI):
 
 class Usergroups(SlackAPI):
     def add_channels(
-        self, channel_ids: str, usergroup_id: str, team_id: str = None, **kwargs
+        self,
+        channel_ids: str,
+        usergroup_id: str,
+        team_id: str = None,
+        **kwargs
     ) -> Response:
         """
         Add one or more default channels to an IDP group.
@@ -1993,10 +2118,16 @@ class Usergroups(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.usergroups.addChannels", payload=payload, **kwargs)
+        return self._post(
+            "admin.usergroups.addChannels", payload=payload, **kwargs
+        )
 
     def add_teams(
-        self, team_ids: str, usergroup_id: str, auto_provision: bool = None, **kwargs
+        self,
+        team_ids: str,
+        usergroup_id: str,
+        auto_provision: bool = None,
+        **kwargs
     ) -> Response:
         """
         Associate one or more default workspaces with an organization-wide IDP group.
@@ -2036,7 +2167,9 @@ class Usergroups(SlackAPI):
         if auto_provision is not None:
             payload["auto_provision"] = auto_provision
 
-        return self._post("admin.usergroups.addTeams", payload=payload, **kwargs)
+        return self._post(
+            "admin.usergroups.addTeams", payload=payload, **kwargs
+        )
 
     def list_channels(
         self,
@@ -2107,7 +2240,9 @@ class Usergroups(SlackAPI):
         if team_id is not None:
             payload["team_id"] = team_id
 
-        return self._post("admin.usergroups.listChannels", payload=payload, **kwargs)
+        return self._post(
+            "admin.usergroups.listChannels", payload=payload, **kwargs
+        )
 
     def remove_channels(
         self, channel_ids: str, usergroup_id: str, **kwargs
@@ -2144,12 +2279,18 @@ class Usergroups(SlackAPI):
             "usergroup_id": usergroup_id,
         }
 
-        return self._post("admin.usergroups.removeChannels", payload=payload, **kwargs)
+        return self._post(
+            "admin.usergroups.removeChannels", payload=payload, **kwargs
+        )
 
 
 class Session(SlackAPI):
     def reset(
-        self, user_id: str, mobile_only: bool = None, web_only: bool = None, **kwargs
+        self,
+        user_id: str,
+        mobile_only: bool = None,
+        web_only: bool = None,
+        **kwargs
     ) -> Response:
         """
         Wipes all valid sessions on all devices for a given user
@@ -2191,7 +2332,9 @@ class Session(SlackAPI):
         if web_only is not None:
             payload["web_only"] = web_only
 
-        return self._post("admin.users.session.reset", payload=payload, **kwargs)
+        return self._post(
+            "admin.users.session.reset", payload=payload, **kwargs
+        )
 
 
 class Users(SlackAPI):
@@ -2243,7 +2386,11 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
+        payload = {
+            "token": self._token,
+            "team_id": team_id,
+            "user_id": user_id,
+        }
 
         if channel_ids is not None:
             payload["channel_ids"] = channel_ids
@@ -2424,7 +2571,11 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
+        payload = {
+            "token": self._token,
+            "team_id": team_id,
+            "user_id": user_id,
+        }
 
         return self._post("admin.users.remove", payload=payload, **kwargs)
 
@@ -2455,7 +2606,11 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
+        payload = {
+            "token": self._token,
+            "team_id": team_id,
+            "user_id": user_id,
+        }
 
         return self._post("admin.users.setAdmin", payload=payload, **kwargs)
 
@@ -2498,7 +2653,9 @@ class Users(SlackAPI):
             "user_id": user_id,
         }
 
-        return self._post("admin.users.setExpiration", payload=payload, **kwargs)
+        return self._post(
+            "admin.users.setExpiration", payload=payload, **kwargs
+        )
 
     def set_owner(self, team_id: str, user_id: str, **kwargs) -> Response:
         """
@@ -2527,7 +2684,11 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
+        payload = {
+            "token": self._token,
+            "team_id": team_id,
+            "user_id": user_id,
+        }
 
         return self._post("admin.users.setOwner", payload=payload, **kwargs)
 
@@ -2558,7 +2719,11 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "team_id": team_id, "user_id": user_id}
+        payload = {
+            "token": self._token,
+            "team_id": team_id,
+            "user_id": user_id,
+        }
 
         return self._post("admin.users.setRegular", payload=payload, **kwargs)
 

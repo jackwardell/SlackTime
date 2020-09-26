@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from functools import wraps
 
 import requests
@@ -21,8 +20,8 @@ def raise_exception_on_error_from_server(func):
             doc = SLACK_DOC_BASE_URL + url.rsplit("/", maxsplit=1).pop()
             exception = type(resp.error, (SlackError,), {})
             raise exception(
-                f"You tried to perform a request to {url}. \n"
-                f"The server returned a '{resp.error}' response. "
+                f"You tried to perform a request to {url} \n"
+                f"The server returned a '{resp.error}' response "
                 f"Find out more at: {doc}#errors"
             )
         else:
@@ -89,13 +88,17 @@ class SlackAPI:
         return resp
 
     @raise_exception_on_error_from_server
-    def _post(self, path: str, payload: dict = None, **kwargs) -> requests.Response:
+    def _post(
+        self, path: str, payload: dict = None, **kwargs
+    ) -> requests.Response:
         url = self.make_url(path)
         kwargs.setdefault("data", payload)
         return self._request("post", url, **kwargs)
 
     @raise_exception_on_error_from_server
-    def _get(self, path: str, payload: dict = None, **kwargs) -> requests.Response:
+    def _get(
+        self, path: str, payload: dict = None, **kwargs
+    ) -> requests.Response:
         url = self.make_url(path)
         kwargs.setdefault("params", payload)
         return self._request("get", url, **kwargs)

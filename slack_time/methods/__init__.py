@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from slack_time.api import SlackAPI
+from slack_time.utils import cached_property
+
 from .admin import Admin
 from .api import Api
 from .apps import Apps
@@ -24,9 +27,6 @@ from .usergroups import Usergroups
 from .users import Users
 from .views import Views
 from .workflows import Workflows
-
-from slack_time.utils import cached_property
-from slack_time.api import SlackAPI
 
 __all__ = [
     "Admin",

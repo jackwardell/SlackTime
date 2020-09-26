@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
@@ -105,7 +104,10 @@ class Workflows(SlackAPI):
         <Response [200]>
         """
 
-        payload = {"token": self._token, "workflow_step_edit_id": workflow_step_edit_id}
+        payload = {
+            "token": self._token,
+            "workflow_step_edit_id": workflow_step_edit_id,
+        }
 
         if inputs is not None:
             payload["inputs"] = inputs

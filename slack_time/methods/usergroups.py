@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
 
 class Users(SlackAPI):
-    def list(self, usergroup: str, include_disabled: bool = None, **kwargs) -> Response:
+    def list(
+        self, usergroup: str, include_disabled: bool = None, **kwargs
+    ) -> Response:
         """
         List all users in a User Group
         https://api.slack.com/methods/usergroups.users.list
@@ -101,7 +102,11 @@ class Users(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "usergroup": usergroup, "users": users}
+        payload = {
+            "token": self._token,
+            "usergroup": usergroup,
+            "users": users,
+        }
 
         if include_count is not None:
             payload["include_count"] = include_count
@@ -170,7 +175,9 @@ class Usergroups(SlackAPI):
 
         return self._post("usergroups.create", payload=payload, **kwargs)
 
-    def disable(self, usergroup: str, include_count: bool = None, **kwargs) -> Response:
+    def disable(
+        self, usergroup: str, include_count: bool = None, **kwargs
+    ) -> Response:
         """
         Disable an existing User Group
         https://api.slack.com/methods/usergroups.disable
@@ -200,7 +207,9 @@ class Usergroups(SlackAPI):
 
         return self._post("usergroups.disable", payload=payload, **kwargs)
 
-    def enable(self, usergroup: str, include_count: bool = None, **kwargs) -> Response:
+    def enable(
+        self, usergroup: str, include_count: bool = None, **kwargs
+    ) -> Response:
         """
         Enable a User Group
         https://api.slack.com/methods/usergroups.enable

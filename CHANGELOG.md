@@ -9,4 +9,4 @@
 
     * slack_time/utils.py: fixing file upload bug
 
-    *
+    * TODO.md: adding about making flake8 compliant

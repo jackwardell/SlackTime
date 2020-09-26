@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
 
 class Resources(SlackAPI):
-    def list(self, cursor: str = None, limit: int = None, **kwargs) -> Response:
+    def list(
+        self, cursor: str = None, limit: int = None, **kwargs
+    ) -> Response:
         """
         Returns list of resource grants this app has on a team.
         https://api.slack.com/methods/apps.permissions.resources.list
@@ -58,7 +59,9 @@ class Resources(SlackAPI):
         if limit is not None:
             payload["limit"] = limit
 
-        return self._get("apps.permissions.resources.list", payload=payload, **kwargs)
+        return self._get(
+            "apps.permissions.resources.list", payload=payload, **kwargs
+        )
 
 
 class Scopes(SlackAPI):
@@ -109,11 +112,15 @@ class Scopes(SlackAPI):
 
         payload = {"token": self._token}
 
-        return self._get("apps.permissions.scopes.list", payload=payload, **kwargs)
+        return self._get(
+            "apps.permissions.scopes.list", payload=payload, **kwargs
+        )
 
 
 class Users(SlackAPI):
-    def list(self, cursor: str = None, limit: int = None, **kwargs) -> Response:
+    def list(
+        self, cursor: str = None, limit: int = None, **kwargs
+    ) -> Response:
         """
         Returns list of user grants and corresponding scopes this app has on a team.
         https://api.slack.com/methods/apps.permissions.users.list
@@ -166,9 +173,13 @@ class Users(SlackAPI):
         if limit is not None:
             payload["limit"] = limit
 
-        return self._get("apps.permissions.users.list", payload=payload, **kwargs)
+        return self._get(
+            "apps.permissions.users.list", payload=payload, **kwargs
+        )
 
-    def request(self, scopes: str, trigger_id: str, user: str, **kwargs) -> Response:
+    def request(
+        self, scopes: str, trigger_id: str, user: str, **kwargs
+    ) -> Response:
         """
         Enables an app to trigger a permissions modal to grant an app access to a user access scope.
         https://api.slack.com/methods/apps.permissions.users.request
@@ -205,7 +216,9 @@ class Users(SlackAPI):
             "user": user,
         }
 
-        return self._get("apps.permissions.users.request", payload=payload, **kwargs)
+        return self._get(
+            "apps.permissions.users.request", payload=payload, **kwargs
+        )
 
 
 class Permissions(SlackAPI):
@@ -312,7 +325,11 @@ class Permissions(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "scopes": scopes, "trigger_id": trigger_id}
+        payload = {
+            "token": self._token,
+            "scopes": scopes,
+            "trigger_id": trigger_id,
+        }
 
         return self._get("apps.permissions.request", payload=payload, **kwargs)
 
@@ -334,7 +351,9 @@ class Apps(SlackAPI):
     def permissions(self) -> Permissions:
         return Permissions(**self.params)
 
-    def uninstall(self, client_id: float, client_secret: str, **kwargs) -> Response:
+    def uninstall(
+        self, client_id: float, client_secret: str, **kwargs
+    ) -> Response:
         """
         Uninstalls your app from a workspace.
         https://api.slack.com/methods/apps.uninstall

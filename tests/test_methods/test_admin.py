@@ -73,8 +73,12 @@ def test_admin_conversations_unarchive(slack_time):
     assert slack_time.admin.conversations.unarchive
 
 
-def test_admin_conversations_ekm_list_original_connected_channel_info(slack_time):
-    assert slack_time.admin.conversations.ekm.list_original_connected_channel_info
+def test_admin_conversations_ekm_list_original_connected_channel_info(
+    slack_time
+):
+    assert (
+        slack_time.admin.conversations.ekm.list_original_connected_channel_info
+    )
 
 
 def test_admin_conversations_restrict_access_add_group(slack_time):

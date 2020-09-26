@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
@@ -710,7 +709,11 @@ class Conversations(SlackAPI):
         return self._get("conversations.members", payload=payload, **kwargs)
 
     def open(
-        self, channel: str = None, return_im: bool = None, users: str = None, **kwargs
+        self,
+        channel: str = None,
+        return_im: bool = None,
+        users: str = None,
+        **kwargs
     ) -> Response:
         """
         Opens or resumes a direct message or multi-person direct message.
@@ -969,9 +972,15 @@ class Conversations(SlackAPI):
 
         """
 
-        payload = {"token": self._token, "channel": channel, "purpose": purpose}
+        payload = {
+            "token": self._token,
+            "channel": channel,
+            "purpose": purpose,
+        }
 
-        return self._post("conversations.setPurpose", payload=payload, **kwargs)
+        return self._post(
+            "conversations.setPurpose", payload=payload, **kwargs
+        )
 
     def set_topic(self, channel: str, topic: str, **kwargs) -> Response:
         """

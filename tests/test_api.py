@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from requests import Session
 from unittest.mock import patch
+
 import pytest
+from requests import Session
 
 
 def test_slack_api():
@@ -75,7 +76,12 @@ def test_slack_api_request_requests():
 
         resp = api._request(method, url, params=payload, **kwargs)
         request.assert_called_once_with(
-            "get", url, params=payload, proxies=proxies, timeout=timeout, **kwargs
+            "get",
+            url,
+            params=payload,
+            proxies=proxies,
+            timeout=timeout,
+            **kwargs,
         )
         assert resp.body == rv
         assert resp.successful == rv["ok"]

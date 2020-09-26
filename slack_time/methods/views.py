@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
@@ -73,7 +72,11 @@ class Views(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "trigger_id": trigger_id, "view": view}
+        payload = {
+            "token": self._token,
+            "trigger_id": trigger_id,
+            "view": view,
+        }
 
         return self._post("views.open", payload=payload, **kwargs)
 
@@ -221,7 +224,11 @@ class Views(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "trigger_id": trigger_id, "view": view}
+        payload = {
+            "token": self._token,
+            "trigger_id": trigger_id,
+            "view": view,
+        }
 
         return self._post("views.push", payload=payload, **kwargs)
 

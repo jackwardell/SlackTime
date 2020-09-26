@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
 class Reactions(SlackAPI):
-    def add(self, channel: str, name: str, timestamp: float, **kwargs) -> Response:
+    def add(
+        self, channel: str, name: str, timestamp: float, **kwargs
+    ) -> Response:
         """
         Adds a reaction to an item.
         https://api.slack.com/methods/reactions.add

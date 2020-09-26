@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
 
@@ -79,7 +78,9 @@ class ScheduledMessages(SlackAPI):
         if oldest is not None:
             payload["oldest"] = oldest
 
-        return self._post("chat.scheduledMessages.list", payload=payload, **kwargs)
+        return self._post(
+            "chat.scheduledMessages.list", payload=payload, **kwargs
+        )
 
 
 class Chat(SlackAPI):
@@ -129,7 +130,11 @@ class Chat(SlackAPI):
         return self._post("chat.delete", payload=payload, **kwargs)
 
     def delete_scheduled_message(
-        self, channel: str, scheduled_message_id: str, as_user: bool = None, **kwargs
+        self,
+        channel: str,
+        scheduled_message_id: str,
+        as_user: bool = None,
+        **kwargs
     ) -> Response:
         """
         Deletes a pending scheduled message from the queue.
@@ -169,9 +174,13 @@ class Chat(SlackAPI):
         if as_user is not None:
             payload["as_user"] = as_user
 
-        return self._post("chat.deleteScheduledMessage", payload=payload, **kwargs)
+        return self._post(
+            "chat.deleteScheduledMessage", payload=payload, **kwargs
+        )
 
-    def get_permalink(self, channel: int, message_ts: float, **kwargs) -> Response:
+    def get_permalink(
+        self, channel: int, message_ts: float, **kwargs
+    ) -> Response:
         """
         Retrieve a permalink URL for a specific extant message
         https://api.slack.com/methods/chat.getPermalink
@@ -200,7 +209,11 @@ class Chat(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel": channel, "message_ts": message_ts}
+        payload = {
+            "token": self._token,
+            "channel": channel,
+            "message_ts": message_ts,
+        }
 
         return self._get("chat.getPermalink", payload=payload, **kwargs)
 

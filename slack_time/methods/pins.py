@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-
 from slack_time.api import SlackAPI
 
 
@@ -32,7 +31,11 @@ class Pins(SlackAPI):
         }
         """
 
-        payload = {"token": self._token, "channel": channel, "timestamp": timestamp}
+        payload = {
+            "token": self._token,
+            "channel": channel,
+            "timestamp": timestamp,
+        }
 
         return self._post("pins.add", payload=payload, **kwargs)
 
