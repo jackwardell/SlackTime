@@ -17,7 +17,7 @@ class CachedProperty:
 
     def __init__(self, func):
         self.func = func
-        self.__doc__ = getattr(func, "__doc__")
+        self.__doc__ = func.__doc__
 
     def __get__(self, instance, cls):
         if instance is None:
@@ -43,7 +43,6 @@ def make_file(file: Union[str, IO]):
     """
     if isinstance(file, str):
         with open(file, "rb") as f:
-            file_to_upload = f
+            return f
     else:
-        file_to_upload = file
-    return file_to_upload
+        return file

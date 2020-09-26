@@ -3,7 +3,7 @@ repos:
     rev: v2.4.3
     hooks:
       - id: pyupgrade
-        args: [ "--py36-plus" ]
+#        args: [ "--py36-plus" ]
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v2.3.0
     hooks:
@@ -25,7 +25,7 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
-      - id: check-yaml
+#      - id: check-yaml
       - id: check-byte-order-marker
       - id: end-of-file-fixer
       - id: trailing-whitespace
