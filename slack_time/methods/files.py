@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
 from typing import IO
 from typing import Union
 
 from requests import Response
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import comma_separated_string
 from slack_time.utils import make_file
 
 
@@ -273,7 +275,7 @@ class Remote(SlackAPI):
 
     def share(
         self,
-        channels: str,
+        channels: Union[str, Iterable],
         external_id: int = None,
         file: str = None,
         **kwargs
@@ -286,7 +288,7 @@ class Remote(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param channels: Comma-separated list of channel IDs where the file will be shared.
-        :type str: e.g. C1234567890,C2345678901,C3456789012
+        :type Union[str, Iterable]: e.g. C1234567890,C2345678901,C3456789012
 
         :param external_id: The globally unique identifier (GUID) for the file, as set by the app registering the file with Slack.  Either this field or file or both are required.
         :type int: e.g. 123456
@@ -302,6 +304,9 @@ class Remote(SlackAPI):
         >>> response = client.files.remote.share(**your_params)
         <Response [200]>
         """
+
+        if channels is not None:
+            channels = comma_separated_string(channels)
 
         payload = {"token": self._token, "channels": channels}
 
@@ -774,7 +779,7 @@ class Files(SlackAPI):
 
     def upload(
         self,
-        channels: str = None,
+        channels: Union[str, Iterable] = None,
         content: Union[str, IO] = None,
         file: Union[str, IO] = None,
         filename: str = None,
@@ -792,7 +797,7 @@ class Files(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param channels: Comma-separated list of channel names or IDs where the file will be shared.
-        :type str: e.g. C1234567890,C2345678901,C3456789012
+        :type Union[str, Iterable]: e.g. C1234567890,C2345678901,C3456789012
 
         :param content: File contents via a POST variable. If omitting this parameter, you must provide a file.
         :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file
@@ -887,7 +892,7 @@ class Files(SlackAPI):
         payload = {"token": self._token}
 
         if channels is not None:
-            payload["channels"] = channels
+            payload["channels"] = comma_separated_string(channels)
 
         if content is not None:
             file_to_upload = make_file(content)

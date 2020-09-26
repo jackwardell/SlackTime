@@ -720,7 +720,7 @@ class Conversations(SlackAPI):
         self,
         channel: str = None,
         return_im: bool = None,
-        users: str = None,
+        users: Union[str, Iterable] = None,
         **kwargs
     ) -> Response:
         """
@@ -737,7 +737,7 @@ class Conversations(SlackAPI):
         :type bool: e.g. true
 
         :param users: Comma separated lists of users. If only one user is included, this creates a 1:1 DM.  The ordering of the users is preserved whenever a multi-person direct message is returned. Supply a channel when not supplying users.
-        :type str: e.g. W1234567890,U2345678901,U3456789012
+        :type Union[str, Iterable]: e.g. W1234567890,U2345678901,U3456789012
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -764,7 +764,7 @@ class Conversations(SlackAPI):
             payload["return_im"] = return_im
 
         if users is not None:
-            payload["users"] = users
+            payload["users"] = comma_separated_string(users)
 
         return self._post("conversations.open", payload=payload, **kwargs)
 

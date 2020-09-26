@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
+from typing import Union
+
 from requests import Response
 from slack_time.api import SlackAPI
+from slack_time.utils import comma_separated_string
 
 
 class Dnd(SlackAPI):
@@ -97,7 +101,7 @@ class Dnd(SlackAPI):
 
         return self._get("dnd.setSnooze", payload=payload, **kwargs)
 
-    def team_info(self, users: str, **kwargs) -> Response:
+    def team_info(self, users: Union[str, Iterable], **kwargs) -> Response:
         """
         Retrieves the Do Not Disturb status for up to 50 users on a team.
         https://api.slack.com/methods/dnd.teamInfo
@@ -106,7 +110,7 @@ class Dnd(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param users: Comma-separated list of users to fetch Do Not Disturb status for
-        :type str: e.g. U1234,W4567
+        :type Union[str, Iterable]: e.g. U1234,W4567
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -132,6 +136,9 @@ class Dnd(SlackAPI):
             }
         }
         """
+
+        if users is not None:
+            users = comma_separated_string(users)
 
         payload = {"token": self._token, "users": users}
 

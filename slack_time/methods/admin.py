@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
+from typing import Union
+
 from requests import Response
 from slack_time.api import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import comma_separated_string
 
 
 class Approved(SlackAPI):
@@ -990,7 +994,7 @@ class Conversations(SlackAPI):
         search_channel_types: str = None,
         sort: str = None,
         sort_dir: str = None,
-        team_ids: str = None,
+        team_ids: Union[str, Iterable] = None,
         **kwargs
     ) -> Response:
         """
@@ -1019,7 +1023,7 @@ class Conversations(SlackAPI):
         :type str: e.g. asc
 
         :param team_ids: Comma separated string of team IDs, signifying the workspaces to search through.
-        :type str: e.g. T00000000,T00000001
+        :type Union[str, Iterable]: e.g. T00000000,T00000001
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -1051,7 +1055,7 @@ class Conversations(SlackAPI):
             payload["sort_dir"] = sort_dir
 
         if team_ids is not None:
-            payload["team_ids"] = team_ids
+            payload["team_ids"] = comma_separated_string(team_ids)
 
         return self._post(
             "admin.conversations.search", payload=payload, **kwargs
@@ -2075,7 +2079,7 @@ class Teams(SlackAPI):
 class Usergroups(SlackAPI):
     def add_channels(
         self,
-        channel_ids: str,
+        channel_ids: Union[str, Iterable],
         usergroup_id: str,
         team_id: str = None,
         **kwargs
@@ -2088,7 +2092,7 @@ class Usergroups(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param channel_ids: Comma separated string of channel IDs.
-        :type str: e.g. C00000000,C00000001
+        :type Union[str, Iterable]: e.g. C00000000,C00000001
 
         :param usergroup_id: ID of the IDP group to add default channels for.
         :type str: e.g. S00000000
@@ -2108,6 +2112,9 @@ class Usergroups(SlackAPI):
             "ok": true
         }
         """
+
+        if channel_ids is not None:
+            channel_ids = comma_separated_string(channel_ids)
 
         payload = {
             "token": self._token,
@@ -2245,7 +2252,7 @@ class Usergroups(SlackAPI):
         )
 
     def remove_channels(
-        self, channel_ids: str, usergroup_id: str, **kwargs
+        self, channel_ids: Union[str, Iterable], usergroup_id: str, **kwargs
     ) -> Response:
         """
         Remove one or more default channels from an org-level IDP group (user group).
@@ -2255,7 +2262,7 @@ class Usergroups(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param channel_ids: Comma-separated string of channel IDs
-        :type str: e.g. C00000000,C00000001
+        :type Union[str, Iterable]: e.g. C00000000,C00000001
 
         :param usergroup_id: ID of the IDP Group
         :type str: e.g. S00000000
@@ -2272,6 +2279,9 @@ class Usergroups(SlackAPI):
             "ok": true
         }
         """
+
+        if channel_ids is not None:
+            channel_ids = comma_separated_string(channel_ids)
 
         payload = {
             "token": self._token,
@@ -2346,7 +2356,7 @@ class Users(SlackAPI):
         self,
         team_id: str,
         user_id: str,
-        channel_ids: str = None,
+        channel_ids: Union[str, Iterable] = None,
         is_restricted: bool = None,
         is_ultra_restricted: bool = None,
         **kwargs
@@ -2365,7 +2375,7 @@ class Users(SlackAPI):
         :type str:
 
         :param channel_ids: Comma separated values of channel IDs to add user in the new workspace.
-        :type str: e.g. C123,C3456
+        :type Union[str, Iterable]: e.g. C123,C3456
 
         :param is_restricted: True if user should be added to the workspace as a guest.
         :type bool: e.g. true
@@ -2393,7 +2403,7 @@ class Users(SlackAPI):
         }
 
         if channel_ids is not None:
-            payload["channel_ids"] = channel_ids
+            payload["channel_ids"] = comma_separated_string(channel_ids)
 
         if is_restricted is not None:
             payload["is_restricted"] = is_restricted
