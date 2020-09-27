@@ -5,6 +5,9 @@ from functools import wraps
 from typing import IO
 from typing import Union
 
+SLACK_API_BASE_URL = "https://slack.com/api"
+SLACK_DOC_BASE_URL = "https://api.slack.com/methods/"
+
 
 class SlackError(Exception):
     pass
@@ -97,7 +100,3 @@ def raise_exception_on_error_from_server(func):
             return resp
 
     return wrapper
-
-
-SLACK_API_BASE_URL = "https://slack.com/api"
-SLACK_DOC_BASE_URL = "https://api.slack.com/methods/"
