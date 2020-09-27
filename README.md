@@ -18,7 +18,7 @@ This library aims to be:
 * Fast
 
 ## Install
-* This library uses type hints so is Python 3.5+
+* This library uses f-strings and therefore is 3.6+
 * Simply install using pip
 ```
 pip install slack_time
