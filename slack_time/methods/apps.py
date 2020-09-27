@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
+from typing import Union
+
 from requests import Response
 from slack_time import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import comma_separated_string
 
 
 class Resources(SlackAPI):
@@ -178,7 +182,11 @@ class Users(SlackAPI):
         )
 
     def request(
-        self, scopes: str, trigger_id: str, user: str, **kwargs
+        self,
+        scopes: Union[str, Iterable],
+        trigger_id: str,
+        user: str,
+        **kwargs
     ) -> Response:
         """
         Enables an app to trigger a permissions modal to grant an app access to a user access scope.
@@ -188,7 +196,7 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param scopes: A comma separated list of user scopes to request for
-        :type str:
+        :type Union[str, Iterable]:
 
         :param trigger_id: Token used to trigger the request
         :type str:
@@ -208,6 +216,9 @@ class Users(SlackAPI):
             "ok": true
         }
         """
+
+        if scopes is not None:
+            scopes = comma_separated_string(scopes)
 
         payload = {
             "token": self._token,
@@ -298,7 +309,9 @@ class Permissions(SlackAPI):
 
         return self._get("apps.permissions.info", payload=payload, **kwargs)
 
-    def request(self, scopes: str, trigger_id: str, **kwargs) -> Response:
+    def request(
+        self, scopes: Union[str, Iterable], trigger_id: str, **kwargs
+    ) -> Response:
         """
         Allows an app to request additional scopes
         https://api.slack.com/methods/apps.permissions.request
@@ -307,7 +320,7 @@ class Permissions(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param scopes: A comma separated list of scopes to request for
-        :type str:
+        :type Union[str, Iterable]:
 
         :param trigger_id: Token used to trigger the permissions API
         :type str:
@@ -324,6 +337,9 @@ class Permissions(SlackAPI):
             "ok": true
         }
         """
+
+        if scopes is not None:
+            scopes = comma_separated_string(scopes)
 
         payload = {
             "token": self._token,

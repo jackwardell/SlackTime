@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+from collections.abc import Iterable
 from typing import IO
 from typing import Union
 
 from requests import Response
 from slack_time import SlackAPI
 from slack_time.utils import cached_property
+from slack_time.utils import comma_separated_string
 from slack_time.utils import make_file
 
 
@@ -152,7 +154,7 @@ class Users(SlackAPI):
         cursor: str = None,
         exclude_archived: bool = None,
         limit: int = None,
-        types: str = None,
+        types: Union[str, Iterable] = None,
         user: str = None,
         **kwargs
     ) -> Response:
@@ -173,7 +175,7 @@ class Users(SlackAPI):
         :type int: e.g. 20
 
         :param types: Mix and match channel types by providing a comma-separated list of any combination of public_channel, private_channel, mpim, im
-        :type str: e.g. im,mpim
+        :type Union[str, Iterable]: e.g. im,mpim
 
         :param user: Browse conversations by a specific user ID's membership. Non-public channels are restricted to those where the calling user shares membership.
         :type str: e.g. W0B2345D
@@ -270,7 +272,7 @@ class Users(SlackAPI):
             payload["limit"] = limit
 
         if types is not None:
-            payload["types"] = types
+            payload["types"] = comma_separated_string(types)
 
         if user is not None:
             payload["user"] = user

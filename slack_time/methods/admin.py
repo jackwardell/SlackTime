@@ -435,10 +435,10 @@ class Apps(SlackAPI):
 class Ekm(SlackAPI):
     def list_original_connected_channel_info(
         self,
-        channel_ids: str = None,
+        channel_ids: Union[str, Iterable] = None,
         cursor: str = None,
         limit: int = None,
-        team_ids: str = None,
+        team_ids: Union[str, Iterable] = None,
         **kwargs
     ) -> Response:
         """
@@ -449,7 +449,8 @@ class Ekm(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param channel_ids: A comma-separated list of channels to filter to.
-        :type str:
+        :type Union[str, Iterable]:
+
         :param cursor: Set cursor to next_cursor returned by the previous call to list items in the next page.
         :type str: e.g. 5c3e53d5
 
@@ -457,7 +458,7 @@ class Ekm(SlackAPI):
         :type int: e.g. 100
 
         :param team_ids: A comma-separated list of the workspaces to which the channels you would like returned belong.
-        :type str:
+        :type Union[str, Iterable]:
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -483,7 +484,7 @@ class Ekm(SlackAPI):
         payload = {"token": self._token}
 
         if channel_ids is not None:
-            payload["channel_ids"] = channel_ids
+            payload["channel_ids"] = comma_separated_string(channel_ids)
 
         if cursor is not None:
             payload["cursor"] = cursor
@@ -492,7 +493,7 @@ class Ekm(SlackAPI):
             payload["limit"] = limit
 
         if team_ids is not None:
-            payload["team_ids"] = team_ids
+            payload["team_ids"] = comma_separated_string(team_ids)
 
         return self._get(
             "admin.conversations.ekm.listOriginalConnectedChannelInfo",
@@ -1106,7 +1107,7 @@ class Conversations(SlackAPI):
         self,
         channel_id: str,
         org_channel: bool = None,
-        target_team_ids: str = None,
+        target_team_ids: Union[str, Iterable] = None,
         team_id: str = None,
         **kwargs
     ) -> Response:
@@ -1124,7 +1125,7 @@ class Conversations(SlackAPI):
         :type bool: e.g. true
 
         :param target_team_ids: A comma-separated list of workspaces to which the channel should be shared. Not required if the channel is being shared org-wide.
-        :type str: e.g. T1234,T5678,T9012,T3456
+        :type Union[str, Iterable]: e.g. T1234,T5678,T9012,T3456
 
         :param team_id: The workspace to which the channel belongs. Omit this argument if the channel is a cross-workspace shared channel.
         :type str: e.g. T0HFE6EBT
@@ -1148,7 +1149,9 @@ class Conversations(SlackAPI):
             payload["org_channel"] = org_channel
 
         if target_team_ids is not None:
-            payload["target_team_ids"] = target_team_ids
+            payload["target_team_ids"] = comma_separated_string(
+                target_team_ids
+            )
 
         if team_id is not None:
             payload["team_id"] = team_id
@@ -2131,7 +2134,7 @@ class Usergroups(SlackAPI):
 
     def add_teams(
         self,
-        team_ids: str,
+        team_ids: Union[str, Iterable],
         usergroup_id: str,
         auto_provision: bool = None,
         **kwargs
@@ -2144,7 +2147,7 @@ class Usergroups(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param team_ids: A comma separated list of encoded team (workspace) IDs. Each workspace MUST belong to the organization associated with the token.
-        :type str: e.g. T12345678,T98765432
+        :type Union[str, Iterable]: e.g. T12345678,T98765432
 
         :param usergroup_id: An encoded usergroup (IDP Group) ID.
         :type str: e.g. S12345678
@@ -2164,6 +2167,8 @@ class Usergroups(SlackAPI):
             "ok": true
         }
         """
+        if team_ids is not None:
+            team_ids = comma_separated_string(team_ids)
 
         payload = {
             "token": self._token,
@@ -2415,7 +2420,7 @@ class Users(SlackAPI):
 
     def invite(
         self,
-        channel_ids: str,
+        channel_ids: Union[str, Iterable],
         email: str,
         team_id: str,
         custom_message: str = None,
@@ -2434,7 +2439,7 @@ class Users(SlackAPI):
         :type str: e.g. xxxx-xxxxxxxxx-xxxx
 
         :param channel_ids: A comma-separated list of channel_ids for this user to join. At least one channel is required.
-        :type str: e.g. C1A2B3C4D,C26Z25Y24
+        :type Union[str, Iterable]: e.g. C1A2B3C4D,C26Z25Y24
 
         :param email: The email address of the person to invite.
         :type str: e.g. joe@email.com
@@ -2472,6 +2477,9 @@ class Users(SlackAPI):
             "ok": true
         }
         """
+
+        if channel_ids is not None:
+            channel_ids = comma_separated_string(channel_ids)
 
         payload = {
             "token": self._token,

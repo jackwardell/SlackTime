@@ -1,4 +1,4 @@
-2020-09-26  Jack Wardell
+2020-09-26  Jack Wardell   0.1.1
 
     * CHANGELOG.md: adding changelog
 
@@ -14,3 +14,8 @@
     * slack_time/methods/__init__.py (SlackTime): moving to slack_time/__init__.py
 
     * general re-arrangements of auxillary thing
+
+
+2020-09-27   Jack Wardell   0.1.2
+
+    * Trying to up the version to fix CICD
