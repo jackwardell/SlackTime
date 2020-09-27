@@ -3,7 +3,7 @@ from pathlib import Path
 
 from setuptools import setup
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 ROOT_DIR = Path(".")
 
 with open(ROOT_DIR / "README.md") as readme:
