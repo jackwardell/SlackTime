@@ -19,3 +19,8 @@
 2020-09-27   Jack Wardell   0.1.2
 
     * Trying to up the version to fix CICD
+
+
+2020-09-27   Jack Wardell 0.1.3
+
+    * Swapping out cached property
