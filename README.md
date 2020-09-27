@@ -1,5 +1,7 @@
 # SlackTime
 
+[![Build Status](https://travis-ci.com/jackwardell/SlackTime.svg?branch=master)](https://travis-ci.com/jackwardell/SlackTime)
+
 ## Background
 * This library is a wrapper around the Slack WebAPI (https://api.slack.com/methods)
 * This library uses the beautiful requests library (https://github.com/psf/requests) and the methods return `requests.Response` objects
@@ -16,7 +18,7 @@ This library aims to be:
 * Fast
 
 ## Install
-* This library uses type hints so is Python 3.5+
+* This library uses f-strings and therefore is 3.6+
 * Simply install using pip
 ```
 pip install slack_time
