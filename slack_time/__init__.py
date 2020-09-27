@@ -148,5 +148,7 @@ class SlackTime(SlackAPI):
 def get_slack_time(env_var: str = "SLACK_API_TOKEN", **kwargs) -> SlackTime:
     """get a SlackTime client"""
     token = os.getenv(env_var)
-    assert token, f"You must save a '{env_var}' environment variable"
+    assert token, "You must save a '{env_var}' environment variable".format(
+        env_var=env_var
+    )
     return SlackTime(token, **kwargs)
