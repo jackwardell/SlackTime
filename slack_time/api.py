@@ -1,33 +1,7 @@
 # -*- coding: utf-8 -*-
-from functools import wraps
-
 import requests
-
-SLACK_API_BASE_URL = "https://slack.com/api"
-SLACK_DOC_BASE_URL = "https://api.slack.com/methods/"
-
-
-class SlackError(Exception):
-    pass
-
-
-def raise_exception_on_error_from_server(func):
-    @wraps(func)
-    def wrapper(instance, path, **kwargs):
-        resp = func(instance, path, **kwargs)
-        if not resp.successful:
-            url = SLACK_API_BASE_URL + "/" + path
-            doc = SLACK_DOC_BASE_URL + url.rsplit("/", maxsplit=1).pop()
-            exception = type(resp.error, (SlackError,), {})
-            raise exception(
-                f"You tried to perform a request to {url} \n"
-                f"The server returned a '{resp.error}' response "
-                f"Find out more at: {doc}#errors"
-            )
-        else:
-            return resp
-
-    return wrapper
+from slack_time.utils import raise_exception_on_error_from_server
+from slack_time.utils import SLACK_API_BASE_URL
 
 
 class SlackAPI:
@@ -102,20 +76,3 @@ class SlackAPI:
         url = self.make_url(path)
         kwargs.setdefault("params", payload)
         return self._request("get", url, **kwargs)
-
-
-# class Endpoint:
-#     def __init__(self, url):
-#         self.url = url
-#
-#     def get(self, params=None, **kwargs):
-#         return requests.get(self.url, params=params, **kwargs)
-#
-#     def post(self, data=None, json=None, **kwargs):
-#         return requests.post(self.url, data=data, json=json, **kwargs)
-#
-#     def request(self, method, **kwargs):
-#         return requests.request(method, self.url, **kwargs)
-#
-#     def __call__(self, method, **kwargs):
-#         return self.request(method, **kwargs)

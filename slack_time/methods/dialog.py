@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from requests import Response
-from slack_time.api import SlackAPI
+from slack_time import SlackAPI
 
 
 class Dialog(SlackAPI):

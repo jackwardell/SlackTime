@@ -6,7 +6,7 @@ from requests import Session
 
 
 def test_slack_api():
-    from slack_time.api import SlackAPI
+    from slack_time import SlackAPI
 
     token = "token"
     session = Session()
@@ -32,7 +32,7 @@ def test_slack_api():
 
 def test_slack_api_get_request():
     with patch("slack_time.api.SlackAPI._request") as request:
-        from slack_time.api import SlackAPI
+        from slack_time import SlackAPI
 
         api = SlackAPI("token")
         path = "hello"
@@ -46,7 +46,7 @@ def test_slack_api_get_request():
 
 def test_slack_api_post_request():
     with patch("slack_time.api.SlackAPI._request") as request:
-        from slack_time.api import SlackAPI
+        from slack_time import SlackAPI
 
         api = SlackAPI("token")
         path = "hello"
@@ -62,7 +62,8 @@ def test_slack_api_request_requests():
     with patch("requests.request") as request:
         rv = {"ok": False, "error": "silly"}
         request.return_value = type("rv", (), {"json": (lambda: rv)})
-        from slack_time.api import SlackAPI, SlackError
+        from slack_time import SlackAPI
+        from slack_time import SlackError
 
         proxies = {"http": "10.10.10.10"}
         timeout = 60

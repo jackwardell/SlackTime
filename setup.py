@@ -15,6 +15,7 @@ setup(
     packages=["slack_time"],
     include_package_data=True,
     author="Jack Wardell",
+    author_email="jack@wardell.xyz",
     url="http://github.com/jackwardell/SlackTime/",
     description="A simple, intuitive and fast Slack API client for the Slack Web API",
     long_description=long_description,

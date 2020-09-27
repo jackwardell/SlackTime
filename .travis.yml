@@ -1,5 +1,8 @@
 language: python
 
+install: pip install -e .
+
+
 deploy:
   provider: pypi
   username: __token__

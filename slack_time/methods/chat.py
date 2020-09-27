@@ -2,7 +2,7 @@
 from typing import Union
 
 from requests import Response
-from slack_time.api import SlackAPI
+from slack_time import SlackAPI
 from slack_time.utils import cached_property
 from slack_time.utils import make_json_encoded
 

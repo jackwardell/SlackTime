@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from typing import Union
 
 from requests import Response
-from slack_time.api import SlackAPI
+from slack_time import SlackAPI
 from slack_time.utils import comma_separated_string
 
 

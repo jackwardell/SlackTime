@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
 from collections.abc import Iterable
+from functools import wraps
 from typing import IO
 from typing import Union
+
+
+class SlackError(Exception):
+    pass
 
 
 class CachedProperty:
@@ -73,3 +78,26 @@ def comma_separated_string(param: Union[str, Iterable]):
             "A comma separated string must be passed as the comma separated "
             "string itself or as an iterable which will be joined with a comma"
         )
+
+
+def raise_exception_on_error_from_server(func):
+    @wraps(func)
+    def wrapper(instance, path, **kwargs):
+        resp = func(instance, path, **kwargs)
+        if not resp.successful:
+            url = SLACK_API_BASE_URL + "/" + path
+            doc = SLACK_DOC_BASE_URL + url.rsplit("/", maxsplit=1).pop()
+            exception = type(resp.error, (SlackError,), {})
+            raise exception(
+                f"You tried to perform a request to {url} \n"
+                f"The server returned a '{resp.error}' response "
+                f"Find out more at: {doc}#errors"
+            )
+        else:
+            return resp
+
+    return wrapper
+
+
+SLACK_API_BASE_URL = "https://slack.com/api"
+SLACK_DOC_BASE_URL = "https://api.slack.com/methods/"
