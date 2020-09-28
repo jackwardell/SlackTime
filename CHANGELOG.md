@@ -28,3 +28,5 @@
     * slack_time/utils.py:
       File uploading, json encoding and comma separated string working and
       tested
+
+    * slack_time/test_utils.py: adding tests
