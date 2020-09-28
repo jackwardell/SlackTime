@@ -24,3 +24,7 @@
 2020-09-27   Jack Wardell 0.1.3
 
     * Swapping out cached property
+
+    * slack_time/utils.py:
+      File uploading, json encoding and comma separated string working and
+      tested
