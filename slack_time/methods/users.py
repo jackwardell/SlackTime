@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections.abc import Iterable
+from os import PathLike
 from typing import IO
 from typing import Union
 
@@ -665,7 +666,7 @@ class Users(SlackAPI):
         crop_w: int = None,
         crop_x: int = None,
         crop_y: int = None,
-        image: Union[str, IO] = None,
+        image: Union[str, PathLike, IO] = None,
         **kwargs
     ) -> Response:
         """
@@ -685,7 +686,7 @@ class Users(SlackAPI):
         :type int: e.g. 15
 
         :param image: File contents via multipart/form-data.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
+        :type Union[str, PathLike, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>

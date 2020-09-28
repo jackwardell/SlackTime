@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections.abc import Iterable
+from os import PathLike
 from typing import IO
 from typing import Union
 
@@ -50,8 +51,8 @@ class Remote(SlackAPI):
         external_url: str,
         title: str,
         filetype: str = None,
-        indexable_file_contents: Union[str, IO] = None,
-        preview_image: Union[str, IO] = None,
+        indexable_file_contents: Union[str, PathLike, IO] = None,
+        preview_image: Union[str, PathLike, IO] = None,
         **kwargs
     ) -> Response:
         """
@@ -74,10 +75,10 @@ class Remote(SlackAPI):
         :type str: e.g. doc
 
         :param indexable_file_contents: A text file (txt, pdf, doc, etc.) containing textual search terms that are used to improve discovery of the remote file.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
+        :type Union[str, PathLike, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :param preview_image: Preview of the document via multipart/form-data.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
+        :type Union[str, PathLike, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :returns response:
         :type requests.Response: e.g. <Response [200]>
@@ -324,8 +325,8 @@ class Remote(SlackAPI):
         external_url: str = None,
         file: str = None,
         filetype: str = None,
-        indexable_file_contents: Union[str, IO] = None,
-        preview_image: Union[str, IO] = None,
+        indexable_file_contents: Union[str, PathLike, IO] = None,
+        preview_image: Union[str, PathLike, IO] = None,
         title: str = None,
         **kwargs
     ) -> Response:
@@ -349,10 +350,10 @@ class Remote(SlackAPI):
         :type str: e.g. doc
 
         :param indexable_file_contents: File containing contents that can be used to improve searchability for the remote file.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
+        :type Union[str, PathLike, IO]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :param preview_image: Preview of the document via multipart/form-data.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file"
+        :type Union[str, PathLike]: e.g. '/absolute/path/to/file' or actual IO file"
 
         :param title: Title of the file being shared.
         :type str: e.g. Danger, High Voltage!
@@ -780,8 +781,8 @@ class Files(SlackAPI):
     def upload(
         self,
         channels: Union[str, Iterable] = None,
-        content: Union[str, IO] = None,
-        file: Union[str, IO] = None,
+        content: Union[str, PathLike, IO] = None,
+        file: Union[str, PathLike, IO] = None,
         filename: str = None,
         filetype: str = None,
         initial_comment: str = None,
@@ -800,10 +801,10 @@ class Files(SlackAPI):
         :type Union[str, Iterable]: e.g. C1234567890,C2345678901,C3456789012
 
         :param content: File contents via a POST variable. If omitting this parameter, you must provide a file.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file
+        :type Union[str, PathLike, IO]: e.g. '/absolute/path/to/file' or actual IO file
 
         :param file: File contents via multipart/form-data. If omitting this parameter, you must submit content.
-        :type Union[str, IO]: e.g. '/absolute/path/to/file' or actual IO file
+        :type Union[str, PathLike, IO]: e.g. '/absolute/path/to/file' or actual IO file
 
         :param filename: Filename of file.
         :type str: e.g. foo.txt

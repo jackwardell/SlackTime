@@ -2,6 +2,7 @@
 import json
 from collections.abc import Iterable
 from functools import wraps
+from os import PathLike
 from typing import IO
 from typing import Union
 
@@ -56,32 +57,34 @@ def make_cached_property():
 cached_property = make_cached_property()
 
 
-def make_file(file: Union[str, IO]):
+def make_file(file: Union[str, PathLike, IO]):
     """
-    for multipart/form-data
-
-    for docstrings: e.g. '/absolute/path/to/file' or actual IO file"
-
-    snippet:
-    file_to_upload = make_file(file)
-    payload["xxx"] = file_to_upload
-    or
-    kwargs["files"] = {"file": file_to_upload}
+    converter for user input to file fields for multipart/form-data
     """
-    if isinstance(file, str):
-        with open(file, "rb") as f:
-            return f
+
+    if isinstance(file, (str, PathLike)):
+        return open(file, "rb")
     else:
         return file
+    # else:
+    #     raise TypeError(
+    #         "A file parameter or content parameter or other parameter that "
+    #         "sends a file to Slack requires either a filename (e.g. hello.txt) "
+    #         f"or PathLike object or an open IO object not {file} of class "
+    #         f"{file.__class__}"
+    #     )
 
 
 def make_json_encoded(param: Union[str, list, dict]):
+    """
+    converter for user input to turn into json encoded field
+    """
     if isinstance(param, str):
         return param
     elif isinstance(param, (list, dict)):
         return json.dumps(param)
     else:
-        raise ValueError(
+        raise TypeError(
             "A JSON-encoded object must be passed to the function as either a "
             "string (JSON encoded) or a list or dict, which will be be "
             "converted by json.dumps to a JSON encoded string"
@@ -89,12 +92,15 @@ def make_json_encoded(param: Union[str, list, dict]):
 
 
 def comma_separated_string(param: Union[str, Iterable]):
+    """
+    converter for user input to turn iterable into comma seperated string
+    """
     if isinstance(param, str):
         return param
     elif isinstance(param, Iterable):
         return ",".join(param)
     else:
-        raise ValueError(
+        raise TypeError(
             "A comma separated string must be passed as the comma separated "
             "string itself or as an iterable which will be joined with a comma"
         )
