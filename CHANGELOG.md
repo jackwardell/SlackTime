@@ -21,7 +21,7 @@
     * Trying to up the version to fix CICD
 
 
-2020-09-27   Jack Wardell 0.1.3
+2020-09-27   Jack Wardell 0.1.3 (YANKED)
 
     * Swapping out cached property
 
@@ -30,3 +30,8 @@
       tested
 
     * slack_time/test_utils.py: adding tests
+
+
+2020-09-30   Jack Wardell 0.1.4
+
+    * Fixing bug in importing
