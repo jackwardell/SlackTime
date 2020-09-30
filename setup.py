@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
+from setuptools import find_packages
 from setuptools import setup
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 ROOT_DIR = Path(".")
 
 with open(str(ROOT_DIR / "README.md")) as readme:
@@ -12,7 +13,7 @@ with open(str(ROOT_DIR / "README.md")) as readme:
 setup(
     name="slack_time",
     version=__version__,
-    packages=["slack_time"],
+    packages=find_packages(),
     include_package_data=True,
     author="Jack Wardell",
     author_email="jack@wardell.xyz",

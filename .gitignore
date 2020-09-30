@@ -5,3 +5,4 @@ builder/*
 *egg-info*
 build/*
 dist/*
+.env

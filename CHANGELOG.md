@@ -35,3 +35,8 @@
 2020-09-30   Jack Wardell 0.1.4
 
     * Fixing bug in importing
+
+
+2020-09-30   Jack Wardell 0.1.5
+
+    * Fixing another import bug
