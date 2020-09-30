@@ -1,34 +1,34 @@
 # -*- coding: utf-8 -*-
 import os
 
-from slack_time.api import SlackAPI
-from slack_time.methods import Admin
-from slack_time.methods import Api
-from slack_time.methods import Apps
-from slack_time.methods import Auth
-from slack_time.methods import Bots
-from slack_time.methods import Calls
-from slack_time.methods import Chat
-from slack_time.methods import Conversations
-from slack_time.methods import Dialog
-from slack_time.methods import Dnd
-from slack_time.methods import Emoji
-from slack_time.methods import Files
-from slack_time.methods import Migration
-from slack_time.methods import OAuth
-from slack_time.methods import Pins
-from slack_time.methods import Reactions
-from slack_time.methods import Reminders
-from slack_time.methods import Rtm
-from slack_time.methods import Search
-from slack_time.methods import Stars
-from slack_time.methods import Team
-from slack_time.methods import Usergroups
-from slack_time.methods import Users
-from slack_time.methods import Views
-from slack_time.methods import Workflows
-from slack_time.utils import cached_property
-from slack_time.utils import SlackError
+from .api import SlackAPI
+from .methods import Admin
+from .methods import Api
+from .methods import Apps
+from .methods import Auth
+from .methods import Bots
+from .methods import Calls
+from .methods import Chat
+from .methods import Conversations
+from .methods import Dialog
+from .methods import Dnd
+from .methods import Emoji
+from .methods import Files
+from .methods import Migration
+from .methods import OAuth
+from .methods import Pins
+from .methods import Reactions
+from .methods import Reminders
+from .methods import Rtm
+from .methods import Search
+from .methods import Stars
+from .methods import Team
+from .methods import Usergroups
+from .methods import Users
+from .methods import Views
+from .methods import Workflows
+from .utils import cached_property
+from .utils import SlackError
 
 __all__ = ["get_slack_time", "SlackTime", "SlackError"]
 
